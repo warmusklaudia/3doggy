@@ -1,59 +1,21 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+  import doggy from '$lib/images/pngwing.png'
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+  <title>Home</title>
+  <meta name="description" content="3Doggy Home" />
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+<section class="flex justify-between items-center">
+  <div class="flex flex-col gap-6 max-w-sm">
+    <h3 class="italic text-lg">
+      "Everyone thinks they have the best dog, and none of them are wrong." - Unknown
+    </h3>
+    <h2 class="text-xl">Make your life better and create your canine friend in 3D!</h2>
+    <a class="text-white text-center bg-alpha p-3 rounded-lg w-2/3" href="/">
+      Make your own doggy</a
+    >
+  </div>
+  <img class="w-1/4" src={doggy} alt="dog" />
 </section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
