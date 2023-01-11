@@ -5,7 +5,7 @@
   import Logo from '$lib/Logo.svelte'
 </script>
 
-<header class="flex items-center justify-between px-12 py-10">
+<header class="flex items-center justify-between px-12 pt-10">
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
     <a href="/">
       <Logo />
