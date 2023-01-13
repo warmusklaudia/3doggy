@@ -7,8 +7,17 @@
     email: '',
     password: '',
   }
+  let errorMessage: string = ''
 
   const submitForm = () => {
+    if (userInput.email === '') {
+      errorMessage = 'Email is required'
+      return
+    }
+    if (userInput.password === '') {
+      errorMessage = 'Password is required'
+      return
+    }
     register(userInput.email, userInput.password).then(async (u) => {
       console.log(u)
     })
@@ -24,7 +33,7 @@
   <div
     class="gap-6 py-6 flex items-center w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
   >
-    <h1 class="text-3xl">Create an account</h1>
+    <h1 class="text-3xl">Create new account</h1>
     <form on:submit={submitForm} class="w-1/2 gap-4 flex flex-col justify-center" action="">
       <label class="flex flex-col w-full" for="email">
         Email

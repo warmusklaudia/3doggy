@@ -1,8 +1,13 @@
-<script>
+<script lang="ts">
   import doggy from '$lib/images/pngwing.png'
   import { restoreUser, user } from '$lib/utils/useAuth'
+  import type { User } from 'firebase/auth'
   import { onMount } from 'svelte'
   $: console.log(user)
+  let userValue: User | null = null
+  user.subscribe((value) => {
+    userValue = value
+  })
 </script>
 
 <svelte:head>
@@ -14,7 +19,7 @@
   class="flex flex-col-reverse  sm:flex-row sm:justify-around lg:justify-between items-center pt-10"
 >
   <div class="flex flex-col gap-6 max-w-sm ">
-    <h1>Hello {user?.email}</h1>
+    <h1>Hello {userValue?.email}</h1>
     <h3 class="italic text-lg">
       "Everyone thinks they have the best dog, and none of them are wrong." - Unknown
     </h3>

@@ -1,15 +1,17 @@
+import { goto } from '$app/navigation'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   type User,
   type UserCredential,
 } from 'firebase/auth'
+import { writable } from 'svelte/store'
 import { auth } from './useFirebase'
 
-let user: User | null
+const user = writable<User | null>(null)
 
 const setUser = (u: User | null) => {
-  user = u
+  user.set(u)
 }
 
 const register = async (email: string, password: string): Promise<User | null> => {
@@ -17,7 +19,7 @@ const register = async (email: string, password: string): Promise<User | null> =
     createUserWithEmailAndPassword(auth, email, password)
       .then((u: UserCredential) => {
         setUser(u.user)
-        resolve(user)
+        resolve(u.user)
       })
       .catch((error) => {
         reject(error)
@@ -33,7 +35,7 @@ const login = async (email: string, password: string): Promise<User | null> => {
     signInWithEmailAndPassword(auth, email, password)
       .then((u: UserCredential) => {
         setUser(u.user)
-        resolve(user)
+        resolve(u.user)
       })
       .catch((error) => {
         reject(error)
@@ -47,6 +49,7 @@ const logout = (): Promise<void> => {
       .signOut()
       .then(() => {
         setUser(null)
+        goto('/')
         resolve()
       })
       .catch((error) => {

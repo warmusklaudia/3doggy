@@ -10,7 +10,9 @@
 		"sourceMap": true,
 		"isolatedModules": true,
 		"strict": true,
-		"preserveValueImports": true
+		"preserveValueImports": true,
+		"importsNotUsedAsValues": "preserve"
+		
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.svelte"],
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
