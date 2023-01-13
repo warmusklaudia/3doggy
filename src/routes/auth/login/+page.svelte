@@ -60,7 +60,7 @@
       <label class="block" for="email">
         <span class="block">Email</span>
         <input
-          class=" w-full mt-1 py-2 bg-transparent border rounded-md px-3"
+          class=" w-full mt-1 py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
           type="email"
           name="email"
           id="email"
@@ -72,7 +72,7 @@
       <label class="block" for="password">
         <span class="block">Password</span>
         <input
-          class="mt-1 w-full py-2 bg-transparent border rounded-md px-3"
+          class="mt-1 w-full py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="password"
           id="password"
@@ -82,10 +82,14 @@
         />
       </label>
       <div class="flex items-center justify-between my-3">
-        <a class="hover:underline text-[#4AD5E2] md:mr-10" href="/auth/register"
-          >Don't have an account yet?</a
+        <a
+          class="hover:underline text-[#4AD5E2] md:mr-10  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
+          href="/auth/register">Don't have an account yet?</a
         >
-        <button class="text-white bg-alpha px-4 py-2 rounded-lg" type="submit">Log in</button>
+        <button
+          class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-teal-600 focus:outline-none"
+          type="submit">Log in</button
+        >
       </div>
     </form>
   </div>

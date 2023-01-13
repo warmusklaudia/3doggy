@@ -11,7 +11,7 @@
 
 <header class="flex items-center justify-between mx-20 mt-10">
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-    <a href="/">
+    <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
       <Logo />
     </a>
   </div>
@@ -22,11 +22,15 @@
       <nav>
         <ul class="flex gap-6 lg:text-lg relative">
           <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
-            <a class="text-beta" href="/auth/login">Log in</a>
+            <a
+              class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg"
+              href="/auth/login">Log in</a
+            >
           </li>
           <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
-            <a class="text-white bg-alpha p-3 rounded-lg" href="/auth/register"
-              >Create new account</a
+            <a
+              class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-teal-800 focus:outline-none"
+              href="/auth/register">Create new account</a
             >
           </li>
         </ul>

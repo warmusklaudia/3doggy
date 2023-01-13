@@ -38,7 +38,7 @@
       <label class="flex flex-col w-full" for="email">
         Email
         <input
-          class="mt-1 py-2 bg-transparent border rounded-md px-3"
+          class="mt-1 py-2 bg-transparent border rounded-md px-3  focus:border-1 focus:border-teal-400 focus:outline-none"
           type="email"
           name="email"
           id="email"
@@ -50,7 +50,7 @@
       <label class="flex flex-col" for="password">
         Password
         <input
-          class="mt-1  py-2 bg-transparent border rounded-md px-3"
+          class="mt-1  py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="password"
           id="password"
@@ -62,7 +62,7 @@
       <label class="flex flex-col" for="repeatPassword">
         Repeat password
         <input
-          class="mt-1 py-2 bg-transparent border rounded-md px-3"
+          class="mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="repeatPassword"
           id="repeatPassword"
@@ -72,8 +72,14 @@
         />
       </label>
       <div class="flex items-center justify-between my-3">
-        <a class="hover:underline text-[#4AD5E2]" href="/auth/login">I have an account</a>
-        <button class="text-white bg-alpha px-4 py-2 rounded-lg" type="submit">Register</button>
+        <a
+          class="hover:underline text-[#4AD5E2]  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
+          href="/auth/login">I have an account</a
+        >
+        <button
+          class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-teal-600 focus:outline-none"
+          type="submit">Register</button
+        >
       </div>
     </form>
   </div>
