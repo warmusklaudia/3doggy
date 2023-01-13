@@ -13,12 +13,12 @@
   </div>
 
   <nav>
-    <ul class="flex gap-6 lg:text-lg">
-      <li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-        <a class="text-beta" href="/about">Log in</a>
+    <ul class="flex gap-6 lg:text-lg relative">
+      <li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
+        <a class="text-beta" href="/login">Log in</a>
       </li>
-      <li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-        <a class="text-white bg-alpha p-3 rounded-lg" href="/sverdle">Create new account</a>
+      <li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
+        <a class="text-white bg-alpha p-3 rounded-lg" href="/register">Create new account</a>
       </li>
     </ul>
   </nav>

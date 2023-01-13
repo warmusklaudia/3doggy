@@ -6,11 +6,11 @@
 <div class="flex min-h-screen flex-col bg-gradient-to-tr from-[#E4E6E6] to-white ">
   <Header />
 
-  <main class=" flex flex-1 flex-col p-4 w-full max-w-5xl my-0 mx-auto box-border text-beta">
+  <main class=" flex flex-1 w-full flex-col p-4 max-w-5xl my-0 mx-auto box-border text-beta">
     <slot />
   </main>
 
   <footer class=" text-sm flex flex-col justify-center items-center p-3">
-    <p>Website by KWS</p>
+    <a href="https://klaudiawarmus.be">Website by KWS</a>
   </footer>
 </div>
