@@ -7,16 +7,31 @@
 
   let canvas
   let obj
+  let headNumber = 1
+  let headObj
+  let head, head1, head2
+  let body, body1, body2
 
   $: innerHeight = 0
   $: innerWidth = 0
+  const gltfLoader = new GLTFLoader()
+  //Scene
+  const scene = new THREE.Scene()
 
   onMount(() => {
-    const gltfLoader = new GLTFLoader()
     console.log(gltfLoader)
 
     //Models
-    gltfLoader.load('../../../src/models/dog/doggy1.glb', (gltf) => {
+    // gltfLoader.load('../../../src/models/dog/doggy1.glb', (gltf) => {
+    //   obj = gltf.scene.children[0]
+    //   console.log(obj)
+    //   console.log('success')
+    //   gltf.scene.scale.set(1, 1, 1)
+    //   gltf.scene.position.set(0, 1.5, 1)
+    //   scene.add(gltf.scene)
+    // })
+
+    gltfLoader.load('../../../src/models/nose_only.gltf', (gltf) => {
       obj = gltf.scene.children[0]
       console.log(obj)
       console.log('success')
@@ -25,8 +40,73 @@
       scene.add(gltf.scene)
     })
 
-    //Scene
-    const scene = new THREE.Scene()
+    gltfLoader.load('../../../src/models/body1.gltf', (gltf) => {
+      obj = gltf.scene.children[0]
+      body = gltf.scene
+      body1 = gltf.scene
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      scene.add(gltf.scene)
+    })
+
+    gltfLoader.load('../../../src/models/body2.gltf', (gltf) => {
+      obj = gltf.scene.children[0]
+      body = gltf.scene
+      body2 = gltf.scene
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+    })
+
+    gltfLoader.load('../../../src/models/mane1.gltf', (gltf) => {
+      obj = gltf.scene.children[0]
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      scene.add(gltf.scene)
+    })
+
+    gltfLoader.load('../../../src/models/head1.gltf', (gltf) => {
+      head = gltf.scene
+      head1 = gltf.scene
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      scene.add(head)
+    })
+
+    gltfLoader.load('../../../src/models/head2.gltf', (gltf) => {
+      head = gltf.scene
+      head2 = gltf.scene
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      // scene.add(head)
+    })
+
+    gltfLoader.load('../../../src/models/eyes1.gltf', (gltf) => {
+      obj = gltf.scene.children[0]
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      scene.add(gltf.scene)
+    })
+
+    gltfLoader.load('../../../src/models/tongue1.gltf', (gltf) => {
+      obj = gltf.scene.children[0]
+      console.log(obj)
+      console.log('success')
+      gltf.scene.scale.set(1, 1, 1)
+      gltf.scene.position.set(0, 1.5, 1)
+      scene.add(gltf.scene)
+    })
 
     //Lights
     const directionalLightA = new THREE.DirectionalLight('#ffffff', 1)
@@ -64,9 +144,9 @@
 
     //Controls
     const controls = new OrbitControls(camera, canvas)
-    controls.rotateSpeed = 8
+    // controls.rotateSpeed = 8
     controls.enableDamping = true
-    controls.autoRotate = true
+    // controls.autoRotate = true
     controls.enablePan = false
     controls.enableZoom = false
 
@@ -88,10 +168,10 @@
 
     tick()
   })
-  const changeFurColor = (gltf) => {
-    obj.children[0].material.color.set(
-      '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-    )
+  const changeBodyColor = () => {
+    let randomColor = '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
+    body2.children[0].material.color.set(randomColor)
+    body1.children[0].material.color.set(randomColor)
   }
   const changeEyesColor = (gltf) => {
     obj.children[3].material.color.set(
@@ -108,6 +188,25 @@
       '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
     )
   }
+
+  const changeHead1 = () => {
+    scene.remove(head2)
+    scene.add(head1)
+  }
+
+  const changeHead2 = () => {
+    scene.remove(head1)
+    scene.add(head2)
+  }
+
+  const changeBody1 = () => {
+    scene.remove(body2)
+    scene.add(body1)
+  }
+  const changeBody2 = () => {
+    scene.remove(body1)
+    scene.add(body2)
+  }
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
@@ -116,8 +215,12 @@
   <canvas bind:this={canvas} class="w-full" />
   <div class="flex justify-evenly">
     <button on:click={changeEyesColor(obj)}>Eyes and nose</button>
-    <button on:click={changeFurColor(obj)}>Coat</button>
+    <button on:click={changeBodyColor}>Coat</button>
     <button on:click={changeTongueColor(obj)}>Tongue</button>
     <button on:click={changeManeColor(obj)}>Mane</button>
+    <button on:click={changeHead1}>Head 1</button>
+    <button on:click={changeHead2}>Head 2</button>
+    <button on:click={changeBody1}>Body 1</button>
+    <button on:click={changeBody2}>Body 2</button>
   </div>
 </div>
