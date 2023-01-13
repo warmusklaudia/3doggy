@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"firebase": "^9.15.0",
 		"three": "^0.148.0"
 	}
 }

@@ -1,3 +1,9 @@
+<script lang="ts">
+  import { user } from '$lib/utils/useAuth'
+
+  $: console.log(user)
+</script>
+
 <svelte:head>
   <title>Login</title>
   <meta name="login" content="Log in to your account" />

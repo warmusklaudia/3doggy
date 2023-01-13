@@ -1,7 +1,5 @@
 <script>
   import { page } from '$app/stores'
-  import logo from '$lib/images/svelte-logo.svg'
-  import github from '$lib/images/github.svg'
   import Logo from '$lib/Logo.svelte'
 </script>
 
@@ -14,11 +12,11 @@
 
   <nav>
     <ul class="flex gap-6 lg:text-lg relative">
-      <li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
-        <a class="text-beta" href="/login">Log in</a>
+      <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
+        <a class="text-beta" href="/auth/login">Log in</a>
       </li>
-      <li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
-        <a class="text-white bg-alpha p-3 rounded-lg" href="/register">Create new account</a>
+      <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
+        <a class="text-white bg-alpha p-3 rounded-lg" href="/auth/register">Create new account</a>
       </li>
     </ul>
   </nav>
