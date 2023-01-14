@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Avatar creator</title>
+  <title>3Doggy | Create avatar</title>
   <meta name="creator" content="Create your own doggy" />
 </svelte:head>
 

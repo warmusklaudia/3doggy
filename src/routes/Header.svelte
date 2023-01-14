@@ -23,7 +23,7 @@
         <ul class="flex gap-6 lg:text-lg relative">
           <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
             <a
-              class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg"
+              class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg hover:opacity-80"
               href="/auth/login">Log in</a
             >
           </li>

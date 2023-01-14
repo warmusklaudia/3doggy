@@ -12,7 +12,7 @@
 
   <footer class=" text-sm flex flex-col justify-center items-center p-3">
     <a
-      class=" focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg "
+      class="hover:opacity-80 focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg "
       href="https://klaudiawarmus.be">Website by KWS</a
     >
   </footer>

@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-  <title>Home</title>
+  <title>3Doggy | Home</title>
   <meta name="description" content="3Doggy Home" />
 </svelte:head>
 

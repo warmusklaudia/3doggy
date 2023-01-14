@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import Background from '$lib/Background.svelte'
   import { login } from '$lib/utils/useAuth'
-  import { X, AlertTriangle } from 'lucide-svelte'
+  import { X, AlertTriangle, Loader2 } from 'lucide-svelte'
   let errorMessage: string = ''
   let loading: boolean = false
   let userInput = {
@@ -25,7 +25,7 @@
         return goto('/')
       })
       .catch((error) => {
-        errorMessage = error.message
+        errorMessage = error.message.split(':')[1]
       })
       .finally(() => {
         loading = false
@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-  <title>Log in</title>
+  <title>3Doggy | Log in</title>
   <meta name="log in" content="Log in to your account" />
 </svelte:head>
 <section>
@@ -88,8 +88,17 @@
         >
         <button
           class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-teal-600 focus:outline-none"
-          type="submit">Log in</button
+          disabled={loading}
+          type="submit"
         >
+          {#if !loading}
+            <span>Log in</span>
+          {:else}
+            <div class="animate-spin">
+              <Loader2 />
+            </div>
+          {/if}
+        </button>
       </div>
     </form>
   </div>

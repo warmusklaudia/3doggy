@@ -1,15 +1,19 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import Background from '$lib/Background.svelte'
   import { register } from '$lib/utils/useAuth'
+  import { AlertTriangle, Loader2, X } from 'lucide-svelte'
 
+  let errorMessage: string = ''
+  let loading: boolean = false
   let repeatPassword: string
   let userInput = {
     email: '',
     password: '',
   }
-  let errorMessage: string = ''
 
   const submitForm = () => {
+    loading = true
     if (userInput.email === '') {
       errorMessage = 'Email is required'
       return
@@ -18,14 +22,26 @@
       errorMessage = 'Password is required'
       return
     }
-    register(userInput.email, userInput.password).then(async (u) => {
-      console.log(u)
-    })
+    if (repeatPassword === '' || repeatPassword !== userInput.password) {
+      errorMessage = 'Password confirmation does not match'
+      return
+    }
+    register(userInput.email, userInput.password)
+      .then((u) => {
+        return goto('/')
+      })
+      .catch((error) => {
+        console.log({ error })
+        errorMessage = error.message.split(':')[1]
+      })
+      .finally(() => {
+        loading = false
+      })
   }
 </script>
 
 <svelte:head>
-  <title>Register</title>
+  <title>3Doggy | Register</title>
   <meta name="register" content="Create new account" />
 </svelte:head>
 <section>
@@ -34,6 +50,20 @@
     class="gap-6 py-6 flex items-center w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
   >
     <h1 class="text-3xl">Create new account</h1>
+    {#if errorMessage}
+      <div
+        class="bg-neutral-100 border gap-3 flex items-center justify-between rounded-md p-3 border-red-600 text-red-600"
+      >
+        <AlertTriangle />
+        <p>{errorMessage}</p>
+        <button
+          on:click={() => (errorMessage = '')}
+          class="rounded-full p-1 ring-red-600 border-red-600 border hover:bg-red-200 focus:outline-none focus:ring-1"
+        >
+          <X class="h-4 w-4 text-red-600" />
+        </button>
+      </div>
+    {/if}
     <form on:submit={submitForm} class="w-1/2 gap-4 flex flex-col justify-center" action="">
       <label class="flex flex-col w-full" for="email">
         Email
@@ -60,7 +90,7 @@
         />
       </label>
       <label class="flex flex-col" for="repeatPassword">
-        Repeat password
+        Confirm password
         <input
           class="mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
@@ -78,8 +108,17 @@
         >
         <button
           class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-teal-600 focus:outline-none"
-          type="submit">Register</button
+          disabled={loading}
+          type="submit"
         >
+          {#if !loading}
+            <span>Register</span>
+          {:else}
+            <div class="animate-spin">
+              <Loader2 />
+            </div>
+          {/if}
+        </button>
       </div>
     </form>
   </div>
