@@ -27,7 +27,8 @@
     ears,
     tongues,
   } from '$lib/utils/loadObjects'
-  import Tail from '../../lib/components/Tail.svelte'
+  import Tails from '../../lib/components/Tails.svelte'
+  import Ears from '$lib/components/Ears.svelte'
 
   let canvas
   let head, head1, head2
@@ -35,6 +36,7 @@
   let camera, controls, renderer, cameraTarget
 
   let showTails = false
+  let showEars = false
 
   $: innerHeight = 0
   $: innerWidth = 0
@@ -70,8 +72,8 @@
     })
 
     //Camera
-    camera = new PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 90)
-    camera.position.set(-4, 2, 4)
+    camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
+    camera.position.set(-4, 1.5, 4)
 
     scene.add(camera)
 
@@ -108,16 +110,6 @@
     })
   }
 
-  const changeHead1 = () => {
-    scene.remove(head2)
-    scene.add(head1)
-  }
-
-  const changeHead2 = () => {
-    scene.remove(head1)
-    scene.add(head2)
-  }
-
   const animate = () => {
     controls.update()
     camera.position.lerp(cameraTarget, 0.05)
@@ -132,6 +124,7 @@
   const tailsSettings = () => {
     cameraTarget = new Vector3(-4, 2, -4)
     animate()
+    showEars = false
     showTails = !showTails
     controls.update()
   }
@@ -139,15 +132,25 @@
   const earsSettings = () => {
     cameraTarget = new Vector3(0, 2, 5.5)
     animate()
+    showTails = false
+    showEars = !showEars
     controls.update()
   }
 
   const changeTail = (name) => {
-    x = tails.find((t) => t.name === name)
+    let tail = tails.find((t) => t.name === name)
     tails.map((t) => {
       scene.remove(t.tail)
     })
-    scene.add(x.tail)
+    scene.add(tail.tail)
+  }
+
+  const changeEars = (name) => {
+    let ear = ears.find((e) => e.name === name)
+    ears.map((e) => {
+      scene.remove(e.ears)
+    })
+    scene.add(ear.ears)
   }
 </script>
 
@@ -157,7 +160,10 @@
   <canvas bind:this={canvas} class="w-full" />
   <div class="flex flex-col">
     {#if showTails}
-      <Tail {changeTail} />
+      <Tails {changeTail} />
+    {/if}
+    {#if showEars}
+      <Ears {changeEars} />
     {/if}
     <div class="flex gap-3 justify-evenly">
       <button on:click={tailsSettings}>Tails</button>
