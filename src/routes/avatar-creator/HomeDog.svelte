@@ -1,10 +1,33 @@
 <script lang="js">
   //@ts-nocheck
-  import * as THREE from 'three'
+  import {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    DirectionalLight,
+    AmbientLight,
+    Vector3,
+  } from 'three'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
   import { onMount } from 'svelte'
-  import { loadBody, body, activeBody, bodies } from '$lib/components/loadObjects'
+  import {
+    loadBody,
+    loadTail,
+    loadEars,
+    loadNose,
+    loadMane,
+    loadEyes,
+    loadTongue,
+    tails,
+    bodies,
+    manes,
+    noses,
+    eyes,
+    ears,
+    tongues,
+  } from '$lib/components/loadObjects'
+  import { X } from 'lucide-svelte'
 
   let canvas
   let obj
@@ -12,93 +35,34 @@
   let headObj
   let head, head1, head2
   let x
+  let camera, controls, renderer
+  let cameraTarget
+
+  let showTails = false
 
   $: innerHeight = 0
   $: innerWidth = 0
   const gltfLoader = new GLTFLoader()
-  //Scene
-  const scene = new THREE.Scene()
+  const scene = new Scene()
+  loadTail(gltfLoader, scene)
   loadBody(gltfLoader, scene)
+  loadEars(gltfLoader, scene)
+  loadNose(gltfLoader, scene)
+  loadMane(gltfLoader, scene)
+  loadEyes(gltfLoader, scene)
+  loadTongue(gltfLoader, scene)
 
   onMount(() => {
-    console.log(bodies)
-
-    //Models
-    // gltfLoader.load('../../../src/models/dog/doggy1.glb', (gltf) => {
-    //   obj = gltf.scene.children[0]
-    //   console.log(obj)
-    //   console.log('success')
-    //   gltf.scene.scale.set(1, 1, 1)
-    //   gltf.scene.position.set(0, 1.5, 1)
-    //   scene.add(gltf.scene)
-    // })
-
-    gltfLoader.load('../../../src/models/nose_only.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(gltf.scene)
-    })
-
-    gltfLoader.load('../../../src/models/mane1.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(gltf.scene)
-    })
-
-    gltfLoader.load('../../../src/models/head1.gltf', (gltf) => {
-      head = gltf.scene
-      head1 = gltf.scene
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(head)
-    })
-
-    gltfLoader.load('../../../src/models/head2.gltf', (gltf) => {
-      head = gltf.scene
-      head2 = gltf.scene
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      // scene.add(head)
-    })
-
-    gltfLoader.load('../../../src/models/eyes1.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(gltf.scene)
-    })
-
-    gltfLoader.load('../../../src/models/tongue1.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      // console.log(obj)
-      // console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(gltf.scene)
-    })
-
     //Lights
-    const directionalLightA = new THREE.DirectionalLight('#ffffff', 1)
+    const directionalLightA = new DirectionalLight('#ffffff', 1)
     directionalLightA.position.set(-0.5, 1, 2.25)
     scene.add(directionalLightA)
 
-    const directionalLightB = new THREE.DirectionalLight('#ffffff', 1)
+    const directionalLightB = new DirectionalLight('#ffffff', 1)
     directionalLightB.position.set(0.5, 1, -2.25)
     scene.add(directionalLightB)
 
-    const ambientLight = new THREE.AmbientLight('#FFFEFC', 1.5)
+    const ambientLight = new AmbientLight('#FFFEFC', 1.5)
     scene.add(ambientLight)
 
     window.addEventListener('resize', () => {
@@ -109,22 +73,14 @@
       console.log(innerWidth, innerHeight)
     })
 
-    // resize(innerWidth, innerHeight)
-
-    // const resize = (width, height) => {
-    //   // renderer.setSize(width, height)
-    //   camera.aspect = width / height
-    //   camera.updateProjectionMatrix()
-    //   console.log(width, height)
-    // }
-
     //Camera
-    const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 90)
+    camera = new PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 90)
     camera.position.set(-4, 2, 4)
+
     scene.add(camera)
 
     //Controls
-    const controls = new OrbitControls(camera, canvas)
+    controls = new OrbitControls(camera, canvas)
     // controls.rotateSpeed = 8
     controls.enableDamping = true
     // controls.autoRotate = true
@@ -132,7 +88,7 @@
     controls.enableZoom = false
 
     //Renderer
-    const renderer = new THREE.WebGLRenderer({
+    renderer = new WebGLRenderer({
       canvas: canvas,
       alpha: true,
     })
@@ -149,26 +105,11 @@
 
     tick()
   })
-  const changeBodyColor = () => {
+  const changeTailColor = () => {
     let randomColor = '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
-    bodies.map((b) => {
-      b.body.children[0].material.color.set(randomColor)
+    tails.map((t) => {
+      t.tail.children[0].material.color.set(randomColor)
     })
-  }
-  const changeEyesColor = (gltf) => {
-    obj.children[3].material.color.set(
-      '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-    )
-  }
-  const changeTongueColor = (gltf) => {
-    obj.children[2].material.color.set(
-      '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-    )
-  }
-  const changeManeColor = (gltf) => {
-    obj.children[4].material.color.set(
-      '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-    )
   }
 
   const changeHead1 = () => {
@@ -181,13 +122,36 @@
     scene.add(head2)
   }
 
-  const changeBody = (name) => {
-    x = bodies.find((b) => b.name === name)
-    console.log(x.body)
-    bodies.map((b) => {
-      scene.remove(b.body)
+  const animate = () => {
+    controls.update()
+    camera.position.lerp(cameraTarget, 0.05)
+    renderer.render(scene, camera)
+    console.log(camera.position)
+    let x = window.requestAnimationFrame(animate)
+    if (camera.position.distanceTo(cameraTarget) < 0.01) {
+      window.cancelAnimationFrame(x)
+    }
+  }
+
+  const tailsSettings = () => {
+    cameraTarget = new Vector3(-4, 2, -4)
+    animate()
+    showTails = !showTails
+    controls.update()
+  }
+
+  const earsSettings = () => {
+    cameraTarget = new Vector3(0, 2, 5.5)
+    animate()
+    controls.update()
+  }
+
+  const changeTail = (name) => {
+    x = tails.find((t) => t.name === name)
+    tails.map((t) => {
+      scene.remove(t.tail)
     })
-    scene.add(x.body)
+    scene.add(x.tail)
   }
 </script>
 
@@ -195,14 +159,35 @@
 
 <div class="flex flex-col">
   <canvas bind:this={canvas} class="w-full" />
-  <div class="flex justify-evenly">
-    <button on:click={changeEyesColor(obj)}>Eyes and nose</button>
-    <button on:click={changeBodyColor}>Coat</button>
-    <button on:click={changeTongueColor(obj)}>Tongue</button>
-    <button on:click={changeManeColor(obj)}>Mane</button>
-    <button on:click={changeHead1}>Head 1</button>
-    <button on:click={changeHead2}>Head 2</button>
-    <button on:click={() => changeBody('body1')}>Body 1</button>
-    <button on:click={() => changeBody('body2')}>Body 2</button>
+  <div class="flex flex-col">
+    {#if !showTails}
+      <div class="flex gap-10 justify-center mb-6">
+        <button on:click={() => changeTail('tail1')}>
+          <img
+            class="rounded-full w-20 h-20 object-cover"
+            src="../../../src/lib/images/tails/Tail1.JPG"
+            alt="Tail 1"
+          />
+        </button>
+        <button on:click={() => changeTail('tail2')}>
+          <img
+            class="rounded-full w-20 h-20 object-cover"
+            src="../../../src/lib/images/tails/Tail2.JPG"
+            alt="Tail 2"
+          />
+        </button>
+        <button on:click={() => changeTail('tail3')}>
+          <img
+            class="rounded-full w-20 h-20 object-cover"
+            src="../../../src/lib/images/tails/Tail3.JPG"
+            alt="Tail 3"
+          />
+        </button>
+      </div>
+    {/if}
+    <div class="flex gap-3 justify-evenly">
+      <button on:click={tailsSettings}>Tails</button>
+      <button on:click={earsSettings}>Ears</button>
+    </div>
   </div>
 </div>
