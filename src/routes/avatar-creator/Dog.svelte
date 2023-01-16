@@ -26,17 +26,13 @@
     eyes,
     ears,
     tongues,
-  } from '$lib/components/loadObjects'
-  import { X } from 'lucide-svelte'
+  } from '$lib/utils/loadObjects'
+  import Tail from '../../lib/components/Tail.svelte'
 
   let canvas
-  let obj
-  let headNumber = 1
-  let headObj
   let head, head1, head2
   let x
-  let camera, controls, renderer
-  let cameraTarget
+  let camera, controls, renderer, cameraTarget
 
   let showTails = false
 
@@ -160,30 +156,8 @@
 <div class="flex flex-col">
   <canvas bind:this={canvas} class="w-full" />
   <div class="flex flex-col">
-    {#if !showTails}
-      <div class="flex gap-10 justify-center mb-6">
-        <button on:click={() => changeTail('tail1')}>
-          <img
-            class="rounded-full w-20 h-20 object-cover"
-            src="../../../src/lib/images/tails/Tail1.JPG"
-            alt="Tail 1"
-          />
-        </button>
-        <button on:click={() => changeTail('tail2')}>
-          <img
-            class="rounded-full w-20 h-20 object-cover"
-            src="../../../src/lib/images/tails/Tail2.JPG"
-            alt="Tail 2"
-          />
-        </button>
-        <button on:click={() => changeTail('tail3')}>
-          <img
-            class="rounded-full w-20 h-20 object-cover"
-            src="../../../src/lib/images/tails/Tail3.JPG"
-            alt="Tail 3"
-          />
-        </button>
-      </div>
+    {#if showTails}
+      <Tail {changeTail} />
     {/if}
     <div class="flex gap-3 justify-evenly">
       <button on:click={tailsSettings}>Tails</button>

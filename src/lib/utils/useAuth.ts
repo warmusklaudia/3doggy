@@ -71,6 +71,6 @@ const restoreUser = (): Promise<void> => {
   })
 }
 
-if (auth) await restoreUser()
+if (auth) restoreUser()
 
 export { register, login, logout, setUser, restoreUser, user }

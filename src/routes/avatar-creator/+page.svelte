@@ -1,5 +1,5 @@
 <script>
-  import HomeDog from './HomeDog.svelte'
+  import Dog from './Dog.svelte'
 </script>
 
 <svelte:head>
@@ -8,5 +8,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <HomeDog />
+  <Dog />
 </section>
