@@ -4,22 +4,24 @@
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
   import { onMount } from 'svelte'
+  import { loadBody, body, activeBody, bodies } from '$lib/components/loadObjects'
 
   let canvas
   let obj
   let headNumber = 1
   let headObj
   let head, head1, head2
-  let body, body1, body2
+  let x
 
   $: innerHeight = 0
   $: innerWidth = 0
   const gltfLoader = new GLTFLoader()
   //Scene
   const scene = new THREE.Scene()
+  loadBody(gltfLoader, scene)
 
   onMount(() => {
-    console.log(gltfLoader)
+    console.log(bodies)
 
     //Models
     // gltfLoader.load('../../../src/models/dog/doggy1.glb', (gltf) => {
@@ -33,38 +35,17 @@
 
     gltfLoader.load('../../../src/models/nose_only.gltf', (gltf) => {
       obj = gltf.scene.children[0]
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       scene.add(gltf.scene)
-    })
-
-    gltfLoader.load('../../../src/models/body1.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      body = gltf.scene
-      body1 = gltf.scene
-      console.log(obj)
-      console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
-      scene.add(gltf.scene)
-    })
-
-    gltfLoader.load('../../../src/models/body2.gltf', (gltf) => {
-      obj = gltf.scene.children[0]
-      body = gltf.scene
-      body2 = gltf.scene
-      console.log(obj)
-      console.log('success')
-      gltf.scene.scale.set(1, 1, 1)
-      gltf.scene.position.set(0, 1.5, 1)
     })
 
     gltfLoader.load('../../../src/models/mane1.gltf', (gltf) => {
       obj = gltf.scene.children[0]
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       scene.add(gltf.scene)
@@ -73,8 +54,8 @@
     gltfLoader.load('../../../src/models/head1.gltf', (gltf) => {
       head = gltf.scene
       head1 = gltf.scene
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       scene.add(head)
@@ -83,8 +64,8 @@
     gltfLoader.load('../../../src/models/head2.gltf', (gltf) => {
       head = gltf.scene
       head2 = gltf.scene
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       // scene.add(head)
@@ -92,8 +73,8 @@
 
     gltfLoader.load('../../../src/models/eyes1.gltf', (gltf) => {
       obj = gltf.scene.children[0]
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       scene.add(gltf.scene)
@@ -101,8 +82,8 @@
 
     gltfLoader.load('../../../src/models/tongue1.gltf', (gltf) => {
       obj = gltf.scene.children[0]
-      console.log(obj)
-      console.log('success')
+      // console.log(obj)
+      // console.log('success')
       gltf.scene.scale.set(1, 1, 1)
       gltf.scene.position.set(0, 1.5, 1)
       scene.add(gltf.scene)
@@ -170,8 +151,9 @@
   })
   const changeBodyColor = () => {
     let randomColor = '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
-    body2.children[0].material.color.set(randomColor)
-    body1.children[0].material.color.set(randomColor)
+    bodies.map((b) => {
+      b.body.children[0].material.color.set(randomColor)
+    })
   }
   const changeEyesColor = (gltf) => {
     obj.children[3].material.color.set(
@@ -199,13 +181,13 @@
     scene.add(head2)
   }
 
-  const changeBody1 = () => {
-    scene.remove(body2)
-    scene.add(body1)
-  }
-  const changeBody2 = () => {
-    scene.remove(body1)
-    scene.add(body2)
+  const changeBody = (name) => {
+    x = bodies.find((b) => b.name === name)
+    console.log(x.body)
+    bodies.map((b) => {
+      scene.remove(b.body)
+    })
+    scene.add(x.body)
   }
 </script>
 
@@ -220,7 +202,7 @@
     <button on:click={changeManeColor(obj)}>Mane</button>
     <button on:click={changeHead1}>Head 1</button>
     <button on:click={changeHead2}>Head 2</button>
-    <button on:click={changeBody1}>Body 1</button>
-    <button on:click={changeBody2}>Body 2</button>
+    <button on:click={() => changeBody('body1')}>Body 1</button>
+    <button on:click={() => changeBody('body2')}>Body 2</button>
   </div>
 </div>
