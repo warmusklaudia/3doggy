@@ -19,19 +19,22 @@ const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('src/lib/models/shiba/tail/tail1.gltf', (gltf) => {
+  gltfLoader.load('/src/lib/models/shiba/tail/tail1.gltf', (gltf) => {
     tails.push({ name: 'tail1', tail: gltf.scene })
+    gltf.scene.name = 'tail1'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
     scene.add(gltf.scene)
   })
   gltfLoader.load('src/lib/models/shiba/tail/tail2.gltf', (gltf) => {
     tails.push({ name: 'tail2', tail: gltf.scene })
+    gltf.scene.name = 'tail2'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
   gltfLoader.load('src/lib/models/shiba/tail/tail3.gltf', (gltf) => {
     tails.push({ name: 'tail3', tail: gltf.scene })
+    gltf.scene.name = 'tail3'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
@@ -67,17 +70,20 @@ const loadMane = (gltfLoader: GLTFLoader, scene: Scene) => {
 const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
   gltfLoader.load('src/lib/models/shiba/ears/ears1.gltf', (gltf) => {
     ears.push({ name: 'ears1', ears: gltf.scene })
+    gltf.scene.name = 'ears1'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
     scene.add(gltf.scene)
   })
   gltfLoader.load('src/lib/models/shiba/ears/ears2.gltf', (gltf) => {
     ears.push({ name: 'ears2', ears: gltf.scene })
+    gltf.scene.name = 'ears2'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
   gltfLoader.load('src/lib/models/shiba/ears/ears3.gltf', (gltf) => {
     ears.push({ name: 'ears3', ears: gltf.scene })
+    gltf.scene.name = 'ears3'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })

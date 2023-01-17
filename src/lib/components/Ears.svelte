@@ -1,27 +1,68 @@
 <script lang="ts">
+  import { Scene } from 'three'
+
   export let changeEars: Function
+  export let scene: Scene
+  let activeEars: string
+
+  scene.children.map((c) => {
+    if (c.name.includes('ears')) {
+      activeEars = c.name
+      console.log(activeEars)
+    }
+  })
+
+  const setActive = (name: string) => {
+    console.log(scene)
+    scene.children.map((c) => {
+      if (c.name === name) {
+        activeEars = c.name
+        console.log(activeEars)
+      }
+    })
+  }
 </script>
 
-<div class="flex gap-10 justify-center mb-6">
-  <button on:click={() => changeEars('ears1')}>
+<div
+  class="md:absolute md:right-20 md:bottom-0 md:top-0 flex md:flex-col gap-10 justify-center mb-6"
+>
+  <button on:click={() => changeEars('ears1')} on:click={() => setActive('ears1')}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears1.JPG"
-      alt="Tail 1"
+      alt="Ears 1"
     />
+    {#if activeEars === 'ears1'}
+      <div class="flex items-center justify-end">
+        <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
+        <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
+      </div>
+    {/if}
   </button>
-  <button on:click={() => changeEars('ears2')}>
+  <button on:click={() => changeEars('ears2')} on:click={() => setActive('ears2')}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears2.JPG"
-      alt="Tail 2"
+      alt="Ears 2"
     />
+    {#if activeEars === 'ears2'}
+      <div class="flex items-center justify-end">
+        <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
+        <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
+      </div>
+    {/if}
   </button>
-  <button on:click={() => changeEars('ears3')}>
+  <button on:click={() => changeEars('ears3')} on:click={() => setActive('ears3')}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears3.JPG"
-      alt="Tail 3"
+      alt="Ears 3"
     />
+    {#if activeEars === 'ears3'}
+      <div class="flex items-center justify-end">
+        <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
+        <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
+      </div>
+    {/if}
   </button>
 </div>

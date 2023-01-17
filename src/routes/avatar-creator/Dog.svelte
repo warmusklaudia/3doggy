@@ -66,9 +66,8 @@
     window.addEventListener('resize', () => {
       camera.aspect = innerWidth / innerHeight
       camera.updateProjectionMatrix()
-      renderer.setSize(innerWidth / 1.5, innerHeight / 1.5)
+      renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      console.log(innerWidth, innerHeight)
     })
 
     //Camera
@@ -90,7 +89,7 @@
       canvas: canvas,
       alpha: true,
     })
-    renderer.setSize(innerWidth / 1.5, innerHeight / 1.5)
+    renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.physicallyCorrectLights = true
 
@@ -123,17 +122,21 @@
 
   const tailsSettings = () => {
     cameraTarget = new Vector3(-4, 2, -4)
-    animate()
     showEars = false
     showTails = !showTails
+    if (showTails) {
+      animate()
+    }
     controls.update()
   }
 
   const earsSettings = () => {
     cameraTarget = new Vector3(0, 2, 5.5)
-    animate()
     showTails = false
     showEars = !showEars
+    if (showEars) {
+      animate()
+    }
     controls.update()
   }
 
@@ -156,18 +159,30 @@
 
 <svelte:window bind:innerHeight bind:innerWidth />
 
-<div class="flex flex-col">
-  <canvas bind:this={canvas} class="w-full" />
-  <div class="flex flex-col">
+<div class="md:relative">
+  <canvas bind:this={canvas} class=" border-1 border-black" />
+  <div class="">
     {#if showTails}
-      <Tails {changeTail} />
+      <Tails {changeTail} {scene} />
     {/if}
     {#if showEars}
-      <Ears {changeEars} />
+      <Ears {changeEars} {scene} />
     {/if}
-    <div class="flex gap-3 justify-evenly">
-      <button on:click={tailsSettings}>Tails</button>
-      <button on:click={earsSettings}>Ears</button>
-    </div>
+  </div>
+  <div class="flex justify-evenly rouded-full">
+    <button on:click={tailsSettings}>
+      <img
+        class="rounded-full w-20 h-20 object-cover hover:scale-110"
+        src="../../../src/lib/images/bodyParts/Tail.jpg"
+        alt="Tails"
+      />
+    </button>
+    <button on:click={earsSettings}>
+      <img
+        class="rounded-full w-20 h-20 object-cover hover:scale-110"
+        src="../../../src/lib/images/bodyParts/Ears.jpg"
+        alt="Ears"
+      /></button
+    >
   </div>
 </div>
