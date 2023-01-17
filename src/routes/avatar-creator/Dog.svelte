@@ -160,7 +160,7 @@
 <svelte:window bind:innerHeight bind:innerWidth />
 
 <div class="md:relative">
-  <canvas bind:this={canvas} class=" border-1 border-black" />
+  <canvas bind:this={canvas} class="mt-10" />
   <div class="">
     {#if showTails}
       <Tails {changeTail} {scene} />
@@ -169,7 +169,7 @@
       <Ears {changeEars} {scene} />
     {/if}
   </div>
-  <div class="flex justify-evenly rouded-full">
+  <div class="flex justify-evenly rouded-full -mt-10">
     <button on:click={tailsSettings}>
       <img
         class="rounded-full w-20 h-20 object-cover hover:scale-110"
