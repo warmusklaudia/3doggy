@@ -29,6 +29,7 @@
   } from '$lib/utils/loadObjects'
   import Tails from '../../lib/components/Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
+  import Eyes from '$lib/components/Eyes.svelte'
 
   let canvas
   let head, head1, head2
@@ -37,6 +38,7 @@
 
   let showTails = false
   let showEars = false
+  let showEyes = false
 
   $: innerHeight = 0
   $: innerWidth = 0
@@ -81,8 +83,8 @@
     // controls.rotateSpeed = 8
     controls.enableDamping = true
     // controls.autoRotate = true
-    controls.enablePan = false
-    controls.enableZoom = false
+    controls.enablePan = true
+    controls.enableZoom = true
 
     //Renderer
     renderer = new WebGLRenderer({
@@ -111,9 +113,8 @@
 
   const animate = () => {
     controls.update()
-    camera.position.lerp(cameraTarget, 0.05)
+    camera.position.lerp(cameraTarget, 0.03)
     renderer.render(scene, camera)
-    console.log(camera.position)
     let x = window.requestAnimationFrame(animate)
     if (camera.position.distanceTo(cameraTarget) < 0.01) {
       window.cancelAnimationFrame(x)
@@ -123,6 +124,7 @@
   const tailsSettings = () => {
     cameraTarget = new Vector3(-4, 2, -4)
     showEars = false
+    showEyes = false
     showTails = !showTails
     if (showTails) {
       animate()
@@ -133,11 +135,32 @@
   const earsSettings = () => {
     cameraTarget = new Vector3(0, 2, 5.5)
     showTails = false
+    showEyes = false
     showEars = !showEars
     if (showEars) {
       animate()
     }
     controls.update()
+  }
+
+  const eyesSettings = () => {
+    cameraTarget = new Vector3(0, 3, 4)
+
+    showTails = false
+    showEars = false
+    showEyes = !showEyes
+    if (showEyes) {
+      animate()
+    }
+    controls.update()
+  }
+
+  const bodySettings = () => {
+    cameraTarget = new Vector3(-5, 1.5, 1.5)
+    showTails = false
+    showEars = false
+    showEyes = false
+    animate()
   }
 
   const changeTail = (name) => {
@@ -155,6 +178,14 @@
     })
     scene.add(ear.ears)
   }
+
+  const changeEyes = (name) => {
+    let eye = eyes.find((e) => e.name === name)
+    eyes.map((e) => {
+      scene.remove(e.eyes)
+    })
+    scene.add(eye.eyes)
+  }
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
@@ -165,24 +196,47 @@
     {#if showTails}
       <Tails {changeTail} {scene} />
     {/if}
+    {#if showEyes}
+      <Eyes {changeEyes} {scene} />
+    {/if}
     {#if showEars}
       <Ears {changeEars} {scene} />
     {/if}
   </div>
   <div class="flex justify-evenly rouded-full -mt-10">
-    <button on:click={tailsSettings}>
-      <img
-        class="rounded-full w-20 h-20 object-cover hover:scale-110"
-        src="../../../src/lib/images/bodyParts/Tail.jpg"
+    <button
+      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
+      on:click={tailsSettings}
+    >
+      <!-- <img
+        class="rounded-full w-20 h-20 object-contain hover:scale-110"
+        src="../../../src/lib/images/bodyParts/Tail2.jpg"
         alt="Tails"
-      />
+      /> -->
+      Tails
     </button>
-    <button on:click={earsSettings}>
-      <img
+    <button
+      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
+      on:click={eyesSettings}
+    >
+      Eyes
+    </button>
+    <button
+      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
+      on:click={earsSettings}
+    >
+      <!-- <img
         class="rounded-full w-20 h-20 object-cover hover:scale-110"
         src="../../../src/lib/images/bodyParts/Ears.jpg"
         alt="Ears"
-      /></button
+      /> -->
+      Ears
+    </button>
+    <button
+      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
+      on:click={bodySettings}
     >
+      Body
+    </button>
   </div>
 </div>
