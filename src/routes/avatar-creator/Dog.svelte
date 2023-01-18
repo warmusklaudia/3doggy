@@ -30,20 +30,21 @@
   import Tails from '../../lib/components/Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
+  import Body from '$lib/components/Body.svelte'
 
   let canvas
-  let head, head1, head2
-  let x
-  let camera, controls, renderer, cameraTarget
+  let camera, controls, renderer, cameraTarget, texture, material, loader
 
   let showTails = false
   let showEars = false
   let showEyes = false
+  let showBody = false
 
   $: innerHeight = 0
   $: innerWidth = 0
   const gltfLoader = new GLTFLoader()
   const scene = new Scene()
+
   loadTail(gltfLoader, scene)
   loadBody(gltfLoader, scene)
   loadEars(gltfLoader, scene)
@@ -125,6 +126,7 @@
     cameraTarget = new Vector3(-4, 2, -4)
     showEars = false
     showEyes = false
+    showBody = false
     showTails = !showTails
     if (showTails) {
       animate()
@@ -136,6 +138,7 @@
     cameraTarget = new Vector3(0, 2, 5.5)
     showTails = false
     showEyes = false
+    showBody = false
     showEars = !showEars
     if (showEars) {
       animate()
@@ -148,6 +151,7 @@
 
     showTails = false
     showEars = false
+    showBody = false
     showEyes = !showEyes
     if (showEyes) {
       animate()
@@ -160,6 +164,7 @@
     showTails = false
     showEars = false
     showEyes = false
+    showBody = !showBody
     animate()
   }
 
@@ -192,7 +197,7 @@
 
 <div class="md:relative">
   <canvas bind:this={canvas} class="mt-10" />
-  <div class="">
+  <div>
     {#if showTails}
       <Tails {changeTail} {scene} />
     {/if}
@@ -202,8 +207,11 @@
     {#if showEars}
       <Ears {changeEars} {scene} />
     {/if}
+    {#if showBody}
+      <Body />
+    {/if}
   </div>
-  <div class="flex justify-evenly rouded-full -mt-10">
+  <div class="flex justify-evenly rouded-full -mt-10 relative">
     <button
       class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
       on:click={tailsSettings}
