@@ -33,7 +33,7 @@
   import Body from '$lib/components/Body.svelte'
 
   let canvas
-  let camera, controls, renderer, cameraTarget, texture, material, loader
+  let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
 
   let showTails = false
   let showEars = false
@@ -54,49 +54,35 @@
   loadTongue(gltfLoader, scene)
 
   onMount(() => {
-    //Lights
-    const directionalLightA = new DirectionalLight('#ffffff', 1)
+    directionalLightA = new DirectionalLight('#ffffff', 1)
     directionalLightA.position.set(-0.5, 1, 2.25)
     scene.add(directionalLightA)
 
-    const directionalLightB = new DirectionalLight('#ffffff', 1)
+    directionalLightB = new DirectionalLight('#ffffff', 1)
     directionalLightB.position.set(0.5, 1, -2.25)
     scene.add(directionalLightB)
 
-    const ambientLight = new AmbientLight('#FFFEFC', 1.5)
+    ambientLight = new AmbientLight('#FFFEFC', 1.5)
     scene.add(ambientLight)
 
-    window.addEventListener('resize', () => {
-      camera.aspect = innerWidth / innerHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    })
-
-    //Camera
     camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
     camera.position.set(-4, 1.5, 4)
-
     scene.add(camera)
 
-    //Controls
     controls = new OrbitControls(camera, canvas)
-    // controls.rotateSpeed = 8
     controls.enableDamping = true
-    // controls.autoRotate = true
     controls.enablePan = true
     controls.enableZoom = true
 
-    //Renderer
     renderer = new WebGLRenderer({
       canvas: canvas,
       alpha: true,
     })
+
     renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.physicallyCorrectLights = true
 
-    //Animate
     const tick = () => {
       controls.update()
       renderer.render(scene, camera)
@@ -105,20 +91,14 @@
 
     tick()
   })
-  const changeTailColor = () => {
-    let randomColor = '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
-    tails.map((t) => {
-      t.tail.children[0].material.color.set(randomColor)
-    })
-  }
 
   const animate = () => {
     controls.update()
     camera.position.lerp(cameraTarget, 0.03)
     renderer.render(scene, camera)
-    let x = window.requestAnimationFrame(animate)
+    let x = requestAnimationFrame(animate)
     if (camera.position.distanceTo(cameraTarget) < 0.01) {
-      window.cancelAnimationFrame(x)
+      cancelAnimationFrame(x)
     }
   }
 
@@ -191,9 +171,16 @@
     })
     scene.add(eye.eyes)
   }
+
+  const resize = () => {
+    camera.aspect = innerWidth / innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  }
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth />
+<svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
 
 <div class="md:relative">
   <canvas bind:this={canvas} class="mt-10" />
@@ -216,11 +203,6 @@
       class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
       on:click={tailsSettings}
     >
-      <!-- <img
-        class="rounded-full w-20 h-20 object-contain hover:scale-110"
-        src="../../../src/lib/images/bodyParts/Tail2.jpg"
-        alt="Tails"
-      /> -->
       Tail
     </button>
     <button
@@ -233,11 +215,6 @@
       class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
       on:click={earsSettings}
     >
-      <!-- <img
-        class="rounded-full w-20 h-20 object-cover hover:scale-110"
-        src="../../../src/lib/images/bodyParts/Ears.jpg"
-        alt="Ears"
-      /> -->
       Ears
     </button>
     <button
