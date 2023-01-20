@@ -71,6 +71,17 @@ const restoreUser = (): Promise<void> => {
   })
 }
 
+const protect = () => {
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      console.log(user)
+      return true
+    } else {
+      goto('/auth/login')
+    }
+  })
+}
+
 if (auth) restoreUser()
 
-export { register, login, logout, setUser, restoreUser, user }
+export { register, login, logout, setUser, restoreUser, protect, user }

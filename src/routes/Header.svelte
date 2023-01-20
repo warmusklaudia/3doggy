@@ -49,8 +49,8 @@
   </header>
 {:else}
   <header>
-    <nav class="absolute w-full pt-6 px-10 overflow-hidden">
-      <ul class="flex justify-between">
+    <nav class="absolute w-full pt-10 px-20 overflow-hidden">
+      <ul class="flex justify-between items-center">
         <li>
           <a href="/">
             <ArrowLeft
@@ -59,7 +59,7 @@
           </a>
         </li>
         <li>
-          <a href="/">
+          <a href="/avatar-creator/library">
             <ArrowRight
               class="w-12 h-12 text-white bg-alpha p-3 rounded-full focus:ring-2 focus:ring-teal-800 focus:outline-none"
             />

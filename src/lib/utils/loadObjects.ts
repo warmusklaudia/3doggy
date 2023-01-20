@@ -12,7 +12,7 @@ let noses: Object[] = []
 let manes: Object[] = []
 
 const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('src/lib/models/shiba/body/body.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/body/body.gltf', (gltf) => {
     bodies.push({ name: 'body1', body: gltf.scene })
     console.log(gltf.scene.children[0])
     gltf.scene.name = 'body'
@@ -25,7 +25,7 @@ const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('/src/lib/models/shiba/tail/tail1.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/tail/tail1.gltf', (gltf) => {
     tails.push({ name: 'tail1', tail: gltf.scene })
     gltf.scene.name = 'tail1'
     gltf.scene.children[0].material.color.set(lightBrown)
@@ -33,14 +33,14 @@ const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
     gltf.scene.position.set(0, 1.5, 1)
     scene.add(gltf.scene)
   })
-  gltfLoader.load('src/lib/models/shiba/tail/tail2.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/tail/tail2.gltf', (gltf) => {
     tails.push({ name: 'tail2', tail: gltf.scene })
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'tail2'
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
-  gltfLoader.load('src/lib/models/shiba/tail/tail3.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/tail/tail3.gltf', (gltf) => {
     tails.push({ name: 'tail3', tail: gltf.scene })
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'tail3'

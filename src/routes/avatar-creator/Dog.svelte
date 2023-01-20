@@ -221,7 +221,7 @@
         src="../../../src/lib/images/bodyParts/Tail2.jpg"
         alt="Tails"
       /> -->
-      Tails
+      Tail
     </button>
     <button
       class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"

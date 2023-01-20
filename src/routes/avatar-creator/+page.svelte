@@ -1,5 +1,11 @@
-<script>
+<!-- <script context="module">
+  import { protect } from '$lib/utils/useAuth'
+
+  export let before = protect
+</script> -->
+<script lang="ts">
   import Dog from './Dog.svelte'
+  let activeTailName = 'tail2'
 </script>
 
 <svelte:head>

@@ -1,5 +1,17 @@
 <script lang="ts">
-  import { Scene } from 'three'
+  import {
+    Camera,
+    FrontSide,
+    MeshBasicMaterial,
+    MeshLambertMaterial,
+    MeshPhongMaterial,
+    MeshStandardMaterial,
+    PerspectiveCamera,
+    RepeatWrapping,
+    Scene,
+    TextureLoader,
+    WebGLRenderer,
+  } from 'three'
   import { lightBrown, gray, darkBrown } from '$lib/utils/colors'
   import { bodies, ears, tails } from '$lib/utils/loadObjects'
 
@@ -13,6 +25,33 @@
       }
     })
   })
+
+  const changeTexture = () => {
+    var texture = new TextureLoader().load('../../../src/lib/images/body/BodyColor4.jpg')
+    // texture.wrapS = RepeatWrapping
+    // texture.wrapT = RepeatWrapping
+    // texture.repeat.set(2, 2)
+    var newMaterial = new MeshLambertMaterial({
+      map: texture,
+    })
+    bodies.map((b) => {
+      //@ts-ignore
+      b.body.children.map((p) => {
+        if (p.name.includes('body')) {
+          p.material.dispose()
+          p.material.color.setHex(0xffffff)
+          p.material = newMaterial
+          p.material.transparent = true
+          p.material.alphaTest = 0.5
+          // p.material.alphaTest = 0.5
+          // p.material.side = FrontSide
+          p.material.needsUpdate = true
+          console.log(p)
+          // renderer.render(scene, camera)
+        }
+      })
+    })
+  }
 
   const changeBodyColor = (color: string) => {
     activeBodyColor = color
