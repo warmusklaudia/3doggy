@@ -80,13 +80,13 @@
     })
 
     renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
     renderer.physicallyCorrectLights = true
 
     const tick = () => {
       controls.update()
       renderer.render(scene, camera)
-      window.requestAnimationFrame(tick)
+      requestAnimationFrame(tick)
     }
 
     tick()
@@ -176,7 +176,7 @@
     camera.aspect = innerWidth / innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
   }
 </script>
 
