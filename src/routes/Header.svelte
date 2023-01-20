@@ -16,7 +16,7 @@
     {#if $page.url.pathname !== '/auth/login' && $page.url.pathname !== '/auth/register'}
       <div />
       {#await $user}
-        <Loader2 />
+        <p>Loading...</p>
       {:then user}
         {#if !user}
           <nav>
