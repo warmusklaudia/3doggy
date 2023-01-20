@@ -1,21 +1,15 @@
 <script lang="ts">
   import { Scene } from 'three'
+  import { activeEars } from '$lib/utils/parts'
 
   export let changeEars: Function
   export let scene: Scene
-  let activeEars: string
-
-  scene.children.map((c) => {
-    if (c.name.includes('ears')) {
-      activeEars = c.name
-    }
-  })
 
   const setActive = (name: string) => {
     console.log(scene)
     scene.children.map((c) => {
       if (c.name === name) {
-        activeEars = c.name
+        activeEars.set(c.name)
       }
     })
   }
@@ -30,7 +24,7 @@
       src="../../../src/lib/images/ears/Ears1.JPG"
       alt="Ears 1"
     />
-    {#if activeEars === 'ears1'}
+    {#if $activeEars === 'ears1'}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -43,7 +37,7 @@
       src="../../../src/lib/images/ears/Ears2.JPG"
       alt="Ears 2"
     />
-    {#if activeEars === 'ears2'}
+    {#if $activeEars === 'ears2'}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -56,7 +50,7 @@
       src="../../../src/lib/images/ears/Ears3.JPG"
       alt="Ears 3"
     />
-    {#if activeEars === 'ears3'}
+    {#if $activeEars === 'ears3'}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />

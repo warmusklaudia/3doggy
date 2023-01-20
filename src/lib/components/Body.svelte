@@ -14,14 +14,13 @@
   } from 'three'
   import { lightBrown, gray, darkBrown } from '$lib/utils/colors'
   import { bodies, ears, tails } from '$lib/utils/loadObjects'
-
-  let activeBodyColor: string
+  import { activeBodyColor } from '$lib/utils/parts'
 
   $bodies.map((b) => {
     //@ts-ignore
     b.body.children.map((p) => {
       if (p.name.includes('body')) {
-        activeBodyColor = `#${p.material.color.getHexString().toUpperCase()}`
+        activeBodyColor.set(`#${p.material.color.getHexString().toUpperCase()}`)
       }
     })
   })
@@ -53,7 +52,7 @@
   }
 
   const changeBodyColor = (color: string) => {
-    activeBodyColor = color
+    activeBodyColor.set(color)
     $bodies.map((b) => {
       //@ts-ignore
       b.body.children.map((p) => {
@@ -90,7 +89,7 @@
       src="../../../src/lib/images/body/BodyColor1.JPG"
       alt="Tail 1"
     />
-    {#if activeBodyColor === lightBrown}
+    {#if $activeBodyColor === lightBrown}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -103,7 +102,7 @@
       src="../../../src/lib/images/body/BodyColor2.JPG"
       alt="Tail 2"
     />
-    {#if activeBodyColor === darkBrown}
+    {#if $activeBodyColor === darkBrown}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -116,7 +115,7 @@
       src="../../../src/lib/images/body/BodyColor3.JPG"
       alt="Tail 3"
     />
-    {#if activeBodyColor === gray}
+    {#if $activeBodyColor === gray}
       <div class="flex items-center justify-end">
         <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
         <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />

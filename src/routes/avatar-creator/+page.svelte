@@ -1,12 +1,10 @@
 <script lang="ts">
   import Dog from './Dog.svelte'
-  let activeTailName = 'tail2'
-  let activeEarsName = 'ears3'
-  let activeEyesName = 'eyes3'
-  let activeBodyName = 'body1'
-  let activeManeName = 'mane1'
-  let activeNoseName = 'nose1'
-  let activeTongueName = 'tongue1'
+  import { activeTail, activeEars, activeEyes } from '$lib/utils/parts'
+
+  activeTail.set('tail2')
+  activeEars.set('ears1')
+  activeEyes.set('eyes1')
 </script>
 
 <svelte:head>
@@ -15,5 +13,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog {activeTailName} {activeEarsName} {activeEyesName} />
+  <Dog activeTailName={$activeTail} activeEarsName={$activeEars} activeEyesName={$activeEyes} />
 </section>

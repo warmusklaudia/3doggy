@@ -2,23 +2,16 @@
   import { Scene } from 'three'
   import { eyes } from '$lib/utils/loadObjects'
   import { green, blue, brown } from '$lib/utils/colors'
+  import { activeEyesColor, activeEyes } from '$lib/utils/parts'
 
   export let changeEyes: Function
   export let scene: Scene
-  let activeEyes: string
-  let activeColor: string
-
-  scene.children.map((c) => {
-    if (c.name.includes('eyes')) {
-      activeEyes = c.name
-    }
-  })
 
   $eyes.map((e) => {
     //@ts-ignore
     e.eyes.children.map((p) => {
       if (p.name.includes('pupil')) {
-        activeColor = `#${p.material.color.getHexString().toUpperCase()}`
+        activeEyesColor.set(`#${p.material.color.getHexString().toUpperCase()}`)
       }
     })
   })
@@ -26,13 +19,13 @@
   const setActive = (name: string) => {
     scene.children.map((c) => {
       if (c.name === name) {
-        activeEyes = c.name
+        activeEyes.set(c.name)
       }
     })
   }
 
   const changeEyesColor = (color: string) => {
-    activeColor = color
+    activeEyesColor.set(color)
     $eyes.map((e) => {
       //@ts-ignore
       e.eyes.children.map((p) => {
@@ -54,7 +47,7 @@
         src="../../../src/lib/images/eyes/Eyes1.JPG"
         alt="Eyes 1"
       />
-      {#if activeEyes === 'eyes1'}
+      {#if $activeEyes === 'eyes1'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
           <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -67,7 +60,7 @@
         src="../../../src/lib/images/eyes/Eyes2.JPG"
         alt="Eyes 2"
       />
-      {#if activeEyes === 'eyes2'}
+      {#if $activeEyes === 'eyes2'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
           <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -80,7 +73,7 @@
         src="../../../src/lib/images/eyes/Eyes3.JPG"
         alt="Eyes 3"
       />
-      {#if activeEyes === 'eyes3'}
+      {#if $activeEyes === 'eyes3'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
           <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -89,7 +82,7 @@
     </button>
   </div>
 
-  {#if activeEyes === 'eyes2' || activeEyes === 'eyes3'}
+  {#if $activeEyes === 'eyes2' || $activeEyes === 'eyes3'}
     <div class="flex md:flex-col gap-10 ">
       <button on:click={() => changeEyesColor(green)}>
         <img
@@ -97,7 +90,7 @@
           src="../../../src/lib/images/eyes/EyesColor1.JPG"
           alt="Eyes 1"
         />
-        {#if activeColor === green}
+        {#if $activeEyesColor === green}
           <div class="flex items-center justify-end">
             <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
             <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -110,7 +103,7 @@
           src="../../../src/lib/images/eyes/EyesColor2.JPG"
           alt="Eyes 1"
         />
-        {#if activeColor === blue}
+        {#if $activeEyesColor === blue}
           <div class="flex items-center justify-end">
             <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
             <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
@@ -123,7 +116,7 @@
           src="../../../src/lib/images/eyes/EyesColor3.JPG"
           alt="Eyes 1"
         />
-        {#if activeColor === brown}
+        {#if $activeEyesColor === brown}
           <div class="flex items-center justify-end">
             <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
             <div class="w-6 h-6 absolute -mt-4 bg-alpha rounded-full animate-pulse" />
