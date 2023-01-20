@@ -1,24 +1,36 @@
 import { goto } from '$app/navigation'
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   type User,
   type UserCredential,
 } from 'firebase/auth'
-import { writable } from 'svelte/store'
+import { readable, writable } from 'svelte/store'
 import { auth } from './useFirebase'
 
-const user = writable<User | null>(null)
+const createUserStore = () => {
+  const { subscribe } = readable<User | null>(undefined, (set) => onAuthStateChanged(auth, set))
 
-const setUser = (u: User | null) => {
-  user.set(u)
+  const known = new Promise<void>((resolve) => {
+    let unsub = () => {}
+    unsub = subscribe((user) => {
+      if (user !== undefined) {
+        resolve()
+        unsub()
+      }
+    })
+  })
+
+  return { subscribe, known }
 }
+
+export const user = createUserStore()
 
 const register = async (email: string, password: string): Promise<User | null> => {
   return new Promise((resolve, reject) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((u: UserCredential) => {
-        setUser(u.user)
         resolve(u.user)
       })
       .catch((error) => {
@@ -34,7 +46,6 @@ const login = async (email: string, password: string): Promise<User | null> => {
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((u: UserCredential) => {
-        setUser(u.user)
         resolve(u.user)
       })
       .catch((error) => {
@@ -48,7 +59,6 @@ const logout = (): Promise<void> => {
     auth
       .signOut()
       .then(() => {
-        setUser(null)
         goto('/')
         resolve()
       })
@@ -62,7 +72,6 @@ const restoreUser = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     auth.onAuthStateChanged((u: User | null) => {
       if (u) {
-        setUser(u)
         resolve()
       } else {
         resolve()
@@ -82,6 +91,4 @@ const protect = () => {
   })
 }
 
-if (auth) restoreUser()
-
-export { register, login, logout, setUser, restoreUser, protect, user }
+export { register, login, logout, restoreUser, protect }

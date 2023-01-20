@@ -1,13 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import Logo from '$lib/Logo.svelte'
-  import { type User } from 'firebase/auth'
   import { logout, user } from '$lib/utils/useAuth'
-  import { ArrowLeft, ArrowRight } from 'lucide-svelte'
-  let userValue: User | null = null
-  user.subscribe((value) => {
-    userValue = value
-  })
+  import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-svelte'
 </script>
 
 {#if $page.url.pathname !== '/avatar-creator'}
@@ -20,31 +15,35 @@
 
     {#if $page.url.pathname !== '/auth/login' && $page.url.pathname !== '/auth/register'}
       <div />
-      {#if !userValue}
-        <nav>
-          <ul class="flex gap-6 lg:text-lg relative">
-            <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
-              <a
-                class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg hover:opacity-80"
-                href="/auth/login">Log in</a
-              >
-            </li>
-            <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
-              <a
-                class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-teal-800 focus:outline-none"
-                href="/auth/register">Create new account</a
-              >
-            </li>
-          </ul>
-        </nav>
-      {:else}
-        <button
-          on:click={logout}
-          class=" flex items-center justify-center w-14 h-14 rounded-full bg-beta"
-        >
-          <p class="uppercase text-2xl text-white">{userValue.email?.toString()[0]}</p>
-        </button>
-      {/if}
+      {#await $user}
+        <Loader2 />
+      {:then user}
+        {#if !user}
+          <nav>
+            <ul class="flex gap-6 lg:text-lg relative">
+              <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
+                <a
+                  class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg hover:opacity-80"
+                  href="/auth/login">Log in</a
+                >
+              </li>
+              <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
+                <a
+                  class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-teal-800 focus:outline-none"
+                  href="/auth/register">Create new account</a
+                >
+              </li>
+            </ul>
+          </nav>
+        {:else}
+          <button
+            on:click={logout}
+            class=" flex items-center justify-center w-14 h-14 rounded-full bg-beta"
+          >
+            <p class="uppercase text-2xl text-white">{user?.email?.toString()[0]}</p>
+          </button>
+        {/if}
+      {/await}
     {/if}
   </header>
 {:else}
