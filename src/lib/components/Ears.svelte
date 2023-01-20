@@ -8,7 +8,6 @@
   scene.children.map((c) => {
     if (c.name.includes('ears')) {
       activeEars = c.name
-      console.log(activeEars)
     }
   })
 
@@ -17,7 +16,6 @@
     scene.children.map((c) => {
       if (c.name === name) {
         activeEars = c.name
-        console.log(activeEars)
       }
     })
   }

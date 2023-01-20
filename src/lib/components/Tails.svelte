@@ -8,16 +8,13 @@
   scene.children.map((c) => {
     if (c.name.includes('tail')) {
       activeTail = c.name
-      console.log(activeTail)
     }
   })
 
   const setActive = (name: string) => {
-    console.log(scene)
     scene.children.map((c) => {
       if (c.name === name) {
         activeTail = c.name
-        console.log(activeTail)
       }
     })
   }

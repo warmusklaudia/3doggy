@@ -17,7 +17,7 @@
 
   let activeBodyColor: string
 
-  bodies.map((b) => {
+  $bodies.map((b) => {
     //@ts-ignore
     b.body.children.map((p) => {
       if (p.name.includes('body')) {
@@ -34,7 +34,7 @@
     var newMaterial = new MeshLambertMaterial({
       map: texture,
     })
-    bodies.map((b) => {
+    $bodies.map((b) => {
       //@ts-ignore
       b.body.children.map((p) => {
         if (p.name.includes('body')) {
@@ -46,7 +46,6 @@
           // p.material.alphaTest = 0.5
           // p.material.side = FrontSide
           p.material.needsUpdate = true
-          console.log(p)
           // renderer.render(scene, camera)
         }
       })
@@ -55,7 +54,7 @@
 
   const changeBodyColor = (color: string) => {
     activeBodyColor = color
-    bodies.map((b) => {
+    $bodies.map((b) => {
       //@ts-ignore
       b.body.children.map((p) => {
         if (p.name.includes('body')) {
@@ -63,7 +62,7 @@
         }
       })
     })
-    ears.map((e) => {
+    $ears.map((e) => {
       //@ts-ignore
       e.ears.children.map((p) => {
         if (p.name.includes('body')) {
@@ -71,8 +70,7 @@
         }
       })
     })
-    tails.map((t) => {
-      console.log(t)
+    $tails.map((t) => {
       //@ts-ignore
       t.tail.children.map((p) => {
         if (p.name.includes('body')) {

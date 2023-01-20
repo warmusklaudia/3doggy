@@ -1,11 +1,12 @@
-<!-- <script context="module">
-  import { protect } from '$lib/utils/useAuth'
-
-  export let before = protect
-</script> -->
 <script lang="ts">
   import Dog from './Dog.svelte'
   let activeTailName = 'tail2'
+  let activeEarsName = 'ears3'
+  let activeEyesName = 'eyes3'
+  let activeBodyName = 'body1'
+  let activeManeName = 'mane1'
+  let activeNoseName = 'nose1'
+  let activeTongueName = 'tongue1'
 </script>
 
 <svelte:head>
@@ -14,5 +15,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog />
+  <Dog {activeTailName} {activeEarsName} {activeEyesName} />
 </section>

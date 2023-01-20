@@ -11,11 +11,10 @@
   scene.children.map((c) => {
     if (c.name.includes('eyes')) {
       activeEyes = c.name
-      console.log(activeEyes)
     }
   })
 
-  eyes.map((e) => {
+  $eyes.map((e) => {
     //@ts-ignore
     e.eyes.children.map((p) => {
       if (p.name.includes('pupil')) {
@@ -25,18 +24,16 @@
   })
 
   const setActive = (name: string) => {
-    console.log(scene)
     scene.children.map((c) => {
       if (c.name === name) {
         activeEyes = c.name
-        console.log(activeEyes)
       }
     })
   }
 
   const changeEyesColor = (color: string) => {
     activeColor = color
-    eyes.map((e) => {
+    $eyes.map((e) => {
       //@ts-ignore
       e.eyes.children.map((p) => {
         if (p.name.includes('pupil')) {

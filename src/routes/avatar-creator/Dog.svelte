@@ -19,22 +19,22 @@
     loadMane,
     loadEyes,
     loadTongue,
-    tails,
     bodies,
     manes,
     noses,
     eyes,
     ears,
     tongues,
+    tails,
   } from '$lib/utils/loadObjects'
   import Tails from '../../lib/components/Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
   import Body from '$lib/components/Body.svelte'
+  export let activeTailName, activeEarsName, activeEyesName
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
-
   let showTails = false
   let showEars = false
   let showEyes = false
@@ -45,15 +45,33 @@
   const gltfLoader = new GLTFLoader()
   const scene = new Scene()
 
-  loadTail(gltfLoader, scene)
-  loadBody(gltfLoader, scene)
-  loadEars(gltfLoader, scene)
-  loadNose(gltfLoader, scene)
-  loadMane(gltfLoader, scene)
-  loadEyes(gltfLoader, scene)
-  loadTongue(gltfLoader, scene)
+  $: {
+    if ($tails.length === 3) {
+      changeTail(activeTailName)
+    }
+  }
+
+  $: {
+    if ($ears.length === 3) {
+      changeEars(activeEarsName)
+    }
+  }
+
+  $: {
+    if ($eyes.length === 3) {
+      changeEyes(activeEyesName)
+    }
+  }
 
   onMount(() => {
+    loadTail(gltfLoader, scene)
+    loadBody(gltfLoader, scene)
+    loadEars(gltfLoader, scene)
+    loadNose(gltfLoader, scene)
+    loadMane(gltfLoader, scene)
+    loadEyes(gltfLoader, scene)
+    loadTongue(gltfLoader, scene)
+
     directionalLightA = new DirectionalLight('#ffffff', 1)
     directionalLightA.position.set(-0.5, 1, 2.25)
     scene.add(directionalLightA)
@@ -148,28 +166,32 @@
     animate()
   }
 
-  const changeTail = (name) => {
-    let tail = tails.find((t) => t.name === name)
-    tails.map((t) => {
-      scene.remove(t.tail)
-    })
-    scene.add(tail.tail)
-  }
-
   const changeEars = (name) => {
-    let ear = ears.find((e) => e.name === name)
-    ears.map((e) => {
+    console.log($ears)
+    let ear = $ears.find((e) => e.name === name)
+    $ears.map((e) => {
       scene.remove(e.ears)
     })
+    console.log(ear)
     scene.add(ear.ears)
   }
 
   const changeEyes = (name) => {
-    let eye = eyes.find((e) => e.name === name)
-    eyes.map((e) => {
+    console.log($eyes)
+    let eye = $eyes.find((e) => e.name === name)
+    $eyes.map((e) => {
       scene.remove(e.eyes)
     })
+    console.log(eye)
     scene.add(eye.eyes)
+  }
+
+  const changeTail = (name) => {
+    let tail = $tails.find((t) => t.name === name)
+    $tails.map((t) => {
+      scene.remove(t.tail)
+    })
+    scene.add(tail.tail)
   }
 
   const resize = () => {
