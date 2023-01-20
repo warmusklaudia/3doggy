@@ -22,7 +22,7 @@
     }
     login(userInput.email, userInput.password)
       .then((u) => {
-        return goto('/')
+        return goto('/avatar-creator/library')
       })
       .catch((error) => {
         errorMessage = error.message.split(':')[1]
