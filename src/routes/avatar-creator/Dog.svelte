@@ -223,6 +223,19 @@
       console.error('Error adding document: ', e)
     }
   }
+
+  const saveImage = () => {
+    camera.position.set(-4, 1.5, 4)
+    controls.update()
+    renderer.setClearColor('#ffffff', 1)
+    renderer.render(scene, camera)
+    const link = document.createElement('a')
+    link.href = canvas.toDataURL('image/jpeg')
+    link.download = 'canvas.jpeg'
+    link.click()
+    renderer.setClearColor(null, 0)
+    renderer.render(scene, camera)
+  }
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
@@ -269,5 +282,6 @@
       Body
     </button>
     <button on:click={saveDog}> Save </button>
+    <button on:click={saveImage}> Img </button>
   </div>
 </div>
