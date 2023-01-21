@@ -11,6 +11,8 @@
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
   import { onMount } from 'svelte'
+  import { collection, addDoc, doc, setDoc } from 'firebase/firestore'
+  import { v4 as uuidv4 } from 'uuid'
   import {
     loadBody,
     loadTail,
@@ -31,6 +33,9 @@
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
   import Body from '$lib/components/Body.svelte'
+  import { auth, db } from '$lib/utils/useFirebase'
+  import { user } from '$lib/utils/useAuth'
+  import { generateUUID } from 'three/src/math/MathUtils'
   export let activeTailName, activeEarsName, activeEyesName
 
   let canvas
@@ -200,6 +205,24 @@
     renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
   }
+
+  const saveDog = async () => {
+    const id = uuidv4()
+    const data = {
+      ears: activeEarsName,
+      eyes: activeEyesName,
+      tail: activeTailName,
+    }
+    try {
+      const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), {
+        data,
+      }).then(() => {
+        console.log(id)
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  }
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
@@ -245,5 +268,6 @@
     >
       Body
     </button>
+    <button on:click={saveDog}> Save </button>
   </div>
 </div>
