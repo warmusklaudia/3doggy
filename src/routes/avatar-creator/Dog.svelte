@@ -76,7 +76,6 @@
 
   onMount(() => {
     clearScene(scene)
-    console.log(scene)
     loadTail(gltfLoader, scene)
     loadBody(gltfLoader, scene)
     loadEars(gltfLoader, scene)

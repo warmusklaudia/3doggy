@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import doggy from '$lib/images/pngwing.png'
   import { user } from '$lib/utils/useAuth'
   import type { User } from 'firebase/auth'
@@ -22,11 +23,11 @@
       "Everyone thinks they have the best dog, and none of them are wrong." - Unknown
     </h3>
     <h2 class="text-xl">Make your life better and create your canine friend in 3D!</h2>
-    <a
+    <button
+      on:click={() => goto('/avatar-creator')}
       class="hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg w-2/3"
-      href="/avatar-creator"
     >
-      Make your own doggy</a
+      Make your own doggy</button
     >
   </div>
   <img class="w-1/4 pb-6 sm:pb-0" src={doggy} alt="dog" />

@@ -7,7 +7,7 @@
 <div class="flex min-h-screen flex-col bg-gradient-to-tr from-[#E4E6E6] to-white ">
   <Header />
 
-  <main class=" flex flex-1 w-full flex-col p-4 max-w-5xl my-0 mx-auto box-border text-beta">
+  <main class="w-full flex flex-1 flex-col p-4 max-w-5xl my-0 mx-auto box-border text-beta">
     <slot />
   </main>
   {#if $page.url.pathname !== '/avatar-creator'}
