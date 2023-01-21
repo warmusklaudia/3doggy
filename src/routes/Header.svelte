@@ -2,7 +2,11 @@
   import { page } from '$app/stores'
   import Logo from '$lib/Logo.svelte'
   import { logout, user } from '$lib/utils/useAuth'
-  import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-svelte'
+  let showMenu = false
+
+  const toggleMenu = () => {
+    showMenu = !showMenu
+  }
 </script>
 
 {#if $page.url.pathname !== '/avatar-creator'}
@@ -47,19 +51,71 @@
     {/if}
   </header>
 {:else}
-  <header>
-    <nav class="absolute w-full pt-10 px-20 overflow-hidden flex justify-between items-center ">
-      <div class="">
-        <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
-          <Logo />
-        </a>
-      </div>
+  <nav class="absolute w-full pt-10 px-20 flex justify-between items-center ">
+    <div class="">
+      <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+        <Logo />
+      </a>
+    </div>
+    <div class="relative flex flex-col items-center whitespace-nowrap">
       <button
-        on:click={logout}
+        on:click={toggleMenu}
         class=" flex items-center justify-center w-14 h-14 rounded-full bg-beta"
       >
-        <p class="uppercase text-2xl text-white">{$user?.email?.toString()[0]}</p>
+        <p class="uppercase text-2xl text-white">{$user?.email?.toString()[0] || ''}</p>
       </button>
-    </nav>
-  </header>
+      <ul
+        class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg' +
+          (showMenu ? '' : ' hidden')}
+      >
+        <li>
+          <a
+            on:click={logout}
+            class="
+            text-sm
+            py-2
+            pr-6 pl-3
+            block
+            w-full
+            whitespace-nowrap
+            text-gray-700
+            hover:bg-gray-100
+          "
+            href="/">My account</a
+          >
+        </li>
+        <li>
+          <a
+            class="
+              text-sm
+              py-2
+              pr-6 pl-3
+              block
+              w-full
+              whitespace-nowrap
+              text-gray-700
+              hover:bg-gray-100
+            "
+            href="/avatar-creator/library">Library</a
+          >
+        </li>
+        <li>
+          <a
+            on:click={logout}
+            class="
+                text-sm
+                py-2
+                pr-6 pl-3
+                block
+                w-full
+                whitespace-nowrap
+                text-gray-700
+                hover:bg-gray-100
+              "
+            href="/">Log out</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
 {/if}
