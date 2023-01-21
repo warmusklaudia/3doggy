@@ -68,7 +68,15 @@
     }
   }
 
+  const clearScene = (scene) => {
+    while (scene.children.length > 0) {
+      scene.remove(scene.children[0])
+    }
+  }
+
   onMount(() => {
+    clearScene(scene)
+    console.log(scene)
     loadTail(gltfLoader, scene)
     loadBody(gltfLoader, scene)
     loadEars(gltfLoader, scene)
