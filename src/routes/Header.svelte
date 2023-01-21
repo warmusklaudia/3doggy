@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
   import Logo from '$lib/Logo.svelte'
   import { logout, user } from '$lib/utils/useAuth'
+  import { Library, LogOut, User } from 'lucide-svelte'
   let showMenu = false
 
   const toggleMenu = () => {
@@ -51,55 +52,34 @@
               <p class="uppercase text-2xl text-white">{user?.email?.toString()[0] || ''}</p>
             </button>
             <ul
-              class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg' +
+              class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg text-beta' +
                 (showMenu ? '' : ' hidden')}
             >
-              <li>
+              <li class="flex items-center  hover:bg-gray-100">
                 <a
                   on:click={toggleMenu}
-                  class="
-                  text-sm
-                  py-2
-                  pr-6 pl-3
-                  block
-                  w-full
-                  whitespace-nowrap
-                  text-gray-700
-                  hover:bg-gray-100
-                "
-                  href="/profile">My account</a
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                  href="/profile"
+                >
+                  <User class="mr-2" size={20} />My account</a
                 >
               </li>
-              <li>
+              <li class="flex items-center  hover:bg-gray-100">
                 <a
                   on:click={toggleMenu}
-                  class="
-                    text-sm
-                    py-2
-                    pr-6 pl-3
-                    block
-                    w-full
-                    whitespace-nowrap
-                    text-gray-700
-                    hover:bg-gray-100
-                  "
-                  href="/avatar-creator/library">Library</a
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                  href="/avatar-creator/library"
+                >
+                  <Library class="mr-2" size={20} />Library</a
                 >
               </li>
-              <li>
-                <a
+              <li class="border-t-1 border-t" />
+              <li class="pt-1 flex items-center  hover:bg-gray-100">
+                <button
                   on:click={logout}
-                  class="
-                      text-sm
-                      py-2
-                      pr-6 pl-3
-                      block
-                      w-full
-                      whitespace-nowrap
-                      text-gray-700
-                      hover:bg-gray-100
-                    "
-                  href="/">Log out</a
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                >
+                  <LogOut class="mr-2" size={20} />Log out</button
                 >
               </li>
             </ul>
