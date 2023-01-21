@@ -48,23 +48,18 @@
   </header>
 {:else}
   <header>
-    <nav class="absolute w-full pt-10 px-20 overflow-hidden">
-      <ul class="flex justify-between items-center">
-        <li>
-          <a href="/">
-            <ArrowLeft
-              class="w-12 h-12 text-white bg-alpha p-3 rounded-full focus:ring-2 focus:ring-teal-800 focus:outline-none"
-            />
-          </a>
-        </li>
-        <li>
-          <a href="/avatar-creator/library">
-            <ArrowRight
-              class="w-12 h-12 text-white bg-alpha p-3 rounded-full focus:ring-2 focus:ring-teal-800 focus:outline-none"
-            />
-          </a>
-        </li>
-      </ul>
+    <nav class="absolute w-full pt-10 px-20 overflow-hidden flex justify-between items-center ">
+      <div class="">
+        <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+          <Logo />
+        </a>
+      </div>
+      <button
+        on:click={logout}
+        class=" flex items-center justify-center w-14 h-14 rounded-full bg-beta"
+      >
+        <p class="uppercase text-2xl text-white">{$user?.email?.toString()[0]}</p>
+      </button>
     </nav>
   </header>
 {/if}
