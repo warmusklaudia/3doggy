@@ -43,7 +43,11 @@
     activeEyes,
     activeEyesColor,
     activeTail,
+    name,
   } from '$lib/utils/parts'
+  import DogName from '$lib/components/DogName.svelte'
+  import { goto } from '$app/navigation'
+  import { showName } from '$lib/utils/stores'
   export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol, dogId
 
   let canvas
@@ -270,7 +274,7 @@
     const dataToAdd = {
       id: id,
       //TODO
-      name: 'Bambi',
+      name: $name,
       breed: 'Shiba',
       ears: $activeEars,
       eyes: $activeEyes,
@@ -281,7 +285,7 @@
     }
     const dataToUpdate = {
       //TODO
-      name: 'Bambi',
+      name: $name,
       breed: 'Shiba',
       ears: $activeEars,
       eyes: $activeEyes,
@@ -292,58 +296,61 @@
     if (!dogId) {
       console.log('no dog id')
       try {
-        const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), dataToAdd).then(
-          () => {
-            saveImage(id)
-          },
-        )
+        await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), dataToAdd).then(async () => {
+          await saveImage(id)
+        })
       } catch (e) {
         console.error('Error adding document: ', e)
       }
     } else {
       try {
-        const dogRef = doc(db, '3doggy', `${$user.uid}/dog`, dogId)
-        updateDoc(dogRef, dataToUpdate).then(() => {
-          saveImage(dogId)
-        })
+        await updateDoc(doc(db, '3doggy', `${$user.uid}/dog`, dogId), dataToUpdate).then(
+          async () => {
+            await saveImage(dogId)
+          },
+        )
       } catch (e) {
         console.error('Error updating document: ', e)
       }
     }
+    name.set('')
+    goto('/avatar-creator/library')
   }
 
-  const getImg = (storageRef, id) => {
+  const getImg = async (storageRef, id) => {
     const dogRef = doc(db, '3doggy', `${$user.uid}/dog`, id)
-    getDownloadURL(storageRef).then((link) => {
-      updateDoc(dogRef, {
+    await getDownloadURL(storageRef).then(async (link) => {
+      await updateDoc(dogRef, {
         img: link,
       })
     })
   }
 
-  const saveImage = (id) => {
+  const saveImage = async (id) => {
     const storageRef = ref(storage, `${id}.jpg`)
     camera.position.set(-4, 2.5, 4)
     controls.update()
     renderer.setClearColor('#ffffff', 1)
     renderer.render(scene, camera)
     const img = canvas.toDataURL('image/jpeg')
-    uploadString(storageRef, img.split('base64,')[1], 'base64')
-      .then(() => {
-        getImg(storageRef, id)
+    renderer.setClearColor(null, 0)
+    renderer.render(scene, camera)
+    await uploadString(storageRef, img.split('base64,')[1], 'base64')
+      .then(async () => {
+        await getImg(storageRef, id)
       })
       .catch((err) => {
         console.log(err)
       })
-
-    renderer.setClearColor(null, 0)
-    renderer.render(scene, camera)
   }
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
 
 <div class="md:relative">
+  {#if $showName}
+    <DogName {saveDog} {dogId} />
+  {/if}
   <canvas bind:this={canvas} class="mt-10" />
   <div>
     {#if showTails}
@@ -384,7 +391,7 @@
     >
       Body
     </button>
+    <button on:click={() => showName.set(!$showName)}>Name</button>
     <button on:click={saveDog}> Save </button>
-    <button on:click={saveImage}> Img </button>
   </div>
 </div>

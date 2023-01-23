@@ -7,4 +7,6 @@ export const activeTail = writable()
 export const activeEars = writable()
 export const activeEyes = writable()
 
+export const name = writable()
+
 export const dog = writable<Dog | undefined>()
