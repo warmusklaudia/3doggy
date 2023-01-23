@@ -3,18 +3,13 @@
   import { eyes } from '$lib/utils/loadObjects'
   import { green, blue, brown } from '$lib/utils/colors'
   import { activeEyesColor, activeEyes } from '$lib/utils/parts'
-
+  export let activeColor: string
   export let changeEyes: Function
   export let scene: Scene
 
-  $eyes.map((e) => {
-    //@ts-ignore
-    e.eyes.children.map((p) => {
-      if (p.name.includes('pupil')) {
-        activeEyesColor.set(`#${p.material.color.getHexString().toUpperCase()}`)
-      }
-    })
-  })
+  $: if (activeColor) {
+    changeEyesColor(activeColor)
+  }
 
   const setActive = (name: string) => {
     scene.children.map((c) => {

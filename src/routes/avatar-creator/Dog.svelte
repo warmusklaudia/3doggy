@@ -36,9 +36,8 @@
   import { auth, db, storage } from '$lib/utils/useFirebase'
   import { user } from '$lib/utils/useAuth'
   import { generateUUID } from 'three/src/math/MathUtils'
-  import { activeBodyColor, activeEyesColor } from '$lib/utils/parts'
   import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage'
-  export let activeTailName, activeEarsName, activeEyesName
+  export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
@@ -67,6 +66,18 @@
   $: {
     if ($eyes.length === 3) {
       changeEyes(activeEyesName)
+    }
+  }
+
+  $: {
+    if ($bodies.length === 1 && $tails.length === 3 && $ears.length === 3) {
+      changeBodyColor(activeBodyCol)
+    }
+  }
+
+  $: {
+    if ($eyes.length === 3) {
+      changeEyesColor(activeEyesCol)
     }
   }
 
@@ -180,24 +191,54 @@
     animate()
   }
 
+  const changeBodyColor = (color) => {
+    $bodies.map((b) => {
+      b.body.children.map((p) => {
+        if (p.name.includes('body')) {
+          p.material.color.set(color)
+        }
+      })
+    })
+    $ears.map((e) => {
+      e.ears.children.map((p) => {
+        if (p.name.includes('body')) {
+          p.material.color.set(color)
+        }
+      })
+    })
+    $tails.map((t) => {
+      t.tail.children.map((p) => {
+        if (p.name.includes('body')) {
+          p.material.color.set(color)
+        }
+      })
+    })
+  }
+
   const changeEars = (name) => {
-    console.log($ears)
     let ear = $ears.find((e) => e.name === name)
     $ears.map((e) => {
       scene.remove(e.ears)
     })
-    console.log(ear)
     scene.add(ear.ears)
   }
 
   const changeEyes = (name) => {
-    console.log($eyes)
     let eye = $eyes.find((e) => e.name === name)
     $eyes.map((e) => {
       scene.remove(e.eyes)
     })
-    console.log(eye)
     scene.add(eye.eyes)
+  }
+
+  const changeEyesColor = (color) => {
+    $eyes.map((e) => {
+      e.eyes.children.map((p) => {
+        if (p.name.includes('pupil')) {
+          p.material.color.set(color)
+        }
+      })
+    })
   }
 
   const changeTail = (name) => {
@@ -227,11 +268,10 @@
       ears: activeEarsName,
       eyes: activeEyesName,
       tail: activeTailName,
-      eyesColor: $activeEyesColor,
-      bodyColor: $activeBodyColor,
+      eyesColor: activeEyesCol,
+      bodyColor: activeBodyCol,
       created: date.toLocaleDateString('en-GB', dateOptions),
     }
-    console.log(data)
     try {
       const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), data).then(() => {
         saveImage(id)
@@ -244,7 +284,6 @@
   const getImg = (storageRef, id) => {
     const dogRef = doc(db, '3doggy', `${$user.uid}/dog`, id)
     getDownloadURL(storageRef).then((link) => {
-      console.log(link)
       updateDoc(dogRef, {
         img: link,
       })
@@ -258,7 +297,6 @@
     renderer.setClearColor('#ffffff', 1)
     renderer.render(scene, camera)
     const img = canvas.toDataURL('image/jpeg')
-    console.log(img)
     uploadString(storageRef, img.split('base64,')[1], 'base64')
       .then(() => {
         getImg(storageRef, id)
@@ -281,13 +319,13 @@
       <Tails {changeTail} {scene} />
     {/if}
     {#if showEyes}
-      <Eyes {changeEyes} {scene} />
+      <Eyes {changeEyes} {scene} activeColor={activeEyesCol} />
     {/if}
     {#if showEars}
       <Ears {changeEars} {scene} />
     {/if}
     {#if showBody}
-      <Body />
+      <Body activeColor={activeBodyCol} />
     {/if}
   </div>
   <div class="flex justify-evenly rouded-full -mt-10 relative">

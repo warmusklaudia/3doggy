@@ -1,6 +1,12 @@
 <script lang="ts">
   import Dog from './Dog.svelte'
-  import { activeTail, activeEars, activeEyes } from '$lib/utils/parts'
+  import {
+    activeTail,
+    activeEars,
+    activeEyes,
+    activeBodyColor,
+    activeEyesColor,
+  } from '$lib/utils/parts'
 
   activeTail.set('tail2')
   activeEars.set('ears1')
@@ -13,5 +19,11 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog activeTailName={$activeTail} activeEarsName={$activeEars} activeEyesName={$activeEyes} />
+  <Dog
+    activeTailName={$activeTail}
+    activeEarsName={$activeEars}
+    activeEyesName={$activeEyes}
+    activeBodyCol={$activeBodyColor}
+    activeEyesCol={$activeEyesColor}
+  />
 </section>
