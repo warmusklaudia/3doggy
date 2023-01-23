@@ -14,7 +14,7 @@
   class={'flex justify-between items-center ' +
     ($page.url.pathname === '/avatar-creator' ||
     $page.url.pathname.startsWith('/avatar-creator/edit')
-      ? 'absolute w-full pt-10 px-20'
+      ? 'absolute w-full pt-10 px-20 z-50'
       : ' mx-20 mt-10')}
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>

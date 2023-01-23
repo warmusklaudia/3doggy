@@ -23,10 +23,12 @@
   }
 </script>
 
-<section class="absolute z-40 flex justify-center items-center w-full h-full opacity-90">
+<section
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-20 backdrop-blur-[2px]"
+>
   <form
     action=""
-    class="bg-beta p-4 rounded-lg shadow-2xl text-white flex flex-col"
+    class="bg-beta p-4 rounded-lg shadow-2xl text-white flex flex-col relative "
     on:submit={submitForm}
   >
     <button

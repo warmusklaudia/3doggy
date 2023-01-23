@@ -152,6 +152,7 @@
     }
 
     tick()
+    renderer.dispose()
   })
 
   const animate = () => {
@@ -355,7 +356,7 @@
 
 <svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
 
-<div class="md:relative">
+<div class="">
   {#if $showName}
     <DogName {saveDog} {dogId} />
   {/if}
