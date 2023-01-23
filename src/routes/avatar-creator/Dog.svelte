@@ -92,6 +92,14 @@
     }
   }
 
+  $: if (dogId) {
+    activeTail.set(activeTailName)
+    activeEars.set(activeEarsName)
+    activeEyes.set(activeEyesName)
+    activeBodyColor.set(activeBodyCol)
+    activeEyesColor.set(activeEyesCol)
+  }
+
   const clearScene = (scene) => {
     while (scene.children.length > 0) {
       scene.remove(scene.children[0])
@@ -391,7 +399,6 @@
     >
       Body
     </button>
-    <button on:click={() => showName.set(!$showName)}>Name</button>
-    <button on:click={saveDog}> Save </button>
+    <button on:click={() => showName.set(!$showName)}>Save</button>
   </div>
 </div>
