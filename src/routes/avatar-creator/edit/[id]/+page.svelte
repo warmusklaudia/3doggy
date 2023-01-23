@@ -26,5 +26,6 @@
     activeEyesName={$dog?.eyes}
     activeBodyCol={$dog?.bodyColor}
     activeEyesCol={$dog?.eyesColor}
+    dogId={$dog?.id}
   />
 </section>

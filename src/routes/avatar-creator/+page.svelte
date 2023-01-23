@@ -25,5 +25,6 @@
     activeEyesName={$activeEyes}
     activeBodyCol={$activeBodyColor}
     activeEyesCol={$activeEyesColor}
+    dogId={undefined}
   />
 </section>

@@ -37,7 +37,14 @@
   import { user } from '$lib/utils/useAuth'
   import { generateUUID } from 'three/src/math/MathUtils'
   import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage'
-  export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol
+  import {
+    activeBodyColor,
+    activeEars,
+    activeEyes,
+    activeEyesColor,
+    activeTail,
+  } from '$lib/utils/parts'
+  export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol, dogId
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
@@ -260,24 +267,48 @@
     const id = uuidv4()
     const date = new Date()
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-    const data = {
+    const dataToAdd = {
       id: id,
       //TODO
       name: 'Bambi',
       breed: 'Shiba',
-      ears: activeEarsName,
-      eyes: activeEyesName,
-      tail: activeTailName,
-      eyesColor: activeEyesCol,
-      bodyColor: activeBodyCol,
+      ears: $activeEars,
+      eyes: $activeEyes,
+      tail: $activeTail,
+      eyesColor: $activeEyesColor,
+      bodyColor: $activeBodyColor,
       created: date.toLocaleDateString('en-GB', dateOptions),
     }
-    try {
-      const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), data).then(() => {
-        saveImage(id)
-      })
-    } catch (e) {
-      console.error('Error adding document: ', e)
+    const dataToUpdate = {
+      //TODO
+      name: 'Bambi',
+      breed: 'Shiba',
+      ears: $activeEars,
+      eyes: $activeEyes,
+      tail: $activeTail,
+      eyesColor: $activeEyesColor,
+      bodyColor: $activeBodyColor,
+    }
+    if (!dogId) {
+      console.log('no dog id')
+      try {
+        const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), dataToAdd).then(
+          () => {
+            saveImage(id)
+          },
+        )
+      } catch (e) {
+        console.error('Error adding document: ', e)
+      }
+    } else {
+      try {
+        const dogRef = doc(db, '3doggy', `${$user.uid}/dog`, dogId)
+        updateDoc(dogRef, dataToUpdate).then(() => {
+          saveImage(dogId)
+        })
+      } catch (e) {
+        console.error('Error updating document: ', e)
+      }
     }
   }
 
