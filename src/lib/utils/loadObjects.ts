@@ -3,6 +3,7 @@ import { writable } from 'svelte/store'
 import { MeshBasicMaterial, RepeatWrapping, Scene, TextureLoader } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { green, lightBrown } from './colors'
+import { activeBodyColor, activeEyesColor } from './parts'
 
 let tails = writable([{}])
 tails.update((tail) => {
@@ -21,6 +22,7 @@ let noses = writable([{}])
 let manes = writable([{}])
 
 const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
+  activeBodyColor.set(lightBrown)
   gltfLoader.load('/models/shiba/body/body.gltf', (gltf) => {
     bodies.update((body) => {
       body.pop()
@@ -154,6 +156,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
+  activeEyesColor.set(green)
   eyes.update((eye) => {
     eye = eye.filter(() => false)
     return eye

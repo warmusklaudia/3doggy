@@ -11,7 +11,7 @@
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
   import { onMount } from 'svelte'
-  import { collection, addDoc, doc, setDoc } from 'firebase/firestore'
+  import { collection, addDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
   import { v4 as uuidv4 } from 'uuid'
   import {
     loadBody,
@@ -33,9 +33,11 @@
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
   import Body from '$lib/components/Body.svelte'
-  import { auth, db } from '$lib/utils/useFirebase'
+  import { auth, db, storage } from '$lib/utils/useFirebase'
   import { user } from '$lib/utils/useAuth'
   import { generateUUID } from 'three/src/math/MathUtils'
+  import { activeBodyColor, activeEyesColor } from '$lib/utils/parts'
+  import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage'
   export let activeTailName, activeEarsName, activeEyesName
 
   let canvas
@@ -96,7 +98,7 @@
     scene.add(ambientLight)
 
     camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
-    camera.position.set(-4, 1.5, 4)
+    camera.position.set(-4, 2, 4)
     scene.add(camera)
 
     controls = new OrbitControls(camera, canvas)
@@ -170,7 +172,7 @@
   }
 
   const bodySettings = () => {
-    cameraTarget = new Vector3(-5, 1.5, 1.5)
+    cameraTarget = new Vector3(-5, 2, 1.5)
     showTails = false
     showEars = false
     showEyes = false
@@ -216,30 +218,52 @@
   const saveDog = async () => {
     const id = uuidv4()
     const data = {
+      //TODO
+      name: 'Bambi',
+      breed: 'Shiba',
       ears: activeEarsName,
       eyes: activeEyesName,
       tail: activeTailName,
+      eyesColor: $activeEyesColor,
+      bodyColor: $activeBodyColor,
+      created: new Date().toLocaleDateString(),
     }
+    console.log(data)
     try {
-      const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), {
-        data,
-      }).then(() => {
-        console.log(id)
+      const docRef = await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), data).then(() => {
+        saveImage(id)
       })
     } catch (e) {
       console.error('Error adding document: ', e)
     }
   }
 
-  const saveImage = () => {
-    camera.position.set(-4, 1.5, 4)
+  const getImg = (storageRef, id) => {
+    const dogRef = doc(db, '3doggy', `${$user.uid}/dog`, id)
+    getDownloadURL(storageRef).then((link) => {
+      console.log(link)
+      updateDoc(dogRef, {
+        img: link,
+      })
+    })
+  }
+
+  const saveImage = (id) => {
+    const storageRef = ref(storage, `${id}.jpg`)
+    camera.position.set(-4, 2.5, 4)
     controls.update()
     renderer.setClearColor('#ffffff', 1)
     renderer.render(scene, camera)
-    const link = document.createElement('a')
-    link.href = canvas.toDataURL('image/jpeg')
-    link.download = 'canvas.jpeg'
-    link.click()
+    const img = canvas.toDataURL('image/jpeg')
+    console.log(img)
+    uploadString(storageRef, img.split('base64,')[1], 'base64')
+      .then(() => {
+        getImg(storageRef, id)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
     renderer.setClearColor(null, 0)
     renderer.render(scene, camera)
   }
