@@ -1,4 +1,5 @@
 export default interface Dog {
+  id: string
   name: string
   bodyColor: string
   eyesColor: string

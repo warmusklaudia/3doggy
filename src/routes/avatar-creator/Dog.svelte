@@ -218,6 +218,7 @@
   const saveDog = async () => {
     const id = uuidv4()
     const data = {
+      id: id,
       //TODO
       name: 'Bambi',
       breed: 'Shiba',

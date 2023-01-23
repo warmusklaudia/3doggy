@@ -2,16 +2,25 @@
   import { goto } from '$app/navigation'
   import { user } from '$lib/utils/useAuth'
   import { db } from '$lib/utils/useFirebase'
-  import { collection, getDocs } from 'firebase/firestore'
+  import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
   import { Edit, Plus, Trash2 } from 'lucide-svelte'
   import type Dog from '$lib/interfaces/dog.interface'
 
   let myDogs: Dog[] = []
-  const dogs = getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
-  dogs.then((dogs) => {
-    myDogs = dogs.docs.map((dog) => dog.data() as Dog)
-  })
-  $: console.log(myDogs)
+
+  const getDogs = () => {
+    const dogs = getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
+    dogs.then((dogs) => {
+      myDogs = dogs.docs.map((dog) => dog.data() as Dog)
+    })
+  }
+  getDogs()
+
+  const deleteDog = async (id: string) => {
+    await deleteDoc(doc(db, '3doggy', $user!.uid, 'dog', id)).then(() => {
+      getDogs()
+    })
+  }
 </script>
 
 <svelte:head>
@@ -45,6 +54,7 @@
               Edit</button
             >
             <button
+              on:click={() => deleteDog(dog.id)}
               class="text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
             >
               <Trash2 class="mr-2" size={20} />
