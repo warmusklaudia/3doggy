@@ -12,7 +12,10 @@
 
 <header
   class={'flex justify-between items-center ' +
-    ($page.url.pathname === '/avatar-creator' ? 'absolute w-full pt-10 px-20' : ' mx-20 mt-10')}
+    ($page.url.pathname === '/avatar-creator' ||
+    $page.url.pathname.startsWith('/avatar-creator/edit')
+      ? 'absolute w-full pt-10 px-20'
+      : ' mx-20 mt-10')}
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
     <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">

@@ -77,7 +77,7 @@ const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadTongue = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('src/lib/models/shiba/tongue/tongue.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/tongue/tongue.gltf', (gltf) => {
     tongues.update((tongue) => {
       tongue.pop()
       tongue.push({ name: 'tongue1', tongue: gltf.scene })
@@ -91,7 +91,7 @@ const loadTongue = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadNose = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('src/lib/models/shiba/nose/nose.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/nose/nose.gltf', (gltf) => {
     noses.update((nose) => {
       nose.pop()
       nose.push({ name: 'nose1', nose: gltf.scene })
@@ -105,7 +105,7 @@ const loadNose = (gltfLoader: GLTFLoader, scene: Scene) => {
 }
 
 const loadMane = (gltfLoader: GLTFLoader, scene: Scene) => {
-  gltfLoader.load('src/lib/models/shiba/mane/mane.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/mane/mane.gltf', (gltf) => {
     manes.update((mane) => {
       mane.pop()
       mane.push({ name: 'mane1', mane: gltf.scene })
@@ -123,7 +123,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
     ear = ear.filter(() => false)
     return ear
   })
-  gltfLoader.load('src/lib/models/shiba/ears/ears1.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/ears/ears1.gltf', (gltf) => {
     ears.update((ear) => {
       ear.push({ name: 'ears1', ears: gltf.scene })
       return ear
@@ -133,7 +133,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
-  gltfLoader.load('src/lib/models/shiba/ears/ears2.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/ears/ears2.gltf', (gltf) => {
     ears.update((ear) => {
       ear.push({ name: 'ears2', ears: gltf.scene })
       return ear
@@ -143,7 +143,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
-  gltfLoader.load('src/lib/models/shiba/ears/ears3.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/ears/ears3.gltf', (gltf) => {
     ears.update((ear) => {
       ear.push({ name: 'ears3', ears: gltf.scene })
       return ear
@@ -161,7 +161,7 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
     eye = eye.filter(() => false)
     return eye
   })
-  gltfLoader.load('src/lib/models/shiba/eyes/eyes1.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/eyes/eyes1.gltf', (gltf) => {
     eyes.update((eye) => {
       eye.push({ name: 'eyes1', eyes: gltf.scene })
       return eye
@@ -171,7 +171,7 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
   })
-  gltfLoader.load('src/lib/models/shiba/eyes/eyes2.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/eyes/eyes2.gltf', (gltf) => {
     eyes.update((eye) => {
       eye.push({ name: 'eyes2', eyes: gltf.scene })
       return eye
@@ -186,7 +186,7 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
     gltf.scene.children[8].material.color.set('#000000')
     gltf.scene.position.set(0, 1.5, 1)
   })
-  gltfLoader.load('src/lib/models/shiba/eyes/eyes3.gltf', (gltf) => {
+  gltfLoader.load('/models/shiba/eyes/eyes3.gltf', (gltf) => {
     eyes.update((eye) => {
       eye.push({ name: 'eyes3', eyes: gltf.scene })
       return eye

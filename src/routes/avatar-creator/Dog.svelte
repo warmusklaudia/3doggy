@@ -217,6 +217,8 @@
 
   const saveDog = async () => {
     const id = uuidv4()
+    const date = new Date()
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const data = {
       id: id,
       //TODO
@@ -227,7 +229,7 @@
       tail: activeTailName,
       eyesColor: $activeEyesColor,
       bodyColor: $activeBodyColor,
-      created: new Date().toLocaleDateString(),
+      created: date.toLocaleDateString('en-GB', dateOptions),
     }
     console.log(data)
     try {
