@@ -8,7 +8,7 @@
     activeEyesColor,
   } from '$lib/utils/parts'
 
-  activeTail.set('tail2')
+  activeTail.set('tail1')
   activeEars.set('ears1')
   activeEyes.set('eyes1')
 </script>

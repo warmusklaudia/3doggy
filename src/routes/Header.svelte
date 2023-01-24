@@ -8,6 +8,12 @@
   const toggleMenu = () => {
     showMenu = !showMenu
   }
+
+  const handleClick = (event: any) => {
+    if (!confirm('Are you sure you want to leave? All changes will be discarded.')) {
+      event.preventDefault()
+    }
+  }
 </script>
 
 <header
@@ -18,9 +24,15 @@
       : ' mx-20 mt-10')}
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-    <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
-      <Logo />
-    </a>
+    {#if $page.url.pathname !== '/avatar-creator' && !$page.url.pathname.startsWith('/avatar-creator/edit')}
+      <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+        <Logo />
+      </a>
+    {:else}
+      <a on:click={handleClick} class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+        <Logo />
+      </a>
+    {/if}
   </div>
 
   {#if $page.url.pathname !== '/auth/login' && $page.url.pathname !== '/auth/register'}

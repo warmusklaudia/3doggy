@@ -15,7 +15,7 @@
 </script>
 
 <div class="md:fixed md:inset-y-0 flex md:flex-col gap-10 justify-center mb-6 md:mb-0">
-  <button on:click={() => changeTail('tail1')} on:click={() => setActive('tail1')}>
+  <button on:click={() => [changeTail('tail1'), setActive('tail1')]}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/tails/Tail1.JPG"
@@ -28,7 +28,7 @@
       </div>
     {/if}
   </button>
-  <button on:click={() => changeTail('tail2')} on:click={() => setActive('tail2')}>
+  <button on:click={() => [changeTail('tail2'), setActive('tail2')]}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/tails/Tail2.JPG"
@@ -41,7 +41,7 @@
       </div>
     {/if}
   </button>
-  <button class="relative" on:click={() => changeTail('tail3')} on:click={() => setActive('tail3')}>
+  <button class="relative" on:click={() => [changeTail('tail3'), setActive('tail3')]}>
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/tails/Tail3.JPG"

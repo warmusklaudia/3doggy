@@ -36,7 +36,7 @@
   class="md:fixed flex flex-col md:flex-row gap-5 justify-center mb-6 md:mb-0 md:inset-y-0 items-center"
 >
   <div class="flex md:flex-col gap-10 ">
-    <button on:click={() => changeEyes('eyes1')} on:click={() => setActive('eyes1')}>
+    <button on:click={() => [changeEyes('eyes1'), setActive('eyes1')]}>
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes1.JPG"
@@ -49,7 +49,7 @@
         </div>
       {/if}
     </button>
-    <button on:click={() => changeEyes('eyes2')} on:click={() => setActive('eyes2')}>
+    <button on:click={() => [changeEyes('eyes2'), setActive('eyes2')]}>
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes2.JPG"
@@ -62,7 +62,7 @@
         </div>
       {/if}
     </button>
-    <button on:click={() => changeEyes('eyes3')} on:click={() => setActive('eyes3')}>
+    <button on:click={() => [changeEyes('eyes3'), setActive('eyes3')]}>
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes3.JPG"

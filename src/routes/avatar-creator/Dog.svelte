@@ -107,6 +107,12 @@
     }
   }
 
+  const handleClick = (event) => {
+    if (!confirm('Are you sure you want to leave? All changes will be discarded.')) {
+      event.preventDefault()
+    }
+  }
+
   onMount(() => {
     clearScene(scene)
     loadTail(gltfLoader, scene)
@@ -356,7 +362,7 @@
   }
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth on:resize={resize} />
+<svelte:window bind:innerHeight bind:innerWidth on:resize={resize} on:beforeunload={handleClick} />
 
 <div class="">
   {#if $showName}
