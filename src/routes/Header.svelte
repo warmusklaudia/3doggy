@@ -69,7 +69,7 @@
               </p>
             </button>
             <ul
-              class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg text-beta' +
+              class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg text-beta mr-14 md:mr-0' +
                 (showMenu ? '' : ' hidden')}
             >
               <li class="flex items-center  hover:bg-gray-100">
