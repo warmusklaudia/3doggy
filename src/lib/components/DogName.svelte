@@ -28,7 +28,7 @@
 >
   <form
     action=""
-    class="bg-beta p-4 rounded-lg shadow-2xl text-white flex flex-col relative "
+    class="bg-beta bg-opacity-90 p-4 rounded-lg shadow-2xl text-white flex flex-col relative "
     on:submit={submitForm}
   >
     <button
@@ -53,10 +53,10 @@
       </div>
     {/if}
     <label for="name" class="block px-6 pb-3">
-      <span class="block">Choose a name</span>
+      <span class="block font-cormorant font-medium text-lg">Choose a name</span>
       <input
         type="text"
-        class=" w-full mt-1 py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
+        class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
         placeholder="Name"
         id="name"
         bind:value={$name}

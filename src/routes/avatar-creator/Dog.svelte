@@ -136,6 +136,7 @@
 
     camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
     camera.position.set(0, 2, 5.5)
+    camera.updateProjectionMatrix()
     scene.add(camera)
 
     controls = new OrbitControls(camera, canvas)
@@ -148,7 +149,7 @@
       alpha: true,
     })
 
-    renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
+    renderer.setSize(innerWidth / 1.2, innerHeight / 1.2)
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
     renderer.physicallyCorrectLights = true
 
@@ -280,7 +281,7 @@
   const resize = () => {
     camera.aspect = innerWidth / innerHeight
     camera.updateProjectionMatrix()
-    renderer.setSize(innerWidth / 1.25, innerHeight / 1.25)
+    renderer.setSize(innerWidth / 1.2, innerHeight / 1.2)
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
   }
 
@@ -364,12 +365,12 @@
 
 <svelte:window bind:innerHeight bind:innerWidth on:resize={resize} on:beforeunload={handleClick} />
 
-<div class="">
+<div class="flex flex-col md:static">
   {#if $showName}
     <DogName {saveDog} {dogId} />
   {/if}
-  <canvas bind:this={canvas} class="mt-10" />
-  <div class="ml-16">
+  <canvas bind:this={canvas} class="mt-10 -mb-32 md:-mb-0" />
+  <div class="md:ml-16">
     {#if showTails}
       <Tails {changeTail} {scene} />
     {/if}
@@ -383,8 +384,8 @@
       <Body activeColor={activeBodyCol} />
     {/if}
   </div>
-  <div class="flex justify-center -mt-10 items-center ">
-    <div class="flex gap-12 w-3/5 relative bg-opacity-20">
+  <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">
+    <div class="flex md:gap-12 md:w-3/5 relative bg-opacity-20">
       <div class="">
         <input
           class=" sr-only peer"

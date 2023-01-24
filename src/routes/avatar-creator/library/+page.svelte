@@ -6,8 +6,11 @@
   import { Edit, Plus, Trash2 } from 'lucide-svelte'
   import type Dog from '$lib/interfaces/dog.interface'
   import NoDataDog from '$lib/svg/NoDataDog.svelte'
+  import { showDelete } from '$lib/utils/stores'
+  import DeleteDog from '$lib/components/DeleteDog.svelte'
 
   let myDogs: Dog[] = []
+  let id: string
 
   const getDogs = () => {
     const dogs = getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
@@ -20,6 +23,7 @@
   const deleteDog = async (id: string) => {
     await deleteDoc(doc(db, '3doggy', $user!.uid, 'dog', id)).then(() => {
       getDogs()
+      showDelete.set(!$showDelete)
     })
   }
 </script>
@@ -30,6 +34,9 @@
 </svelte:head>
 
 <section class="">
+  {#if $showDelete}
+    <DeleteDog {deleteDog} dogId={id} />
+  {/if}
   {#if myDogs.length === 0}
     <div class="flex flex-col justify-center items-center">
       <NoDataDog />
@@ -73,7 +80,7 @@
                 Edit</button
               >
               <button
-                on:click={() => deleteDog(dog.id)}
+                on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
                 class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
               >
                 <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
