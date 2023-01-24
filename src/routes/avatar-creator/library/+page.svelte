@@ -30,11 +30,11 @@
 </svelte:head>
 
 <section class="">
-  {#if myDogs.length === 0}
+  {#if myDogs.length !== 0}
     <div class="flex flex-col justify-center items-center">
       <NoDataDog />
       <div class="absolute flex items-center justify-center flex-col">
-        <h1 class="text-4xl pb-3">You haven't any dogs yet</h1>
+        <h1 class="text-4xl pb-3 font-cormorant font-bold">You haven't any dogs yet</h1>
         <button
           on:click={() => goto('/avatar-creator')}
           class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "

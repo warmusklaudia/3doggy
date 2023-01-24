@@ -20,12 +20,12 @@
   class={'flex justify-between items-center ' +
     ($page.url.pathname === '/avatar-creator' ||
     $page.url.pathname.startsWith('/avatar-creator/edit')
-      ? 'absolute w-full pt-10 px-20 z-50'
-      : ' mx-20 mt-10')}
+      ? 'absolute w-full pt-3 px-6 md:pt-10 md:px-20 z-50'
+      : ' mx-6 mt-3 md:mx-20 md:mt-10')}
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
     {#if $page.url.pathname !== '/avatar-creator' && !$page.url.pathname.startsWith('/avatar-creator/edit')}
-      <a class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+      <a class="focus:ring-2 focus:ring-teal-800 rounded-lg relative z-10" href="/">
         <Logo />
       </a>
     {:else}

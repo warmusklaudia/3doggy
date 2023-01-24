@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
@@ -8,6 +9,13 @@ module.exports = {
         'alpha-dark': '#0B737D',
         beta: '#0D1B1E',
       },
+      backgroundImage: {
+        paws: "url('/paws.svg')",
+      },
+    },
+    fontFamily: {
+      cormorant: ['Cormorant', 'sans-serif'],
+      openSans: ['Open Sans', 'sans-serif'],
     },
   },
   plugins: [],

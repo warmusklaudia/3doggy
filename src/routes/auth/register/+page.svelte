@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import Background from '$lib/Background.svelte'
   import { register } from '$lib/utils/useAuth'
   import { AlertTriangle, Loader2, X } from 'lucide-svelte'
 
@@ -16,27 +15,29 @@
     loading = true
     if (userInput.email === '') {
       errorMessage = 'Email is required'
+      loading = false
       return
     }
     if (userInput.password === '') {
       errorMessage = 'Password is required'
+      loading = false
       return
     }
     if (repeatPassword === '' || repeatPassword !== userInput.password) {
       errorMessage = 'Password confirmation does not match'
+      loading = false
       return
     }
     register(userInput.email, userInput.password)
-      .then((u) => {
+      .then(() => {
         return goto('/')
       })
       .catch((error) => {
         console.log({ error })
         errorMessage = error.message.split(':')[1]
-      })
-      .finally(() => {
         loading = false
       })
+      .finally(() => (loading = false))
   }
 </script>
 
@@ -45,11 +46,10 @@
   <meta name="register" content="Create new account" />
 </svelte:head>
 <section>
-  <Background />
   <div
-    class="gap-6 py-6 flex items-center w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
+    class="gap-6 py-6 flex items-center sm:w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
   >
-    <h1 class="text-3xl">Create new account</h1>
+    <h1 class="text-xl md:text-3xl font-cormorant">Create new account</h1>
     {#if errorMessage}
       <div
         class="bg-neutral-100 border gap-3 flex items-center justify-between rounded-md p-3 border-red-600 text-red-600"
@@ -64,11 +64,11 @@
         </button>
       </div>
     {/if}
-    <form on:submit={submitForm} class="w-1/2 gap-4 flex flex-col justify-center" action="">
-      <label class="flex flex-col w-full" for="email">
-        Email
+    <form on:submit={submitForm} class=" gap-4 flex flex-col justify-center" action="">
+      <label class="block" for="email">
+        <span class="block font-cormorant">Email</span>
         <input
-          class="mt-1 py-2 bg-transparent border rounded-md px-3  focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3  focus:border-1 focus:border-teal-400 focus:outline-none"
           type="email"
           name="email"
           id="email"
@@ -77,10 +77,10 @@
           bind:value={userInput.email}
         />
       </label>
-      <label class="flex flex-col" for="password">
-        Password
+      <label class="block" for="password">
+        <span class="block font-cormorant">Password</span>
         <input
-          class="mt-1  py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="w-full placeholder:font-cormorant mt-1  py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="password"
           id="password"
@@ -89,10 +89,10 @@
           bind:value={userInput.password}
         />
       </label>
-      <label class="flex flex-col" for="repeatPassword">
-        Confirm password
+      <label class="block" for="repeatPassword">
+        <span class="block font-cormorant">Confirm password </span>
         <input
-          class="mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="repeatPassword"
           id="repeatPassword"
@@ -103,7 +103,7 @@
       </label>
       <div class="flex items-center justify-between my-3">
         <a
-          class="hover:underline text-[#4AD5E2]  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
+          class="hover:underline mr-6 text-[#4AD5E2] md:mr-24  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
           href="/auth/login">I have an account</a
         >
         <button
@@ -112,7 +112,7 @@
           type="submit"
         >
           {#if !loading}
-            <span>Register</span>
+            <span class="text-sm sm:text-base">Register</span>
           {:else}
             <div class="animate-spin">
               <Loader2 />

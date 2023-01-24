@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import Background from '$lib/Background.svelte'
   import { login } from '$lib/utils/useAuth'
   import { X, AlertTriangle, Loader2 } from 'lucide-svelte'
   let errorMessage: string = ''
@@ -14,22 +13,23 @@
     loading = true
     if (userInput.email === '') {
       errorMessage = 'Email is required'
+      loading = false
       return
     }
     if (userInput.password === '') {
       errorMessage = 'Password is required'
+      loading = false
       return
     }
     login(userInput.email, userInput.password)
-      .then((u) => {
+      .then(() => {
         return goto('/avatar-creator/library')
       })
       .catch((error) => {
+        loading = false
         errorMessage = error.message.split(':')[1]
       })
-      .finally(() => {
-        loading = false
-      })
+      .finally(() => (loading = false))
   }
 </script>
 
@@ -38,9 +38,8 @@
   <meta name="log in" content="Log in to your account" />
 </svelte:head>
 <section>
-  <Background />
   <div
-    class="gap-6 py-12 flex items-center w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
+    class="gap-6 py-12 flex items-center sm:w-2/3 m-auto flex-col rounded-xl shadow-lg bg-beta opacity-90  text-white"
   >
     {#if errorMessage}
       <div
@@ -58,9 +57,9 @@
     {/if}
     <form on:submit={submitForm} class="gap-4 flex flex-col justify-center" action="">
       <label class="block" for="email">
-        <span class="block">Email</span>
+        <span class="block font-cormorant">Email</span>
         <input
-          class=" w-full mt-1 py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
           type="email"
           name="email"
           id="email"
@@ -70,9 +69,9 @@
         />
       </label>
       <label class="block" for="password">
-        <span class="block">Password</span>
+        <span class="block font-cormorant">Password</span>
         <input
-          class="mt-1 w-full py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant mt-1 w-full py-2 bg-transparent border rounded-md px-3 focus:border-1 focus:border-teal-400 focus:outline-none"
           type="password"
           name="password"
           id="password"
@@ -83,7 +82,7 @@
       </label>
       <div class="flex items-center justify-between my-3">
         <a
-          class="hover:underline text-[#4AD5E2] md:mr-10  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
+          class="text-sm sm:text-base hover:underline mr-3 text-[#4AD5E2] md:mr-10  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
           href="/auth/register">Don't have an account yet?</a
         >
         <button
@@ -92,7 +91,7 @@
           type="submit"
         >
           {#if !loading}
-            <span>Log in</span>
+            <span class="text-sm sm:text-base">Log in</span>
           {:else}
             <div class="animate-spin">
               <Loader2 />

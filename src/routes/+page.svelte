@@ -19,7 +19,7 @@
   class="flex flex-col-reverse  sm:flex-row sm:justify-around lg:justify-between items-center pt-10"
 >
   <div class="flex flex-col gap-6 max-w-sm ">
-    <h3 class="italic text-lg">
+    <h3 class="italic text-xl font-cormorant font-medium">
       "Everyone thinks they have the best dog, and none of them are wrong." - Unknown
     </h3>
     <h2 class="text-xl">Make your life better and create your canine friend in 3D!</h2>
