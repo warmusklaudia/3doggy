@@ -30,14 +30,14 @@
 </svelte:head>
 
 <section class="">
-  {#if myDogs.length !== 0}
+  {#if myDogs.length === 0}
     <div class="flex flex-col justify-center items-center">
       <NoDataDog />
       <div class="absolute flex items-center justify-center flex-col">
-        <h1 class="text-4xl pb-3 font-cormorant font-bold">You haven't any dogs yet</h1>
+        <h1 class="text-2xl sm:text-4xl pb-3 font-cormorant font-bold">You haven't any dogs yet</h1>
         <button
           on:click={() => goto('/avatar-creator')}
-          class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
+          class="text-sm sm:text-base ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
         >
           <Plus class="mr-2" />
           Create your first doggy</button
@@ -52,10 +52,12 @@
       <Plus class="mr-2" />
       Create new dog</button
     >
-    <div class="grid grid-cols-2 gap-x-10 gap-y-6 overflow-y-auto max-h-[60vh] p-2 scrollbar">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 gap-y-6 overflow-y-auto max-h-[70vh] lg:max-h-[60vh] p-2 scrollbar"
+    >
       {#each myDogs as dog}
-        <div class="flex items-center bg-white rounded-md shadow-lg p-6">
-          <img src={dog.img} alt={dog.breed} class="w-32 h-32 object-cover" />
+        <div class="flex items-center bg-white rounded-md shadow-lg p-3 lg:p-6 mr-1 md:mr-2">
+          <img src={dog.img} alt={dog.breed} class="w-24 h-24 md:w-32 md:h-32 object-cover" />
           <div class="pl-4">
             <h2 class="text-lg pb-2">{dog.name}</h2>
             <div class="pb-3">
@@ -65,16 +67,16 @@
             <div class="flex items-center gap-3">
               <button
                 on:click={() => goto(`/avatar-creator/edit/${dog.id}`)}
-                class="text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
               >
-                <Edit class="mr-2" size={20} />
+                <Edit class="mr-2 w-4 h-4 md:w-5 md:h-5" />
                 Edit</button
               >
               <button
                 on:click={() => deleteDog(dog.id)}
-                class="text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
               >
-                <Trash2 class="mr-2" size={20} />
+                <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
                 Delete</button
               >
             </div>

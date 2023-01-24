@@ -62,9 +62,11 @@
           <div class=" flex flex-col items-center whitespace-nowrap">
             <button
               on:click={toggleMenu}
-              class=" flex items-center justify-center w-14 h-14 rounded-full bg-beta"
+              class=" flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-beta"
             >
-              <p class="uppercase text-2xl text-white">{user?.email?.toString()[0] || ''}</p>
+              <p class="uppercase text-lg font-cormorant font-bold sm:text-2xl text-white">
+                {user?.email?.toString()[0] || ''}
+              </p>
             </button>
             <ul
               class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg text-beta' +

@@ -2,7 +2,7 @@
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   width="888"
-  class="opacity-50"
+  class=" opacity-50"
   height="483.61099"
   viewBox="0 0 888 483.61099"
   ><path
