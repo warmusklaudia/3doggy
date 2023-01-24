@@ -8,17 +8,18 @@
   import NoDataDog from '$lib/svg/NoDataDog.svelte'
   import { showDelete } from '$lib/utils/stores'
   import DeleteDog from '$lib/components/DeleteDog.svelte'
+  import { onMount } from 'svelte'
 
   let myDogs: Dog[] = []
   let id: string
 
-  const getDogs = () => {
-    const dogs = getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
-    dogs.then((dogs) => {
-      myDogs = dogs.docs.map((dog) => dog.data() as Dog)
-    })
+  const getDogs = async () => {
+    const dogs = await getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
+    myDogs = dogs.docs.map((dog) => dog.data() as Dog)
   }
-  getDogs()
+  onMount(() => {
+    getDogs()
+  })
 
   const deleteDog = async (id: string) => {
     await deleteDoc(doc(db, '3doggy', $user!.uid, 'dog', id)).then(() => {
@@ -37,59 +38,73 @@
   {#if $showDelete}
     <DeleteDog {deleteDog} dogId={id} />
   {/if}
-  {#if myDogs.length === 0}
-    <div class="flex flex-col justify-center items-center">
-      <NoDataDog />
-      <div class="absolute flex items-center justify-center flex-col">
-        <h1 class="text-2xl sm:text-4xl pb-3 font-cormorant font-bold">You haven't any dogs yet</h1>
-        <button
-          on:click={() => goto('/avatar-creator')}
-          class="text-sm sm:text-base ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
-        >
-          <Plus class="mr-2" />
-          Create your first doggy</button
-        >
-      </div>
-    </div>
-  {:else}
-    <button
-      on:click={() => goto('/avatar-creator')}
-      class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
-    >
-      <Plus class="mr-2" />
-      Create new dog</button
-    >
+  {#await getDogs()}
     <div
-      class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 gap-y-6 overflow-y-auto max-h-[70vh] lg:max-h-[60vh] p-2 scrollbar"
+      class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 gap-y-6 overflow-y-auto max-h-[70vh] lg:max-h-[60vh] p-2"
     >
-      {#each myDogs as dog}
-        <div class="flex items-center bg-white rounded-md shadow-lg p-3 lg:p-6 mr-1 md:mr-2">
-          <img src={dog.img} alt={dog.breed} class="w-24 h-24 md:w-32 md:h-32 object-cover" />
-          <div class="pl-4">
-            <h2 class="text-lg pb-2">{dog.name}</h2>
-            <div class="pb-3">
-              <p>{dog.breed}</p>
-              <p>Born on {dog.created}</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <button
-                on:click={() => goto(`/avatar-creator/edit/${dog.id}`)}
-                class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
-              >
-                <Edit class="mr-2 w-4 h-4 md:w-5 md:h-5" />
-                Edit</button
-              >
-              <button
-                on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
-                class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
-              >
-                <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
-                Delete</button
-              >
-            </div>
-          </div>
-        </div>
+      {#each [1, 2, 3, 4] as _}
+        <div
+          class="flex items-center rounded-md shadow-lg bg-neutral-400 animate-pulse w-full h-44"
+        />
       {/each}
     </div>
-  {/if}
+  {:then}
+    {#if myDogs.length !== 0}
+      <button
+        on:click={() => goto('/avatar-creator')}
+        class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
+      >
+        <Plus class="mr-2" />
+        Create new dog</button
+      >
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 gap-y-6 overflow-y-auto max-h-[70vh] lg:max-h-[60vh] p-2 scrollbar"
+      >
+        {#each myDogs as dog}
+          <div class="flex items-center bg-white rounded-md shadow-lg p-3 lg:p-6 mr-1 md:mr-2">
+            <img src={dog.img} alt={dog.breed} class="w-24 h-24 md:w-32 md:h-32 object-cover" />
+            <div class="pl-4">
+              <h2 class="text-lg pb-2">{dog.name}</h2>
+              <div class="pb-3">
+                <p>{dog.breed}</p>
+                <p>Born on {dog.created}</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  on:click={() => goto(`/avatar-creator/edit/${dog.id}`)}
+                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                >
+                  <Edit class="mr-2 w-4 h-4 md:w-5 md:h-5" />
+                  Edit</button
+                >
+                <button
+                  on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
+                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                >
+                  <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
+                  Delete</button
+                >
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {:else}
+      <div class="flex flex-col justify-center items-center">
+        <NoDataDog />
+        <div class="absolute flex items-center justify-center flex-col">
+          <h1 class="text-2xl sm:text-4xl pb-3 font-cormorant font-bold">
+            You haven't any dogs yet
+          </h1>
+          <button
+            on:click={() => goto('/avatar-creator')}
+            class="text-sm sm:text-base ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
+          >
+            <Plus class="mr-2" />
+            Create your first doggy</button
+          >
+        </div>
+      </div>
+    {/if}
+  {/await}
 </section>

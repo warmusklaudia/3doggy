@@ -19,6 +19,11 @@
   console.log($dog)
 </script>
 
+<svelte:head>
+  <title>3Doggy | Edit</title>
+  <meta name="edit" content="Avatar editing" />
+</svelte:head>
+
 <section class="flex justify-center items-center">
   <Dog
     activeTailName={$dog?.tail}

@@ -8,8 +8,6 @@
       if (!$user) return goto('/auth/login')
     }
   }
-
-  export { myDogs as LayoutData }
 </script>
 
 {#await $user}
