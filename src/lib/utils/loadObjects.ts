@@ -1,6 +1,5 @@
-import { text } from 'svelte/internal'
 import { writable } from 'svelte/store'
-import { MeshBasicMaterial, RepeatWrapping, Scene, TextureLoader } from 'three'
+import { Scene } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { green, lightBrown } from './colors'
 import { activeBodyColor, activeEyesColor } from './parts'
@@ -30,6 +29,7 @@ const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
       return body
     })
     gltf.scene.name = 'body'
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -49,6 +49,7 @@ const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
       return tail
     })
     gltf.scene.name = 'tail1'
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -58,6 +59,7 @@ const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
       tail.push({ name: 'tail2', tail: gltf.scene })
       return tail
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'tail2'
     gltf.scene.scale.set(1, 1, 1)
@@ -68,6 +70,7 @@ const loadTail = (gltfLoader: GLTFLoader, scene: Scene) => {
       tail.push({ name: 'tail3', tail: gltf.scene })
       return tail
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'tail3'
     gltf.scene.scale.set(1, 1, 1)
@@ -83,6 +86,7 @@ const loadTongue = (gltfLoader: GLTFLoader, scene: Scene) => {
       tongue.push({ name: 'tongue1', tongue: gltf.scene })
       return tongue
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set('#E7A6C3')
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -97,6 +101,7 @@ const loadNose = (gltfLoader: GLTFLoader, scene: Scene) => {
       nose.push({ name: 'nose1', nose: gltf.scene })
       return nose
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set('#2C0D0C')
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -111,6 +116,7 @@ const loadMane = (gltfLoader: GLTFLoader, scene: Scene) => {
       mane.push({ name: 'mane1', mane: gltf.scene })
       return mane
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set('#ffffff')
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -128,6 +134,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
       ear.push({ name: 'ears1', ears: gltf.scene })
       return ear
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'ears1'
     gltf.scene.scale.set(1, 1, 1)
@@ -138,6 +145,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
       ear.push({ name: 'ears2', ears: gltf.scene })
       return ear
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'ears2'
     gltf.scene.scale.set(1, 1, 1)
@@ -148,6 +156,7 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene) => {
       ear.push({ name: 'ears3', ears: gltf.scene })
       return ear
     })
+    //@ts-ignore
     gltf.scene.children[0].material.color.set(lightBrown)
     gltf.scene.name = 'ears3'
     gltf.scene.scale.set(1, 1, 1)
@@ -167,6 +176,7 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
       return eye
     })
     gltf.scene.name = 'eyes1'
+    //@ts-ignore
     gltf.scene.children[1].material.color.set('#000000')
     gltf.scene.scale.set(1, 1, 1)
     gltf.scene.position.set(0, 1.5, 1)
@@ -178,11 +188,17 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
     })
     gltf.scene.name = 'eyes2'
     gltf.scene.scale.set(1, 1, 1)
+    //@ts-ignore
     gltf.scene.children[1].material.color.set('#ffffff')
+    //@ts-ignore
     gltf.scene.children[2].material.color.set(green)
+    //@ts-ignore
     gltf.scene.children[3].material.color.set('#000000')
+    //@ts-ignore
     gltf.scene.children[4].material.color.set('#ffffff')
+    //@ts-ignore
     gltf.scene.children[5].material.color.set('#ffffff')
+    //@ts-ignore
     gltf.scene.children[8].material.color.set('#000000')
     gltf.scene.position.set(0, 1.5, 1)
   })
@@ -193,10 +209,15 @@ const loadEyes = (gltfLoader: GLTFLoader, scene: Scene) => {
     })
     gltf.scene.name = 'eyes3'
     gltf.scene.scale.set(1, 1, 1)
+    //@ts-ignore
     gltf.scene.children[0].material.color.set('#ffffff')
+    //@ts-ignore
     gltf.scene.children[1].material.color.set(green)
+    //@ts-ignore
     gltf.scene.children[2].material.color.set('#000000')
+    //@ts-ignore
     gltf.scene.children[3].material.color.set('#ffffff')
+    //@ts-ignore
     gltf.scene.children[8].material.color.set('#000000')
     gltf.scene.position.set(0, 1.5, 1)
   })

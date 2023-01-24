@@ -33,7 +33,7 @@
 </script>
 
 <div
-  class="md:absolute md:right-20 flex flex-col md:flex-row-reverse gap-5 justify-center mb-6 md:bottom-0 md:top-0 items-center"
+  class="md:fixed flex flex-col md:flex-row gap-5 justify-center mb-6 md:mb-0 md:inset-y-0 items-center"
 >
   <div class="flex md:flex-col gap-10 ">
     <button on:click={() => changeEyes('eyes1')} on:click={() => setActive('eyes1')}>

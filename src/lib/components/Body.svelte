@@ -37,9 +37,7 @@
   }
 </script>
 
-<div
-  class="md:absolute md:right-20 md:bottom-0 md:top-0 flex md:flex-col gap-10 justify-center mb-6"
->
+<div class="md:fixed md:inset-y-0 flex md:flex-col gap-10 justify-center mb-6 md:mb-0">
   <button on:click={() => changeBodyColor(lightBrown)}>
     <img
       class="rounded-full w-20 h-20 object-cover"

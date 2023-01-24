@@ -7,6 +7,7 @@
     DirectionalLight,
     AmbientLight,
     Vector3,
+    Box3,
   } from 'three'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -157,10 +158,10 @@
 
   const animate = () => {
     controls.update()
-    camera.position.lerp(cameraTarget, 0.03)
+    camera.position.lerp(cameraTarget, 0.05)
     renderer.render(scene, camera)
     let x = requestAnimationFrame(animate)
-    if (camera.position.distanceTo(cameraTarget) < 0.01) {
+    if (camera.position.distanceTo(cameraTarget) < 0.1) {
       cancelAnimationFrame(x)
     }
   }
@@ -262,6 +263,7 @@
   }
 
   const changeTail = (name) => {
+    console.log(scene)
     let tail = $tails.find((t) => t.name === name)
     $tails.map((t) => {
       scene.remove(t.tail)
@@ -361,7 +363,7 @@
     <DogName {saveDog} {dogId} />
   {/if}
   <canvas bind:this={canvas} class="mt-10" />
-  <div>
+  <div class="ml-16">
     {#if showTails}
       <Tails {changeTail} {scene} />
     {/if}
@@ -375,31 +377,36 @@
       <Body activeColor={activeBodyCol} />
     {/if}
   </div>
-  <div class="flex justify-evenly rouded-full -mt-10 relative">
+  <div class="flex justify-center -mt-10 items-center ">
+    <div class="flex gap-12 w-3/5 relative">
+      <button
+        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+        on:click={tailsSettings}
+      >
+        Tail
+      </button>
+      <button
+        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+        on:click={eyesSettings}
+      >
+        Eyes
+      </button>
+      <button
+        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+        on:click={earsSettings}
+      >
+        Ears
+      </button>
+      <button
+        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+        on:click={bodySettings}
+      >
+        Body
+      </button>
+    </div>
     <button
-      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
-      on:click={tailsSettings}
+      class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+      on:click={() => showName.set(!$showName)}>Save</button
     >
-      Tail
-    </button>
-    <button
-      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
-      on:click={eyesSettings}
-    >
-      Eyes
-    </button>
-    <button
-      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
-      on:click={earsSettings}
-    >
-      Ears
-    </button>
-    <button
-      class="rounded-full w-16 h-16 bg-alpha hover:scale-110 text-white"
-      on:click={bodySettings}
-    >
-      Body
-    </button>
-    <button on:click={() => showName.set(!$showName)}>Save</button>
   </div>
 </div>
