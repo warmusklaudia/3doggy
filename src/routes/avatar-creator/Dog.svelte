@@ -54,7 +54,7 @@
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
   let showTails = false
-  let showEars = false
+  let showEars = true
   let showEyes = false
   let showBody = false
 
@@ -129,13 +129,13 @@
     scene.add(ambientLight)
 
     camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
-    camera.position.set(-4, 2, 4)
+    camera.position.set(0, 2, 5.5)
     scene.add(camera)
 
     controls = new OrbitControls(camera, canvas)
     controls.enableDamping = true
-    controls.enablePan = true
-    controls.enableZoom = true
+    controls.enablePan = false
+    controls.enableZoom = false
 
     renderer = new WebGLRenderer({
       canvas: canvas,
@@ -378,34 +378,71 @@
     {/if}
   </div>
   <div class="flex justify-center -mt-10 items-center ">
-    <div class="flex gap-12 w-3/5 relative">
-      <button
-        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
-        on:click={tailsSettings}
-      >
-        Tail
-      </button>
-      <button
-        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
-        on:click={eyesSettings}
-      >
-        Eyes
-      </button>
-      <button
-        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
-        on:click={earsSettings}
-      >
-        Ears
-      </button>
-      <button
-        class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
-        on:click={bodySettings}
-      >
-        Body
-      </button>
+    <div class="flex gap-12 w-3/5 relative bg-opacity-20">
+      <div class="">
+        <input
+          class=" sr-only peer"
+          checked
+          id="ears"
+          type="radio"
+          name="settings"
+          on:change={earsSettings}
+        />
+        <label
+          for="ears"
+          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+        >
+          Ears
+        </label>
+      </div>
+      <div class="">
+        <input
+          class=" sr-only peer"
+          id="eyes"
+          type="radio"
+          name="settings"
+          on:change={eyesSettings}
+        />
+        <label
+          for="eyes"
+          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+        >
+          Eyes
+        </label>
+      </div>
+      <div class="">
+        <input
+          class=" sr-only peer"
+          id="body"
+          type="radio"
+          name="settings"
+          on:change={bodySettings}
+        />
+        <label
+          for="body"
+          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+        >
+          Body
+        </label>
+      </div>
+      <div class="">
+        <input
+          class=" sr-only peer"
+          id="tails"
+          type="radio"
+          name="settings"
+          on:change={tailsSettings}
+        />
+        <label
+          for="tails"
+          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+        >
+          Tail
+        </label>
+      </div>
     </div>
     <button
-      class="rounded-md px-6 py-2 bg-alpha hover:scale-110 text-white"
+      class="rounded-md px-6 py-2 bg-alpha text-white hover:bg-alpha-dark"
       on:click={() => showName.set(!$showName)}>Save</button
     >
   </div>
