@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import doggy from '$lib/images/pngwing.png'
   import { user } from '$lib/utils/useAuth'
   import type { User } from 'firebase/auth'
   $: console.log(user)
@@ -30,5 +29,5 @@
       Make your own doggy</button
     >
   </div>
-  <img class="w-1/3 sm:w-1/4 pb-6 sm:pb-0" src={doggy} alt="dog" />
+  <img class="w-1/3 sm:w-1/4 pb-6 sm:pb-0" src="/pngwing.png" alt="dog" />
 </section>

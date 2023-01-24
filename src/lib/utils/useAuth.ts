@@ -6,7 +6,7 @@ import {
   type User,
   type UserCredential,
 } from 'firebase/auth'
-import { readable, writable } from 'svelte/store'
+import { readable } from 'svelte/store'
 import { auth } from './useFirebase'
 
 const createUserStore = () => {

@@ -7,12 +7,11 @@
     DirectionalLight,
     AmbientLight,
     Vector3,
-    Box3,
   } from 'three'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
   import { onMount } from 'svelte'
-  import { collection, addDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
+  import { doc, setDoc, updateDoc } from 'firebase/firestore'
   import { v4 as uuidv4 } from 'uuid'
   import {
     loadBody,
@@ -23,21 +22,17 @@
     loadEyes,
     loadTongue,
     bodies,
-    manes,
-    noses,
     eyes,
     ears,
-    tongues,
     tails,
   } from '$lib/utils/loadObjects'
   import Tails from '../../lib/components/Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
   import Body from '$lib/components/Body.svelte'
-  import { auth, db, storage } from '$lib/utils/useFirebase'
+  import { db, storage } from '$lib/utils/useFirebase'
   import { user } from '$lib/utils/useAuth'
-  import { generateUUID } from 'three/src/math/MathUtils'
-  import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage'
+  import { getDownloadURL, ref, uploadString } from 'firebase/storage'
   import {
     activeBodyColor,
     activeEars,

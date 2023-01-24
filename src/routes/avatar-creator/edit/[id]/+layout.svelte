@@ -18,7 +18,7 @@
       .then(() => {
         foundDog = myDogs.find((dog) => dog.id === data.props.id)
         if (foundDog) dog.set(foundDog)
-        else goto('/')
+        else goto('/avatar-creator/library')
       })
   }
 </script>
