@@ -44,7 +44,7 @@
   >
     <img
       class="rounded-full w-20 h-20 object-cover"
-      src="../../../src/lib/images/body/BodyColor1.JPG"
+      src="/images/body/BodyColor1.JPG"
       alt="Tail 1"
     />
     {#if $activeBodyColor === lightBrown}
@@ -60,7 +60,7 @@
   >
     <img
       class="rounded-full w-20 h-20 object-cover"
-      src="../../../src/lib/images/body/BodyColor2.JPG"
+      src="/images/body/BodyColor2.JPG"
       alt="Tail 2"
     />
     {#if $activeBodyColor === darkBrown}
@@ -76,7 +76,7 @@
   >
     <img
       class="rounded-full w-20 h-20 object-cover"
-      src="../../../src/lib/images/body/BodyColor3.JPG"
+      src="/images/body/BodyColor3.JPG"
       alt="Tail 3"
     />
     {#if $activeBodyColor === gray}

@@ -40,11 +40,7 @@
       class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
       on:click={() => [changeEyes('eyes1'), setActive('eyes1')]}
     >
-      <img
-        class="rounded-full w-20 h-20 object-cover"
-        src="../../../src/lib/images/eyes/Eyes1.JPG"
-        alt="Eyes 1"
-      />
+      <img class="rounded-full w-20 h-20 object-cover" src="/images/eyes/Eyes1.JPG" alt="Eyes 1" />
       {#if $activeEyes === 'eyes1'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
@@ -56,11 +52,7 @@
       class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
       on:click={() => [changeEyes('eyes2'), setActive('eyes2')]}
     >
-      <img
-        class="rounded-full w-20 h-20 object-cover"
-        src="../../../src/lib/images/eyes/Eyes2.JPG"
-        alt="Eyes 2"
-      />
+      <img class="rounded-full w-20 h-20 object-cover" src="/images/eyes/Eyes2.JPG" alt="Eyes 2" />
       {#if $activeEyes === 'eyes2'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
@@ -72,11 +64,7 @@
       class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
       on:click={() => [changeEyes('eyes3'), setActive('eyes3')]}
     >
-      <img
-        class="rounded-full w-20 h-20 object-cover"
-        src="../../../src/lib/images/eyes/Eyes3.JPG"
-        alt="Eyes 3"
-      />
+      <img class="rounded-full w-20 h-20 object-cover" src="/images/eyes/Eyes3.JPG" alt="Eyes 3" />
       {#if $activeEyes === 'eyes3'}
         <div class="flex items-center justify-end">
           <div class="w-4 h-4 mr-1 absolute -mt-4 bg-alpha rounded-full" />
@@ -94,7 +82,7 @@
       >
         <img
           class="rounded-full w-20 h-20 object-cover"
-          src="../../../src/lib/images/eyes/EyesColor1.JPG"
+          src="/images/eyes/EyesColor1.JPG"
           alt="Eyes 1"
         />
         {#if $activeEyesColor === green}
@@ -110,7 +98,7 @@
       >
         <img
           class="rounded-full w-20 h-20 object-cover"
-          src="../../../src/lib/images/eyes/EyesColor2.JPG"
+          src="/images/eyes/EyesColor2.JPG"
           alt="Eyes 1"
         />
         {#if $activeEyesColor === blue}
@@ -126,7 +114,7 @@
       >
         <img
           class="rounded-full w-20 h-20 object-cover"
-          src="../../../src/lib/images/eyes/EyesColor3.JPG"
+          src="/images/eyes/EyesColor3.JPG"
           alt="Eyes 1"
         />
         {#if $activeEyesColor === brown}
