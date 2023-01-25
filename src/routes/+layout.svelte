@@ -11,7 +11,7 @@
 >
   <Header />
 
-  <main class="w-full flex flex-1 flex-col p-4 max-w-5xl my-0 mx-auto box-border text-beta ">
+  <main class="w-full flex flex-1 flex-col px-6 py-3  max-w-5xl my-0 mx-auto box-border text-beta ">
     <slot />
   </main>
   {#if $page.url.pathname !== '/avatar-creator'}
