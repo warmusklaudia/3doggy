@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dog from './Dog.svelte'
+  import Dog from '../../lib/components/Dog.svelte'
   import {
     activeTail,
     activeEars,

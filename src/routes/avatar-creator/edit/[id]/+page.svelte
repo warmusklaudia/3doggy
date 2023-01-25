@@ -1,6 +1,6 @@
 <script lang="ts">
   import { dog } from '$lib/utils/parts'
-  import Dog from '../../Dog.svelte'
+  import Dog from '../../../../lib/components/Dog.svelte'
   import {
     activeTail,
     activeEars,

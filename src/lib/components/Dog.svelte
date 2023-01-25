@@ -27,7 +27,7 @@
     ears,
     tails,
   } from '$lib/utils/loadObjects'
-  import Tails from '../../lib/components/Tails.svelte'
+  import Tails from './Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
   import Body from '$lib/components/Body.svelte'

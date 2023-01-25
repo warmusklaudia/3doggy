@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Logo from '$lib/Logo.svelte'
+  import Logo from '$lib/svg/Logo.svelte'
   import { logout, user } from '$lib/utils/useAuth'
   import { Library, Loader2, LogOut, User } from 'lucide-svelte'
   let showMenu = false
