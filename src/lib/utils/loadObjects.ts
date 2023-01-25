@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { Scene } from 'three'
+import { LoadingManager, ObjectLoader, Scene } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { green, lightBrown } from './colors'
 import { activeBodyColor, activeEyesColor } from './parts'

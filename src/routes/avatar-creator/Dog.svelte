@@ -7,6 +7,7 @@
     DirectionalLight,
     AmbientLight,
     Vector3,
+    LoadingManager,
   } from 'three'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -43,11 +44,13 @@
   } from '$lib/utils/parts'
   import DogName from '$lib/components/DogName.svelte'
   import { goto } from '$app/navigation'
-  import { showName } from '$lib/utils/stores'
+  import { loadingObjects, showName } from '$lib/utils/stores'
+  import LoadingObjects from '$lib/components/LoadingObjects.svelte'
   export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol, dogId
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
+  let progress = 0
   let showTails = false
   let showEars = true
   let showEyes = false
@@ -55,7 +58,8 @@
 
   $: innerHeight = 0
   $: innerWidth = 0
-  const gltfLoader = new GLTFLoader()
+  const loadingManager = new LoadingManager()
+  const gltfLoader = new GLTFLoader(loadingManager)
   const scene = new Scene()
 
   $: {
@@ -109,6 +113,21 @@
   }
 
   onMount(() => {
+    loadingManager.onStart = () => {
+      loadingObjects.set(true)
+      console.log($loadingObjects)
+    }
+
+    loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      progress = ((itemsLoaded / itemsTotal) * 100).toFixed(0)
+      console.log(progress)
+    }
+
+    loadingManager.onLoad = () => {
+      loadingObjects.set(false)
+      console.log($loadingObjects)
+    }
+
     clearScene(scene)
     loadTail(gltfLoader, scene)
     loadBody(gltfLoader, scene)
@@ -365,87 +384,91 @@
     <DogName {saveDog} {dogId} />
   {/if}
   <canvas bind:this={canvas} class="mt-10 -mb-32 md:-mb-0" />
-  <div class="md:ml-16">
-    {#if showTails}
-      <Tails {changeTail} {scene} />
-    {/if}
-    {#if showEyes}
-      <Eyes {changeEyes} {scene} activeColor={activeEyesCol} />
-    {/if}
-    {#if showEars}
-      <Ears {changeEars} {scene} />
-    {/if}
-    {#if showBody}
-      <Body activeColor={activeBodyCol} />
-    {/if}
-  </div>
-  <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">
-    <div class="flex md:gap-12 md:w-3/5 relative bg-opacity-20">
-      <div class="">
-        <input
-          class=" sr-only peer"
-          checked
-          id="ears"
-          type="radio"
-          name="settings"
-          on:change={earsSettings}
-        />
-        <label
-          for="ears"
-          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
-        >
-          Ears
-        </label>
-      </div>
-      <div class="">
-        <input
-          class=" sr-only peer"
-          id="eyes"
-          type="radio"
-          name="settings"
-          on:change={eyesSettings}
-        />
-        <label
-          for="eyes"
-          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
-        >
-          Eyes
-        </label>
-      </div>
-      <div class="">
-        <input
-          class=" sr-only peer"
-          id="body"
-          type="radio"
-          name="settings"
-          on:change={bodySettings}
-        />
-        <label
-          for="body"
-          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
-        >
-          Body
-        </label>
-      </div>
-      <div class="">
-        <input
-          class=" sr-only peer"
-          id="tails"
-          type="radio"
-          name="settings"
-          on:change={tailsSettings}
-        />
-        <label
-          for="tails"
-          class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
-        >
-          Tail
-        </label>
-      </div>
+  {#if $loadingObjects}
+    <LoadingObjects {progress} />
+  {:else}
+    <div class="md:ml-16">
+      {#if showTails}
+        <Tails {changeTail} {scene} />
+      {/if}
+      {#if showEyes}
+        <Eyes {changeEyes} {scene} activeColor={activeEyesCol} />
+      {/if}
+      {#if showEars}
+        <Ears {changeEars} {scene} />
+      {/if}
+      {#if showBody}
+        <Body activeColor={activeBodyCol} />
+      {/if}
     </div>
-    <button
-      class="rounded-md px-6 py-2 bg-alpha text-white hover:bg-alpha-dark"
-      on:click={() => showName.set(!$showName)}>Save</button
-    >
-  </div>
+    <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">
+      <div class="flex md:gap-12 md:w-3/5 relative bg-opacity-20">
+        <div class="">
+          <input
+            class=" sr-only peer"
+            checked
+            id="ears"
+            type="radio"
+            name="settings"
+            on:change={earsSettings}
+          />
+          <label
+            for="ears"
+            class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+          >
+            Ears
+          </label>
+        </div>
+        <div class="">
+          <input
+            class=" sr-only peer"
+            id="eyes"
+            type="radio"
+            name="settings"
+            on:change={eyesSettings}
+          />
+          <label
+            for="eyes"
+            class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+          >
+            Eyes
+          </label>
+        </div>
+        <div class="">
+          <input
+            class=" sr-only peer"
+            id="body"
+            type="radio"
+            name="settings"
+            on:change={bodySettings}
+          />
+          <label
+            for="body"
+            class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+          >
+            Body
+          </label>
+        </div>
+        <div class="">
+          <input
+            class=" sr-only peer"
+            id="tails"
+            type="radio"
+            name="settings"
+            on:change={tailsSettings}
+          />
+          <label
+            for="tails"
+            class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+          >
+            Tail
+          </label>
+        </div>
+      </div>
+      <button
+        class="rounded-md px-6 py-2 bg-alpha text-white hover:bg-alpha-dark"
+        on:click={() => showName.set(!$showName)}>Save</button
+      >
+    </div>
+  {/if}
 </div>
