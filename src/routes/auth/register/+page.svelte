@@ -24,7 +24,7 @@
       return
     }
     if (repeatPassword === '' || repeatPassword !== userInput.password) {
-      errorMessage = 'Password confirmation does not match'
+      errorMessage = 'Passwords does not match'
       loading = false
       return
     }
@@ -68,7 +68,7 @@
       <label class="block" for="email">
         <span class="block font-cormorant">Email</span>
         <input
-          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3  focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3  focus:border-1 focus:border-alpha focus:outline-none"
           type="email"
           name="email"
           id="email"
@@ -80,7 +80,7 @@
       <label class="block" for="password">
         <span class="block font-cormorant">Password</span>
         <input
-          class="w-full placeholder:font-cormorant mt-1  py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="w-full placeholder:font-cormorant mt-1  py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-alpha focus:outline-none"
           type="password"
           name="password"
           id="password"
@@ -92,7 +92,7 @@
       <label class="block" for="repeatPassword">
         <span class="block font-cormorant">Confirm password </span>
         <input
-          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-teal-400 focus:outline-none"
+          class="placeholder:font-cormorant w-full mt-1 py-2 bg-transparent border rounded-md px-3   focus:border-1 focus:border-alpha focus:outline-none"
           type="password"
           name="repeatPassword"
           id="repeatPassword"
@@ -103,11 +103,11 @@
       </label>
       <div class="flex items-center justify-between my-3">
         <a
-          class="hover:underline mr-6 text-[#4AD5E2] md:mr-24  focus:ring-2 focus:ring-teal-600 focus:outline-none rounded-md"
+          class="hover:underline mr-6 text-[#4AD5E2] md:mr-24  focus:ring-2 focus:ring-alpha focus:outline-none rounded-md"
           href="/auth/login">I have an account</a
         >
         <button
-          class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-teal-600 focus:outline-none"
+          class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-alpha-dark focus:outline-none"
           disabled={loading}
           type="submit"
         >

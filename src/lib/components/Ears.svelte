@@ -16,7 +16,10 @@
 </script>
 
 <div class="md:fixed md:inset-y-0 flex md:flex-col gap-10 justify-center mb-6 md:mb-0">
-  <button on:click={() => [changeEars('ears1'), setActive('ears1')]}>
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => [changeEars('ears1'), setActive('ears1')]}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears1.JPG"
@@ -29,7 +32,10 @@
       </div>
     {/if}
   </button>
-  <button on:click={() => [changeEars('ears2'), setActive('ears2')]}>
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => [changeEars('ears2'), setActive('ears2')]}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears2.JPG"
@@ -42,7 +48,10 @@
       </div>
     {/if}
   </button>
-  <button on:click={() => [changeEars('ears3'), setActive('ears3')]}>
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => [changeEars('ears3'), setActive('ears3')]}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/ears/Ears3.JPG"

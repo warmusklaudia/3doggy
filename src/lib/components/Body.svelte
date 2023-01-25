@@ -38,7 +38,10 @@
 </script>
 
 <div class="md:fixed md:inset-y-0 flex md:flex-col gap-10 justify-center mb-6 md:mb-0">
-  <button on:click={() => changeBodyColor(lightBrown)}>
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => changeBodyColor(lightBrown)}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/body/BodyColor1.JPG"
@@ -51,7 +54,10 @@
       </div>
     {/if}
   </button>
-  <button on:click={() => changeBodyColor(darkBrown)}>
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => changeBodyColor(darkBrown)}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/body/BodyColor2.JPG"
@@ -64,7 +70,10 @@
       </div>
     {/if}
   </button>
-  <button on:click={() => changeBodyColor(gray)} class="relative">
+  <button
+    class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+    on:click={() => changeBodyColor(gray)}
+  >
     <img
       class="rounded-full w-20 h-20 object-cover"
       src="../../../src/lib/images/body/BodyColor3.JPG"

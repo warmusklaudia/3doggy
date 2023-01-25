@@ -17,7 +17,7 @@
   {#if $page.url.pathname !== '/avatar-creator'}
     <footer class=" text-sm flex flex-col justify-center items-center p-3">
       <a
-        class="hover:opacity-80 focus:ring-2 font-cormorant focus:ring-teal-800 focus:outline-none rounded-lg "
+        class="hover:opacity-80 focus:ring-2 font-cormorant focus:ring-alpha-dark focus:outline-none rounded-lg "
         href="https://klaudiawarmus.be">Website by KWS</a
       >
     </footer>

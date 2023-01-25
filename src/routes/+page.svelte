@@ -24,7 +24,7 @@
     <h2 class="text-xl">Make your life better and create your canine friend in 3D!</h2>
     <button
       on:click={() => goto('/avatar-creator')}
-      class="text-sm sm:text-base hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg w-2/3"
+      class="text-sm sm:text-base hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg w-2/3"
     >
       Make your own doggy</button
     >

@@ -52,7 +52,7 @@
     {#if myDogs.length !== 0}
       <button
         on:click={() => goto('/avatar-creator')}
-        class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
+        class="ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
       >
         <Plus class="mr-2" />
         Create new dog</button
@@ -72,14 +72,14 @@
               <div class="flex items-center gap-3">
                 <button
                   on:click={() => goto(`/avatar-creator/edit/${dog.id}`)}
-                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
                 >
                   <Edit class="mr-2 w-4 h-4 md:w-5 md:h-5" />
                   Edit</button
                 >
                 <button
                   on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
-                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
                 >
                   <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
                   Delete</button
@@ -98,7 +98,7 @@
           </h1>
           <button
             on:click={() => goto('/avatar-creator')}
-            class="text-sm sm:text-base ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-teal-800 focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
+            class="text-sm sm:text-base ml-2 mb-6 flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg "
           >
             <Plus class="mr-2" />
             Create your first doggy</button

@@ -28,11 +28,11 @@
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
     {#if $page.url.pathname !== '/avatar-creator' && !$page.url.pathname.startsWith('/avatar-creator/edit')}
-      <a class="focus:ring-2 focus:ring-teal-800 rounded-lg relative z-10" href="/">
+      <a class="rounded-lg" href="/">
         <Logo />
       </a>
     {:else}
-      <a on:click={handleClick} class="focus:ring-2 focus:ring-teal-800 rounded-lg " href="/">
+      <a on:click={handleClick} class="rounded-lg " href="/">
         <Logo />
       </a>
     {/if}
@@ -48,7 +48,7 @@
           <div class=" flex flex-col items-center whitespace-nowrap">
             <button
               on:click={toggleMenu}
-              class=" flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-beta"
+              class=" flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-beta focus:ring-2 focus:ring-alpha focus:outline-none"
             >
               <p class="uppercase text-lg font-cormorant font-bold sm:text-2xl text-white">
                 {$user?.email?.toString()[0] || ''}
@@ -61,7 +61,7 @@
               <li class="flex items-center  hover:bg-gray-100">
                 <a
                   on:click={toggleMenu}
-                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
                   href="/profile"
                 >
                   <User class="mr-2" size={20} />My account</a
@@ -70,7 +70,7 @@
               <li class="flex items-center  hover:bg-gray-100">
                 <a
                   on:click={toggleMenu}
-                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
                   href="/avatar-creator/library"
                 >
                   <Library class="mr-2" size={20} />Library</a
@@ -81,7 +81,7 @@
                 <button
                   on:click={toggleMenu}
                   on:click={logout}
-                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap"
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
                 >
                   <LogOut class="mr-2" size={20} />Log out</button
                 >
@@ -94,13 +94,13 @@
           <ul class="flex gap-6 lg:text-lg relative">
             <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
               <a
-                class="text-beta focus:ring-2 focus:ring-teal-800 focus:outline-none rounded-lg hover:opacity-80"
+                class="text-beta focus:ring-2 focus:ring-alpha-dark focus:outline-none rounded-lg hover:opacity-80"
                 href="/auth/login">Log in</a
               >
             </li>
             <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
               <a
-                class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-teal-800 focus:outline-none"
+                class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-alpha-dark focus:outline-none"
                 href="/auth/register">Create new account</a
               >
             </li>

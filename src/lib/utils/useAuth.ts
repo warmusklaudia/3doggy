@@ -80,6 +80,18 @@ const restoreUser = (): Promise<void> => {
   })
 }
 
+const updatePassword = (user: User, newPassword: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    updatePassword(user, newPassword)
+      .then(() => {
+        resolve()
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
 const protect = () => {
   auth.onAuthStateChanged(async (user) => {
     if (user) {
@@ -91,4 +103,4 @@ const protect = () => {
   })
 }
 
-export { register, login, logout, restoreUser, protect }
+export { register, login, logout, restoreUser, protect, updatePassword }

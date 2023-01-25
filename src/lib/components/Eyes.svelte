@@ -36,7 +36,10 @@
   class="md:fixed flex flex-col md:flex-row gap-5 justify-center mb-6 md:mb-0 md:inset-y-0 items-center"
 >
   <div class="flex md:flex-col gap-10 ">
-    <button on:click={() => [changeEyes('eyes1'), setActive('eyes1')]}>
+    <button
+      class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+      on:click={() => [changeEyes('eyes1'), setActive('eyes1')]}
+    >
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes1.JPG"
@@ -49,7 +52,10 @@
         </div>
       {/if}
     </button>
-    <button on:click={() => [changeEyes('eyes2'), setActive('eyes2')]}>
+    <button
+      class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+      on:click={() => [changeEyes('eyes2'), setActive('eyes2')]}
+    >
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes2.JPG"
@@ -62,7 +68,10 @@
         </div>
       {/if}
     </button>
-    <button on:click={() => [changeEyes('eyes3'), setActive('eyes3')]}>
+    <button
+      class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+      on:click={() => [changeEyes('eyes3'), setActive('eyes3')]}
+    >
       <img
         class="rounded-full w-20 h-20 object-cover"
         src="../../../src/lib/images/eyes/Eyes3.JPG"
@@ -79,7 +88,10 @@
 
   {#if $activeEyes === 'eyes2' || $activeEyes === 'eyes3'}
     <div class="flex md:flex-col gap-10 ">
-      <button on:click={() => changeEyesColor(green)}>
+      <button
+        class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+        on:click={() => changeEyesColor(green)}
+      >
         <img
           class="rounded-full w-20 h-20 object-cover"
           src="../../../src/lib/images/eyes/EyesColor1.JPG"
@@ -92,7 +104,10 @@
           </div>
         {/if}
       </button>
-      <button on:click={() => changeEyesColor(blue)}>
+      <button
+        class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+        on:click={() => changeEyesColor(blue)}
+      >
         <img
           class="rounded-full w-20 h-20 object-cover"
           src="../../../src/lib/images/eyes/EyesColor2.JPG"
@@ -105,7 +120,10 @@
           </div>
         {/if}
       </button>
-      <button on:click={() => changeEyesColor(brown)}>
+      <button
+        class="focus:ring-2 focus:ring-alpha focus:outline-none focus:rounded-full"
+        on:click={() => changeEyesColor(brown)}
+      >
         <img
           class="rounded-full w-20 h-20 object-cover"
           src="../../../src/lib/images/eyes/EyesColor3.JPG"

@@ -402,10 +402,10 @@
       {/if}
     </div>
     <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">
-      <div class="flex md:gap-12 md:w-3/5 relative bg-opacity-20">
+      <div class="flex md:gap-12 md:w-3/5 relative bg-opacity-20 ">
         <div class="">
           <input
-            class=" sr-only peer"
+            class="sr-only peer"
             checked
             id="ears"
             type="radio"
@@ -466,7 +466,7 @@
         </div>
       </div>
       <button
-        class="rounded-md px-6 py-2 bg-alpha text-white hover:bg-alpha-dark"
+        class="rounded-md px-6 py-2 bg-alpha text-white hover:bg-alpha-dark  focus:ring-2 focus:ring-alpha-dark focus:outline-none"
         on:click={() => showName.set(!$showName)}>Save</button
       >
     </div>
