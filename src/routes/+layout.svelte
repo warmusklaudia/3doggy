@@ -1,53 +1,25 @@
 <script>
-	import Header from './Header.svelte';
-	import './styles.css';
+  import Header from './Header.svelte'
+  import '../app.css'
+  import { page } from '$app/stores'
 </script>
 
-<div class="app">
-	<Header />
+<div
+  class={$page.url.pathname.startsWith('/auth')
+    ? 'flex min-h-screen flex-col overflow-hidden font-openSans bg-paws bg-contain md:bg-auto bg-no-repeat bg-right selection:bg-alpha selection:text-white'
+    : 'flex min-h-screen flex-col overflow-hidden font-openSans bg-gradient-to-tr from-[#E4E6E6] to-white selection:bg-alpha selection:text-white '}
+>
+  <Header />
 
-	<main>
-		<slot />
-	</main>
-
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+  <main class="w-full flex flex-1 flex-col px-6 py-3  max-w-5xl my-0 mx-auto box-border text-beta ">
+    <slot />
+  </main>
+  {#if $page.url.pathname !== '/avatar-creator'}
+    <footer class=" text-sm flex flex-col justify-center items-center p-3">
+      <a
+        class="hover:opacity-80 focus:ring-2 font-cormorant focus:ring-alpha-dark focus:outline-none rounded-lg "
+        href="https://klaudiawarmus.be">Website by KWS</a
+      >
+    </footer>
+  {/if}
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>

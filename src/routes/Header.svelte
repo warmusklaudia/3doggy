@@ -1,129 +1,112 @@
-<script>
-	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+<script lang="ts">
+  import { page } from '$app/stores'
+  import Logo from '$lib/svg/Logo.svelte'
+  import { logout, user } from '$lib/utils/useAuth'
+  import { Library, Loader2, LogOut, User } from 'lucide-svelte'
+  let showMenu = false
+
+  const toggleMenu = () => {
+    showMenu = !showMenu
+  }
+
+  const handleClick = (event: any) => {
+    if (!confirm('Are you sure you want to leave? All changes will be discarded.')) {
+      event.preventDefault()
+    }
+  }
+
+  console.log(user)
+  console.log($user)
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
+<header
+  class={'flex justify-between items-center ' +
+    ($page.url.pathname === '/avatar-creator' ||
+    $page.url.pathname.startsWith('/avatar-creator/edit')
+      ? 'absolute mx-auto pt-3 md:pt-10 2xl:max-w-7xl px-6 md:px-20 2xl:px-0 w-full z-50 2xl:inset-x-0'
+      : ' mt-3 mx-6 md:mt-10 max-w-7xl md:mx-20 2xl:mx-auto 2xl:w-full')}
+>
+  <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+    {#if $page.url.pathname !== '/avatar-creator' && !$page.url.pathname.startsWith('/avatar-creator/edit')}
+      <a class="rounded-lg" href="/">
+        <Logo />
+      </a>
+    {:else}
+      <a on:click={handleClick} class="rounded-lg " href="/">
+        <Logo />
+      </a>
+    {/if}
+  </div>
 
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
-
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
+  {#if $page.url.pathname !== '/auth/login' && $page.url.pathname !== '/auth/register'}
+    <div />
+    {#await user.known}
+      <Loader2 class="animate-spin text-beta" size={30} />
+    {:then}
+      {#if $user}
+        <nav>
+          <div class=" flex flex-col items-center whitespace-nowrap">
+            <button
+              on:click={toggleMenu}
+              class=" flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-beta focus:ring-2 focus:ring-alpha focus:outline-none"
+            >
+              <p class="uppercase text-lg font-cormorant font-bold sm:text-2xl text-white">
+                {$user?.email?.toString()[0] || ''}
+              </p>
+            </button>
+            <ul
+              class={'text-left mt-14 absolute bg-white z-50 py-2 rounded-lg shadow-lg text-beta mr-14 md:mr-0' +
+                (showMenu ? '' : ' hidden')}
+            >
+              <li class="flex items-center  hover:bg-gray-100">
+                <a
+                  on:click={toggleMenu}
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
+                  href="/profile"
+                >
+                  <User class="mr-2" size={20} />My account</a
+                >
+              </li>
+              <li class="flex items-center  hover:bg-gray-100">
+                <a
+                  on:click={toggleMenu}
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
+                  href="/avatar-creator/library"
+                >
+                  <Library class="mr-2" size={20} />Library</a
+                >
+              </li>
+              <li class="border-t-1 border-t" />
+              <li class="pt-1 flex items-center  hover:bg-gray-100">
+                <button
+                  on:click={toggleMenu}
+                  on:click={logout}
+                  class="flex items-center text-sm py-2 pr-6 pl-3 w-full whitespace-nowrap focus:ring-2 focus:ring-alpha-dark focus:outline-none"
+                >
+                  <LogOut class="mr-2" size={20} />Log out</button
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      {:else}
+        <nav>
+          <ul class="flex gap-6 lg:text-lg relative">
+            <li aria-current={$page.url.pathname === '/auth/login' ? 'page' : undefined}>
+              <a
+                class="text-beta focus:ring-2 focus:ring-alpha-dark focus:outline-none rounded-lg hover:opacity-80"
+                href="/auth/login">Log in</a
+              >
+            </li>
+            <li aria-current={$page.url.pathname === '/auth/register' ? 'page' : undefined}>
+              <a
+                class="text-white bg-alpha p-3 hover:bg-alpha-dark rounded-lg focus:ring-2 focus:ring-alpha-dark focus:outline-none"
+                href="/auth/register">Create new account</a
+              >
+            </li>
+          </ul>
+        </nav>
+      {/if}
+    {/await}
+  {/if}
 </header>
-
-<style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.corner {
-		width: 3em;
-		height: 3em;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
-
-	nav {
-		display: flex;
-		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
-	}
-
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
-	}
-
-	li {
-		position: relative;
-		height: 100%;
-	}
-
-	li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
-	}
-
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-		color: var(--color-theme-1);
-	}
-</style>
