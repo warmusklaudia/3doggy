@@ -46,7 +46,7 @@
   import { goto } from '$app/navigation'
   import { loadingObjects, showName } from '$lib/utils/stores'
   import LoadingObjects from '$lib/components/LoadingObjects.svelte'
-  export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol, dogId
+  export let dogId
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
@@ -64,40 +64,32 @@
 
   $: {
     if ($tails.length === 3) {
-      changeTail(activeTailName)
+      changeTail($activeTail)
     }
   }
 
   $: {
     if ($ears.length === 3) {
-      changeEars(activeEarsName)
+      changeEars($activeEars)
     }
   }
 
   $: {
     if ($eyes.length === 3) {
-      changeEyes(activeEyesName)
+      changeEyes($activeEyes)
     }
   }
 
   $: {
     if ($bodies.length === 1 && $tails.length === 3 && $ears.length === 3) {
-      changeBodyColor(activeBodyCol)
+      changeBodyColor($activeBodyColor)
     }
   }
 
   $: {
     if ($eyes.length === 3) {
-      changeEyesColor(activeEyesCol)
+      changeEyesColor($activeEyesColor)
     }
-  }
-
-  $: if (dogId) {
-    activeTail.set(activeTailName)
-    activeEars.set(activeEarsName)
-    activeEyes.set(activeEyesName)
-    activeBodyColor.set(activeBodyCol)
-    activeEyesColor.set(activeEyesCol)
   }
 
   const clearScene = (scene) => {
@@ -286,7 +278,6 @@
   }
 
   const changeTail = (name) => {
-    console.log(scene)
     let tail = $tails.find((t) => t.name === name)
     $tails.map((t) => {
       scene.remove(t.tail)
@@ -328,7 +319,6 @@
       bodyColor: $activeBodyColor,
     }
     if (!dogId) {
-      console.log('no dog id')
       try {
         await setDoc(doc(db, '3doggy', `${$user.uid}/dog`, id), dataToAdd).then(async () => {
           await saveImage(id)
@@ -394,13 +384,13 @@
         <Tails {changeTail} {scene} />
       {/if}
       {#if showEyes}
-        <Eyes {changeEyes} {scene} activeColor={activeEyesCol} />
+        <Eyes {changeEyes} {scene} />
       {/if}
       {#if showEars}
         <Ears {changeEars} {scene} />
       {/if}
       {#if showBody}
-        <Body activeColor={activeBodyCol} />
+        <Body />
       {/if}
     </div>
     <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">

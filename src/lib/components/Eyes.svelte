@@ -3,13 +3,8 @@
   import { eyes } from '$lib/utils/loadObjects'
   import { green, blue, brown } from '$lib/utils/colors'
   import { activeEyesColor, activeEyes } from '$lib/utils/parts'
-  export let activeColor: string
   export let changeEyes: Function
   export let scene: Scene
-
-  $: if (activeColor) {
-    changeEyesColor(activeColor)
-  }
 
   const setActive = (name: string) => {
     scene.children.map((c) => {

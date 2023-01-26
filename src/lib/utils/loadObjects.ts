@@ -21,7 +21,6 @@ let noses = writable([{}])
 let manes = writable([{}])
 
 const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
-  activeBodyColor.set(lightBrown)
   gltfLoader.load('/models/shiba/body/body.gltf', (gltf) => {
     bodies.update((body) => {
       body.pop()
@@ -246,7 +245,6 @@ const loadEars = (gltfLoader: GLTFLoader, scene: Scene, earsName: string) => {
 }
 
 const loadEyes = (gltfLoader: GLTFLoader, scene: Scene, eyesName: string) => {
-  activeEyesColor.set(green)
   eyes.update((eye) => {
     eye = eye.filter(() => false)
     return eye

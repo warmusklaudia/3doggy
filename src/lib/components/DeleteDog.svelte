@@ -3,8 +3,6 @@
   import { Trash2, X } from 'lucide-svelte'
   export let deleteDog: (id: string) => Promise<void>
   export let dogId: string
-
-  $: console.log(dogId)
 </script>
 
 <div

@@ -14,9 +14,6 @@
       event.preventDefault()
     }
   }
-
-  console.log(user)
-  console.log($user)
 </script>
 
 <header
