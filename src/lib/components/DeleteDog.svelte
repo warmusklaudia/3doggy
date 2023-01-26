@@ -7,7 +7,7 @@
   $: console.log(dogId)
 </script>
 
-<section
+<div
   class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-20 backdrop-blur-[2px]"
 >
   <div class="bg-beta bg-opacity-90 p-4 rounded-lg shadow-2xl text-white flex flex-col relative">
@@ -29,4 +29,4 @@
       Delete dog
     </button>
   </div>
-</section>
+</div>

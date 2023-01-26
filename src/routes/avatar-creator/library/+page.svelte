@@ -6,12 +6,18 @@
   import { Edit, Eye, Plus, Trash2 } from 'lucide-svelte'
   import type Dog from '$lib/interfaces/dog.interface'
   import NoDataDog from '$lib/svg/NoDataDog.svelte'
-  import { showDelete } from '$lib/utils/stores'
+  import { showDelete, showPreview } from '$lib/utils/stores'
   import DeleteDog from '$lib/components/DeleteDog.svelte'
   import { onMount } from 'svelte'
+  import Preview from '$lib/components/Preview.svelte'
 
   let myDogs: Dog[] = []
   let id: string
+  let eyes: string = ''
+  let ears: string = ''
+  let tail: string = ''
+  let bodyColor: string = ''
+  let eyesColor: string = ''
 
   const getDogs = async () => {
     const dogs = await getDocs(collection(db, '3doggy', $user!.uid, 'dog'))
@@ -37,6 +43,16 @@
 <section class="">
   {#if $showDelete}
     <DeleteDog {deleteDog} dogId={id} />
+  {/if}
+  {#if $showPreview}
+    <Preview
+      activeBodyCol={bodyColor}
+      activeEarsName={ears}
+      activeEyesCol={eyesColor}
+      activeEyesName={eyes}
+      activeTailName={tail}
+      dogId={id}
+    />
   {/if}
   {#await getDogs()}
     <div
@@ -73,6 +89,15 @@
                 <button
                   title="Preview"
                   class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
+                  on:click={() => {
+                    showPreview.set(!$showPreview)
+                    id = dog.id
+                    eyes = dog.eyes
+                    ears = dog.ears
+                    tail = dog.tail
+                    bodyColor = dog.bodyColor
+                    eyesColor = dog.eyesColor
+                  }}
                 >
                   <Eye size={20} />
                 </button>
@@ -85,7 +110,10 @@
                 </button>
                 <button
                   title="Delete"
-                  on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
+                  on:click={() => {
+                    showDelete.set(!$showDelete)
+                    id = dog.id
+                  }}
                   class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
                 >
                   <Trash2 size={20} />
