@@ -23,8 +23,8 @@
   class={'flex justify-between items-center ' +
     ($page.url.pathname === '/avatar-creator' ||
     $page.url.pathname.startsWith('/avatar-creator/edit')
-      ? 'absolute w-full pt-3 px-6 md:pt-10 md:px-20 z-50'
-      : ' mx-6 mt-3 md:mx-20 md:mt-10')}
+      ? 'absolute mx-auto pt-3 md:pt-10 2xl:max-w-7xl px-6 md:px-20 2xl:px-0 w-full z-50 2xl:inset-x-0'
+      : ' mt-3 mx-6 md:mt-10 max-w-7xl md:mx-20 2xl:mx-auto 2xl:w-full')}
 >
   <div aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
     {#if $page.url.pathname !== '/avatar-creator' && !$page.url.pathname.startsWith('/avatar-creator/edit')}
