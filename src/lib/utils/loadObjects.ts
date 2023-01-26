@@ -1,24 +1,17 @@
-import { writable } from 'svelte/store'
-import { LoadingManager, ObjectLoader, Scene } from 'three'
+import { Scene } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { green, lightBrown } from './colors'
-import { activeBodyColor, activeEyesColor } from './parts'
-
-let tails = writable([{}])
-tails.update((tail) => {
-  tail.pop()
-  return tail
-})
-let bodies = writable([{}])
-let tongues = writable([{}])
-let ears = writable([{}])
-let eyes = writable([{}])
-eyes.update((eye) => {
-  eye.pop()
-  return eye
-})
-let noses = writable([{}])
-let manes = writable([{}])
+import {
+  activeBodyColor,
+  activeEyesColor,
+  bodies,
+  ears,
+  eyes,
+  manes,
+  noses,
+  tails,
+  tongues,
+} from './parts'
 
 const loadBody = (gltfLoader: GLTFLoader, scene: Scene) => {
   activeBodyColor.set(lightBrown)

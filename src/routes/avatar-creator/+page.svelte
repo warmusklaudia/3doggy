@@ -6,11 +6,14 @@
     activeEyes,
     activeBodyColor,
     activeEyesColor,
+    activeCollarColor,
+    activeBreed,
   } from '$lib/utils/parts'
 
   activeTail.set('tail1')
   activeEars.set('ears1')
   activeEyes.set('eyes1')
+  activeBreed.set('Shiba')
 </script>
 
 <svelte:head>
@@ -19,12 +22,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog
-    activeTailName={$activeTail}
-    activeEarsName={$activeEars}
-    activeEyesName={$activeEyes}
-    activeBodyCol={$activeBodyColor}
-    activeEyesCol={$activeEyesColor}
-    dogId={undefined}
-  />
+  <Dog dogId={undefined} />
 </section>

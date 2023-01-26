@@ -6,4 +6,9 @@ let lightBrown: string = '#E7C8A6'
 let darkBrown: string = '#7B6A58'
 let gray: string = '#8F8B8A'
 
-export { blue, green, brown, lightBrown, darkBrown, gray }
+let red: string = '#AC0000'
+let darkBlue: string = '#24637D'
+
+let black: string = '#000000'
+
+export { blue, green, brown, lightBrown, darkBrown, gray, black, red, darkBlue }

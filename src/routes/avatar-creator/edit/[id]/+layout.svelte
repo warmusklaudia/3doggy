@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import type Dog from '$lib/interfaces/dog.interface'
-  import { dog } from '$lib/utils/parts'
+  import { activeBreed, dog } from '$lib/utils/parts'
   import { user } from '$lib/utils/useAuth'
   import { db } from '$lib/utils/useFirebase'
   import { collection, getDocs } from 'firebase/firestore'
@@ -17,8 +17,9 @@
       })
       .then(() => {
         foundDog = myDogs.find((dog) => dog.id === data.props.id)
-        if (foundDog) dog.set(foundDog)
-        else goto('/avatar-creator/library')
+        console.log(foundDog)
+        if (foundDog) dog.set(foundDog), activeBreed.set(foundDog.breed)
+        else goto('/avatar-creator/library'), dog.set(undefined)
       })
   }
 </script>

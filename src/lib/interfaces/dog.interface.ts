@@ -2,7 +2,8 @@ export default interface Dog {
   id: string
   name: string
   bodyColor: string
-  eyesColor: string
+  eyesColor?: string
+  collarColor?: string
   tail: string
   ears: string
   eyes: string

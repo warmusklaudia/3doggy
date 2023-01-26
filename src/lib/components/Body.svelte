@@ -1,39 +1,66 @@
 <script lang="ts">
   import { lightBrown, gray, darkBrown } from '$lib/utils/colors'
   import { bodies, ears, tails } from '$lib/utils/loadObjects'
+  import {
+    bodies as bodiesBeagle,
+    ears as earsBeagle,
+    tails as tailsBeagle,
+  } from '$lib/utils/loadObjectsBeagle'
   import { activeBodyColor } from '$lib/utils/parts'
-  export let activeColor: string
-
-  $: if (activeColor) {
-    changeBodyColor(activeColor)
-  }
-
+  export let breed: string
   const changeBodyColor = (color: string) => {
     activeBodyColor.set(color)
-    $bodies.map((b) => {
-      //@ts-ignore
-      b.body.children.map((p) => {
-        if (p.name.includes('body')) {
-          p.material.color.set(color)
-        }
+    if (breed === 'Shiba') {
+      $bodies.map((b) => {
+        //@ts-ignore
+        b.body.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
       })
-    })
-    $ears.map((e) => {
-      //@ts-ignore
-      e.ears.children.map((p) => {
-        if (p.name.includes('body')) {
-          p.material.color.set(color)
-        }
+      $ears.map((e) => {
+        //@ts-ignore
+        e.ears.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
       })
-    })
-    $tails.map((t) => {
-      //@ts-ignore
-      t.tail.children.map((p) => {
-        if (p.name.includes('body')) {
-          p.material.color.set(color)
-        }
+      $tails.map((t) => {
+        //@ts-ignore
+        t.tail.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
       })
-    })
+    } else if (breed === 'Beagle') {
+      $bodiesBeagle.map((b) => {
+        //@ts-ignore
+        b.body.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
+      })
+      $earsBeagle.map((e) => {
+        //@ts-ignore
+        e.ears.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
+      })
+      $tailsBeagle.map((t) => {
+        //@ts-ignore
+        t.tail.children.map((p) => {
+          if (p.name.includes('body')) {
+            p.material.color.set(color)
+          }
+        })
+      })
+    }
   }
 </script>
 

@@ -22,11 +22,16 @@
     loadMane,
     loadEyes,
     loadTongue,
-    bodies,
-    eyes,
-    ears,
-    tails,
   } from '$lib/utils/loadObjects'
+  import {
+    loadBody as loadBodyBeagle,
+    loadTail as loadTailBeagle,
+    loadEars as loadEarsBeagle,
+    loadEyes as loadEyesBeagle,
+    loadNose as loadNoseBeagle,
+    loadCollar,
+  } from '$lib/utils/loadObjectsBeagle'
+  import { tails, bodies, ears, eyes, noses, collars, tongues, manes } from '$lib/utils/parts'
   import Tails from './Tails.svelte'
   import Ears from '$lib/components/Ears.svelte'
   import Eyes from '$lib/components/Eyes.svelte'
@@ -36,6 +41,8 @@
   import { getDownloadURL, ref, uploadString } from 'firebase/storage'
   import {
     activeBodyColor,
+    activeBreed,
+    activeCollarColor,
     activeEars,
     activeEyes,
     activeEyesColor,
@@ -46,7 +53,8 @@
   import { goto } from '$app/navigation'
   import { loadingObjects, showName } from '$lib/utils/stores'
   import LoadingObjects from '$lib/components/LoadingObjects.svelte'
-  export let activeTailName, activeEarsName, activeEyesName, activeBodyCol, activeEyesCol, dogId
+  import Collar from './Collar.svelte'
+  export let dogId, breed
 
   let canvas
   let camera, controls, renderer, cameraTarget, directionalLightA, directionalLightB, ambientLight
@@ -55,6 +63,7 @@
   let showEars = true
   let showEyes = false
   let showBody = false
+  let showCollar = false
 
   $: innerHeight = 0
   $: innerWidth = 0
@@ -64,40 +73,38 @@
 
   $: {
     if ($tails.length === 3) {
-      changeTail(activeTailName)
+      changeTail($activeTail)
     }
   }
 
   $: {
     if ($ears.length === 3) {
-      changeEars(activeEarsName)
+      changeEars($activeEars)
     }
   }
 
   $: {
     if ($eyes.length === 3) {
-      changeEyes(activeEyesName)
+      changeEyes($activeEyes)
     }
   }
 
   $: {
     if ($bodies.length === 1 && $tails.length === 3 && $ears.length === 3) {
-      changeBodyColor(activeBodyCol)
+      changeBodyColor($activeBodyColor)
+    }
+  }
+
+  $: {
+    if ($collars.length === 2 && $activeBreed === 'Beagle') {
+      changeCollarColor($activeCollarColor)
     }
   }
 
   $: {
     if ($eyes.length === 3) {
-      changeEyesColor(activeEyesCol)
+      changeEyesColor($activeEyesColor)
     }
-  }
-
-  $: if (dogId) {
-    activeTail.set(activeTailName)
-    activeEars.set(activeEarsName)
-    activeEyes.set(activeEyesName)
-    activeBodyColor.set(activeBodyCol)
-    activeEyesColor.set(activeEyesCol)
   }
 
   const clearScene = (scene) => {
@@ -111,8 +118,9 @@
       event.preventDefault()
     }
   }
-
   onMount(() => {
+    console.log($activeBreed)
+    console.log(scene)
     loadingManager.onStart = () => {
       loadingObjects.set(true)
     }
@@ -129,15 +137,24 @@
       console.log(e)
       loadingObjects.set(false)
     }
-
-    clearScene(scene)
-    loadTail(gltfLoader, scene)
-    loadBody(gltfLoader, scene)
-    loadEars(gltfLoader, scene)
-    loadNose(gltfLoader, scene)
-    loadMane(gltfLoader, scene)
-    loadEyes(gltfLoader, scene)
-    loadTongue(gltfLoader, scene)
+    if (breed === 'Shiba') {
+      clearScene(scene)
+      loadTail(gltfLoader, scene)
+      loadBody(gltfLoader, scene)
+      loadEars(gltfLoader, scene)
+      loadNose(gltfLoader, scene)
+      loadMane(gltfLoader, scene)
+      loadEyes(gltfLoader, scene)
+      loadTongue(gltfLoader, scene)
+    } else if (breed === 'Beagle') {
+      clearScene(scene)
+      loadBodyBeagle(gltfLoader, scene)
+      loadTailBeagle(gltfLoader, scene)
+      loadEarsBeagle(gltfLoader, scene)
+      loadEyesBeagle(gltfLoader, scene)
+      loadNoseBeagle(gltfLoader, scene)
+      loadCollar(gltfLoader, scene)
+    }
 
     directionalLightA = new DirectionalLight('#ffffff', 1)
     directionalLightA.position.set(-0.5, 1, 2.25)
@@ -194,6 +211,7 @@
     showEars = false
     showEyes = false
     showBody = false
+    showCollar = false
     showTails = !showTails
     if (showTails) {
       animate()
@@ -206,6 +224,7 @@
     showTails = false
     showEyes = false
     showBody = false
+    showCollar = false
     showEars = !showEars
     if (showEars) {
       animate()
@@ -231,7 +250,18 @@
     showTails = false
     showEars = false
     showEyes = false
+    showCollar = false
     showBody = !showBody
+    animate()
+  }
+
+  const collarSettings = () => {
+    cameraTarget = new Vector3(0, 1, 5)
+    showTails = false
+    showEars = false
+    showEyes = false
+    showBody = false
+    showCollar = !showCollar
     animate()
   }
 
@@ -255,6 +285,15 @@
         if (p.name.includes('body')) {
           p.material.color.set(color)
         }
+      })
+    })
+  }
+
+  const changeCollarColor = (color) => {
+    console.log($collars)
+    $collars.map((c) => {
+      c.collar.children.map((c) => {
+        c.material.color.set(color)
       })
     })
   }
@@ -286,8 +325,10 @@
   }
 
   const changeTail = (name) => {
-    console.log(scene)
+    console.log(name)
+    console.log($tails)
     let tail = $tails.find((t) => t.name === name)
+    console.log(tail)
     $tails.map((t) => {
       scene.remove(t.tail)
     })
@@ -307,24 +348,24 @@
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const dataToAdd = {
       id: id,
-      //TODO
       name: $name,
-      breed: 'Shiba',
+      breed: $activeBreed,
       ears: $activeEars,
       eyes: $activeEyes,
       tail: $activeTail,
-      eyesColor: $activeEyesColor,
+      eyesColor: $activeEyesColor ? $activeEyesColor : '',
       bodyColor: $activeBodyColor,
+      collarColor: $activeCollarColor ? $activeCollarColor : '',
       created: date.toLocaleDateString('en-GB', dateOptions),
     }
     const dataToUpdate = {
-      //TODO
       name: $name,
-      breed: 'Shiba',
+      breed: $activeBreed,
       ears: $activeEars,
       eyes: $activeEyes,
       tail: $activeTail,
-      eyesColor: $activeEyesColor,
+      eyesColor: $activeEyesColor ? $activeEyesColor : '',
+      collarColor: $activeCollarColor ? $activeCollarColor : '',
       bodyColor: $activeBodyColor,
     }
     if (!dogId) {
@@ -394,13 +435,16 @@
         <Tails {changeTail} {scene} />
       {/if}
       {#if showEyes}
-        <Eyes {changeEyes} {scene} activeColor={activeEyesCol} />
+        <Eyes {changeEyes} {scene} />
+      {/if}
+      {#if showCollar}
+        <Collar />
       {/if}
       {#if showEars}
         <Ears {changeEars} {scene} />
       {/if}
       {#if showBody}
-        <Body activeColor={activeBodyCol} />
+        <Body />
       {/if}
     </div>
     <div class="flex gap-3 md:gap-0 flex-col md:flex-row justify-center md:-mt-10 items-center ">
@@ -421,21 +465,39 @@
             Ears
           </label>
         </div>
-        <div class="">
-          <input
-            class=" sr-only peer"
-            id="eyes"
-            type="radio"
-            name="settings"
-            on:change={eyesSettings}
-          />
-          <label
-            for="eyes"
-            class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
-          >
-            Eyes
-          </label>
-        </div>
+        {#if $activeBreed === 'Shiba'}
+          <div class="">
+            <input
+              class=" sr-only peer"
+              id="eyes"
+              type="radio"
+              name="settings"
+              on:change={eyesSettings}
+            />
+            <label
+              for="eyes"
+              class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+            >
+              Eyes
+            </label>
+          </div>
+        {:else if $activeBreed === 'Beagle'}
+          <div class="">
+            <input
+              class=" sr-only peer"
+              id="eyes"
+              type="radio"
+              name="settings"
+              on:change={collarSettings}
+            />
+            <label
+              for="eyes"
+              class="rounded-md px-6 py-2 hover:cursor-pointer peer-checked:bg-alpha peer-checked:text-white"
+            >
+              Collar
+            </label>
+          </div>
+        {/if}
         <div class="">
           <input
             class=" sr-only peer"
