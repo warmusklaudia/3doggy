@@ -60,7 +60,7 @@
   <label for="uploadPic">
     <div
       type="input"
-      class="bg-alpha -mt-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none"
+      class="bg-beta -mt-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:opacity-80 focus:ring-2 focus:ring-alpha-dark focus:outline-none"
     >
       <p class="text-sm text-white md:text-xl ">
         <Plus size={24} />

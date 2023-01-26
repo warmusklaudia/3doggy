@@ -3,7 +3,7 @@
   import { user } from '$lib/utils/useAuth'
   import { db } from '$lib/utils/useFirebase'
   import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
-  import { Edit, Plus, Trash2 } from 'lucide-svelte'
+  import { Edit, Eye, Plus, Trash2 } from 'lucide-svelte'
   import type Dog from '$lib/interfaces/dog.interface'
   import NoDataDog from '$lib/svg/NoDataDog.svelte'
   import { showDelete } from '$lib/utils/stores'
@@ -69,21 +69,27 @@
                 <p>{dog.breed}</p>
                 <p>Born on {dog.created}</p>
               </div>
-              <div class="flex items-center gap-3">
+              <div class="flex items-center justify-evenly gap-3">
                 <button
+                  title="Preview"
+                  class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
+                >
+                  <Eye size={20} />
+                </button>
+                <button
+                  title="Edit"
                   on:click={() => goto(`/avatar-creator/edit/${dog.id}`)}
-                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                  class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
                 >
-                  <Edit class="mr-2 w-4 h-4 md:w-5 md:h-5" />
-                  Edit</button
-                >
+                  <Edit size={20} />
+                </button>
                 <button
+                  title="Delete"
                   on:click={() => [showDelete.set(!$showDelete), (id = dog.id)]}
-                  class="text-xs md:text-sm flex items-center hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha py-2 px-3 rounded-lg "
+                  class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
                 >
-                  <Trash2 class="mr-2 w-4 h-4 md:w-5 md:h-5" />
-                  Delete</button
-                >
+                  <Trash2 size={20} />
+                </button>
               </div>
             </div>
           </div>
