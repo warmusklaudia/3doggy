@@ -51,7 +51,6 @@
       activeEyesCol={eyesColor}
       activeEyesName={eyes}
       activeTailName={tail}
-      dogId={id}
     />
   {/if}
   {#await getDogs()}

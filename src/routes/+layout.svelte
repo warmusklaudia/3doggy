@@ -6,8 +6,8 @@
 
 <div
   class={$page.url.pathname.startsWith('/auth')
-    ? 'flex min-h-screen flex-col overflow-hidden font-openSans bg-paws bg-contain md:bg-auto bg-no-repeat bg-right '
-    : 'flex min-h-screen flex-col overflow-hidden font-openSans bg-gradient-to-tr from-[#E4E6E6] to-white '}
+    ? 'flex min-h-screen flex-col overflow-hidden font-openSans bg-paws bg-contain md:bg-auto bg-no-repeat bg-right selection:bg-alpha selection:text-white'
+    : 'flex min-h-screen flex-col overflow-hidden font-openSans bg-gradient-to-tr from-[#E4E6E6] to-white selection:bg-alpha selection:text-white '}
 >
   <Header />
 

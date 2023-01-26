@@ -2,14 +2,11 @@
   import { showPreview } from '$lib/utils/stores'
   import { X } from 'lucide-svelte'
   import DogPreview from './DogPreview.svelte'
-  export let dogId: string
   export let activeTailName: string
   export let activeEarsName: string
   export let activeEyesName: string
   export let activeBodyCol: string
   export let activeEyesCol: string
-
-  $: console.log(dogId)
 </script>
 
 <div

@@ -115,17 +115,19 @@
   onMount(() => {
     loadingManager.onStart = () => {
       loadingObjects.set(true)
-      console.log($loadingObjects)
     }
 
     loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
       progress = ((itemsLoaded / itemsTotal) * 100).toFixed(0)
-      console.log(progress)
     }
 
     loadingManager.onLoad = () => {
       loadingObjects.set(false)
-      console.log($loadingObjects)
+    }
+
+    loadingManager.onError = (e) => {
+      console.log(e)
+      loadingObjects.set(false)
     }
 
     clearScene(scene)

@@ -86,6 +86,11 @@
       loadingObjects.set(false)
     }
 
+    loadingManager.onError = (e) => {
+      console.log(e)
+      loadingObjects.set(false)
+    }
+
     clearScene(scene)
     loadTail(gltfLoader, scene, activeTailName)
     loadBody(gltfLoader, scene)
@@ -107,7 +112,7 @@
     scene.add(ambientLight)
 
     camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 90)
-    camera.position.set(0, 2, 5.5)
+    camera.position.set(-4, 1.5, 4)
     camera.updateProjectionMatrix()
     scene.add(camera)
 
