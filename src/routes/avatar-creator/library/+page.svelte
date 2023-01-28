@@ -13,6 +13,7 @@
 
   let myDogs: Dog[] = []
   let id: string
+  let name: string
   let eyes: string = ''
   let ears: string = ''
   let tail: string = ''
@@ -42,7 +43,7 @@
 
 <section class="">
   {#if $showDelete}
-    <DeleteDog {deleteDog} dogId={id} />
+    <DeleteDog {deleteDog} dogId={id} {name} />
   {/if}
   {#if $showPreview}
     <Preview
@@ -112,6 +113,7 @@
                   on:click={() => {
                     showDelete.set(!$showDelete)
                     id = dog.id
+                    name = dog.name
                   }}
                   class="text-xs md:text-sm flex items-center hover:opacity-80 focus:ring-2 focus:ring-alpha focus:outline-none  text-white text-center bg-beta p-3 rounded-full "
                 >
@@ -127,7 +129,7 @@
         <NoDataDog />
         <div class="absolute flex items-center justify-center flex-col">
           <h1 class="text-2xl sm:text-4xl pb-3 font-cormorant font-bold">
-            You haven't any dogs yet
+            You don't have any dogs yet
           </h1>
           <button
             on:click={() => goto('/avatar-creator')}

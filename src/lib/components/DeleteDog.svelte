@@ -3,6 +3,7 @@
   import { Trash2, X } from 'lucide-svelte'
   export let deleteDog: (id: string) => Promise<void>
   export let dogId: string
+  export let name: string
 </script>
 
 <div
@@ -17,7 +18,7 @@
       <X class="h-4 w-4" />
     </button>
     <h2 class="py-3 px-4 font-cormorant text-lg font-medium w-64 text-center">
-      Are you sure you want to delete this dog?
+      Are you sure you want to delete {name}?
     </h2>
     <button
       class=" hover:bg-alpha-dark flex bg-alpha px-4 py-2 rounded-lg text-sm mt-3 mb-2  focus:ring-2 focus:ring-alpha-dark focus:outline-none self-center"
