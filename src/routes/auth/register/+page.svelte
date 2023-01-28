@@ -30,7 +30,7 @@
     }
     register(userInput.email, userInput.password)
       .then(() => {
-        return goto('/')
+        return goto('/avatar-creator/library')
       })
       .catch((error) => {
         console.log({ error })

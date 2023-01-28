@@ -6,7 +6,6 @@
   export let scene: Scene
 
   const setActive = (name: string) => {
-    console.log(scene)
     scene.children.map((c) => {
       if (c.name === name) {
         activeEars.set(c.name)

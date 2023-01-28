@@ -4,13 +4,16 @@
     activeTail,
     activeEars,
     activeEyes,
-    activeBodyColor,
     activeEyesColor,
+    activeBodyColor,
   } from '$lib/utils/parts'
+  import { green, lightBrown } from '$lib/utils/colors'
 
   activeTail.set('tail1')
   activeEars.set('ears1')
   activeEyes.set('eyes1')
+  activeEyesColor.set(green)
+  activeBodyColor.set(lightBrown)
 </script>
 
 <svelte:head>
@@ -19,12 +22,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog
-    activeTailName={$activeTail}
-    activeEarsName={$activeEars}
-    activeEyesName={$activeEyes}
-    activeBodyCol={$activeBodyColor}
-    activeEyesCol={$activeEyesColor}
-    dogId={undefined}
-  />
+  <Dog dogId={undefined} />
 </section>

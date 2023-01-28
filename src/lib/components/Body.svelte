@@ -2,11 +2,6 @@
   import { lightBrown, gray, darkBrown } from '$lib/utils/colors'
   import { bodies, ears, tails } from '$lib/utils/loadObjects'
   import { activeBodyColor } from '$lib/utils/parts'
-  export let activeColor: string
-
-  $: if (activeColor) {
-    changeBodyColor(activeColor)
-  }
 
   const changeBodyColor = (color: string) => {
     activeBodyColor.set(color)

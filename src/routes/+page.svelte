@@ -58,7 +58,7 @@
       on:click={() => goto('/avatar-creator')}
       class="text-sm sm:text-base hover:bg-alpha-dark focus:ring-2 focus:ring-alpha-dark focus:outline-none  text-white text-center bg-alpha p-3 rounded-lg w-2/3"
     >
-      Make your own doggy</button
+      Create your own doggy</button
     >
   </div>
   <img class="w-1/3 sm:w-1/4 pb-6 sm:pb-0" src="/pngwing.png" alt="dog" />

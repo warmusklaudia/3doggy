@@ -95,7 +95,6 @@ const updatePassword = (user: User, newPassword: string): Promise<void> => {
 const protect = () => {
   auth.onAuthStateChanged(async (user) => {
     if (user) {
-      console.log(user)
       return true
     } else {
       goto('/auth/login')

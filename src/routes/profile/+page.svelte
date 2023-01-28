@@ -1,13 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { AlertTriangle, Loader2, Plus, X } from 'lucide-svelte'
+  import { Plus } from 'lucide-svelte'
   import { user } from '$lib/utils/useAuth'
   import { onMount } from 'svelte'
   import { collection, getDocs } from 'firebase/firestore'
   import type Dog from '$lib/interfaces/dog.interface'
   import { db, storage } from '$lib/utils/useFirebase'
   import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-  import { updatePassword } from 'firebase/auth'
 
   let myDogs: number = 0
   let pic: string = ''
@@ -69,7 +68,14 @@
     </div>
   </label>
   <h2 class="py-3 text-beta text-lg">{$user?.email}</h2>
-  <h2 class="pb-3 text-beta">You have {myDogs} dogs in your library</h2>
+  {#if myDogs === 0}
+    <h2 class="pb-3 text-beta">You don't have any dogs in your library yet</h2>
+  {:else}
+    <h2 class="pb-3 text-beta">
+      You have {myDogs}
+      {myDogs === 1 ? 'dog' : 'dogs'} in your library
+    </h2>
+  {/if}
   <button
     on:click={() => goto('/avatar-creator/library')}
     class="text-white hover:bg-alpha-dark bg-alpha px-4 py-2 rounded-lg  focus:ring-2 focus:ring-alpha-dark focus:outline-none"

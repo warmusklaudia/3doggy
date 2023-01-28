@@ -15,8 +15,6 @@
     activeBodyColor.set($dog!.bodyColor)
     activeEyesColor.set($dog!.eyesColor)
   }
-
-  console.log($dog)
 </script>
 
 <svelte:head>
@@ -25,12 +23,5 @@
 </svelte:head>
 
 <section class="flex justify-center items-center">
-  <Dog
-    activeTailName={$dog?.tail}
-    activeEarsName={$dog?.ears}
-    activeEyesName={$dog?.eyes}
-    activeBodyCol={$dog?.bodyColor}
-    activeEyesCol={$dog?.eyesColor}
-    dogId={$dog?.id}
-  />
+  <Dog dogId={$dog?.id} />
 </section>
